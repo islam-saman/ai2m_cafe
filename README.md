@@ -1,1 +1,1 @@
-This is a php project
+This is a simple project to manage small cafes
