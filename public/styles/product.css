@@ -1,0 +1,50 @@
+section
+{
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+}
+
+.add-product-form
+{
+    max-width: 50%;
+    padding: 40px;
+    box-shadow: rgb(0 0 0 / 10%) 0px 4px 12px;
+    transition: width .5s;
+
+
+}
+
+.add-product-form button
+{
+    margin: auto;
+    display: block;
+}
+
+label
+{
+    text-transform: capitalize;
+}
+
+#userAddress
+{
+    max-height: 100px;
+}
+
+
+.gender-container
+{
+    padding:7px 15px;
+}
+
+.skills-container
+{
+    padding:7px 22px;
+}
+
+.add-button-container
+{
+    text-align: center;
+}
+
+

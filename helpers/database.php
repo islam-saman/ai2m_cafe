@@ -1,10 +1,5 @@
 <?php 
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-
 
 class Database
 {
@@ -22,6 +17,8 @@ class Database
         $this->dbUser = $dbUser;
         $this->dbPass = $dbPass;
         $this->dbName = $dbName;
+
+        $this->connect();
     }
     private function connect()
     {
@@ -75,8 +72,8 @@ class Database
 
     public function insert(string $tableName, array $columns, array $columnsValue)
     {
-        if (!$this->connect())
-            throw new Exception;
+        // if (!$this->connect())
+        //     throw new Exception;
 
         $rowColumns = "";
         foreach($columns as $column)
@@ -97,7 +94,7 @@ class Database
                 $rowValues .= ","."'{$value}'";
         }
 
-        $insrtQuery = "INSERT INTO users ($rowColumns) values ($rowValues)";
+        $insrtQuery = "INSERT INTO $tableName ($rowColumns) values ($rowValues)";
         $insetStatement = $this->dbConnection->prepare($insrtQuery);
         $insetStatement->execute();
         
@@ -128,7 +125,7 @@ class Database
         echo $prepareSet;
 
 
-        $updateQuery = "UPDATE users SET $prepareSet WHERE id=$id";
+        $updateQuery = "UPDATE $tableName SET $prepareSet WHERE id=$id";
         $updateStatement = $this->dbConnection->prepare($updateQuery);
         $updateStatement->execute();
 
