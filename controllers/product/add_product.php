@@ -2,8 +2,8 @@
      header("Access-Control-Allow-Origin: *");
 
     // include the env file
-    include "../env.php";
-    include "../helpers/database.php";
+    include "../../env.php";
+    include "../../helpers/database.php";
 
     $productInput = json_decode($_POST["product"], true);
 
@@ -17,8 +17,8 @@
     $imageExtension     = pathinfo($image)["extension"];
     $imageOldPath       = $_FILES["productImage"]["tmp_name"];
 
-
     $form_errors = array();
+    
     $name_pattern = "/^[A-Za-z0-9]+$/";
     $allowed_imageExt = ["png", "jpeg", "jpg"];
 
@@ -27,6 +27,7 @@
     if(!isset($name) or empty($name) )
     {
         $form_errors["nameIsRquried"] = "Product name is rquired ";
+        
     }
     
     elseif(!preg_match($name_pattern, $name) )
@@ -54,9 +55,15 @@
     {
         $image = "public/images/product_defualt_image.jpeg";
     }
+    elseif($_FILES["productImage"]["size"] == 0)
+    {
+        $form_errors["ImageSize"] = "The maximum size is 2MB";
+
+    }
     elseif(in_array($imageExtension, $allowed_imageExt) == false)
     {
         $form_errors["allowedImages"] = "Allowed Images are png, jpeg, jpg only";
+        $form_errors["ImageSize"] = $_FILES["productImage"]['error'];
     }
     else
     {
@@ -65,6 +72,8 @@
     }
 
      
+
+
     if($form_errors)
     {
         echo json_encode(array("status"=> 401, "errors" => $form_errors));
@@ -94,7 +103,7 @@
                 {
                     try
                     {
-                        $uploaded = move_uploaded_file($imageOldPath, "../$image");
+                        $uploaded = move_uploaded_file($imageOldPath, "../../$image");
                         echo json_encode(array("status"=> 200, "success" => "Product has been added successfully"));
                     }
                     catch (Exception $movingImageError)

@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    <link rel="stylesheet" href="../public/styles/product.css">
+    <link rel="stylesheet" href="../../public/styles/product.css">
     <link rel="stylesheet" href="https://rawgit.com/MLaritz/Vanilla-Notify/master/dist/vanilla-notify.css">
 
 </head>
@@ -52,6 +52,8 @@
                 <div class="col-8">
                     <input class="form-control" type="file" id="productImage" name="productImage"  accept=".jpg, .png, .jpeg">
                     <span id="allowedImages" class="text-danger"></span>
+                    <span id="ImageSize" class="text-danger"></span>
+
                 </div>
             </div>
             <div class="mb-3 row">
@@ -62,17 +64,7 @@
         <div id="header"></div>
     </section>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
-    <script src="../public/js/product.js"></script>
+    <script src="../../public/js/product.js"></script>
     <script src="https://rawgit.com/MLaritz/Vanilla-Notify/master/dist/vanilla-notify.min.js"></script>
-    <script>
-        fetch("./add_product.html")
-        .then(response => {
-            return response.text()
-        })
-        .then(data => {
-            document.getElementById("header").innerHTML = data;
-        });
-    </script> 
-
 </body>
 </html>
