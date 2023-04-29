@@ -19,5 +19,7 @@
 
     <!-- custom js file link  -->
     <script src="../../public/js/script.js"></script>
+   <script src="../../public/js/bootstrap5.js"></script> 
+
 
 </body>

@@ -97,7 +97,7 @@ class Database
                 $rowValues .= ","."'{$value}'";
         }
 
-        $insrtQuery = "INSERT INTO users ($rowColumns) values ($rowValues)";
+        $insrtQuery = "INSERT INTO $tableName ($rowColumns) values ($rowValues)";
         $insetStatement = $this->dbConnection->prepare($insrtQuery);
         $insetStatement->execute();
         
@@ -128,7 +128,7 @@ class Database
         echo $prepareSet;
 
 
-        $updateQuery = "UPDATE users SET $prepareSet WHERE id=$id";
+        $updateQuery = "UPDATE $tableName SET $prepareSet WHERE id=$id";
         $updateStatement = $this->dbConnection->prepare($updateQuery);
         $updateStatement->execute();
 
