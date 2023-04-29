@@ -104,7 +104,8 @@
                     try
                     {
                         $uploaded = move_uploaded_file($imageOldPath, "../../$image");
-                        echo json_encode(array("status"=> 200, "success" => "Product has been added successfully"));
+                        $newProduct = $db->fetchLastRow("product");
+                        echo json_encode(array("status"=> 200, "success" => $newProduct));
                     }
                     catch (Exception $movingImageError)
                     {

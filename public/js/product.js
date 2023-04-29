@@ -64,8 +64,9 @@ async function addNewProduct()
                 $(key).innerHTML = ""
             }
 
+            localStorage.setItem("newProduct", JSON.stringify(JsonResualt.success))
             $("adding-form").reset()
-            vNotify.success({text: JsonResualt.success, visibleDuration: 2000, fadeInterval: 20});
+            vNotify.success({text: "product has been added succesfully", visibleDuration: 2000, fadeInterval: 20});
 
         }
     }
@@ -88,6 +89,13 @@ async function displayProducts()
     let productList = await getProductsList()
     productList.forEach(product => {
 
+
+        let isAvailableButton;
+        if(product.is_available)
+            isAvailableButton = "Available"
+        else
+            isAvailableButton = "Unavailable"
+
         const tableRow = 
         `
         <tr id="${product.id}">
@@ -98,13 +106,15 @@ async function displayProducts()
                 <img src="../../${product.image}" style='width: 71px; border-radius: 7px;'>
             </td>
             <td>
-                <div class="btn-group" role="group">
+                <div  id="btn-container"  class="btn-group" role="group">
+                    <a type="button" onclick= "isProductAvailable(${product.id})"  class='btn btn-danger'>${isAvailableButton}</a>
                     <a type="button" href='../../views/product/update_product.html?prodId=${product.id}' class='btn btn-success'>Update</a>
                     <a type="button" onclick= "deleteProduct(${product.id})"  class='btn btn-danger'>Delete</a>
                 </div>
             </td>
         </tr>        
         `
+
         $("tableBody").innerHTML += tableRow
 
     });
@@ -125,7 +135,7 @@ async function deleteProduct(productId)
     if(deleteResualt.status == 200)
     {
         $(productId).remove()
-        vNotify.success({text: jsonResualt, visibleDuration: 2000, fadeInterval: 20});
+        vNotify.success({text: "The product has been deleted successfully", visibleDuration: 2000, fadeInterval: 20});
     }
     else
     {
@@ -133,7 +143,30 @@ async function deleteProduct(productId)
 
     }
 
+}
 
+async function isProductAvailable(productId){
+
+    var formData = new FormData();
+    formData.append('prodId', JSON.stringify(productId));
+    
+    let availablityResualt = await fetch("../../controllers/product/product_availability.php", {
+        method: "POST",
+        body: formData
+    }) 
+
+    let jsonResualt = await availablityResualt.json()
+    if(availablityResualt.status == 200)
+    {
+        availableButtonText = jsonResualt.success ? "Available" : "Unavailable"
+        $(productId).querySelector("#btn-container").firstElementChild.innerText = availableButtonText
+        vNotify.success({text: `The product now is ${availableButtonText}`, visibleDuration: 2000, fadeInterval: 20});
+    }
+    else
+    {
+        vNotify.error({text: jsonResualt.error, visibleDuration: 2000, fadeInterval: 20});
+
+    }
 }
 
 function $(identifer)
@@ -141,21 +174,43 @@ function $(identifer)
     return document.getElementById(identifer)
 }
 
-        // for (const key in product) {
-            
-        //     const tableColumn = document.createElement("td")
-        //     if(key == "image")
-        //     {
-        //         const productImage = document.createElement("img")
-        //         productImage.src = product[key];
-        //         tableColumn.appendChild(productImage)
-        //     }
 
-        //     if (key == "is_available" && product[key] == 1)
-        //         product[key] = "Yes"
-        //     else if (key == "is_available" && product[key] == 0)
-        //         product[key] = "No"
 
-        //     tableColumn.innerText =  product[key]
-        //     tableRow.appendChild(tableColumn)
-        // }
+// expriment ... just try to memic angular live update
+window.addEventListener("focus", () => {
+
+    let newProduct = localStorage.getItem("newProduct")
+    if(newProduct)
+    {
+        let product = JSON.parse(newProduct)
+
+        let isAvailableButton;
+        if(product.is_available)
+            isAvailableButton = "Available"
+        else
+            isAvailableButton = "Unavailable"
+
+        const tableRow = 
+        `
+       <tr id="${product.id}">
+           <td>${product.name}</td>
+           <td>${product.price} EG</td>
+           <td>${product.category_id}</td>
+           <td>
+               <img src="../../${product.image}" style='width: 71px; border-radius: 7px;'>
+           </td>
+           <td>
+               <div id="btn-container" class="btn-group" role="group">
+                    <a type="button" onclick= "isProductAvailable(${product.id})"  class='btn btn-danger'>${isAvailableButton}</a>
+                    <a type="button" href='../../views/product/update_product.html?prodId=${product.id}' class='btn btn-success'>Update</a>
+                    <a type="button" onclick= "deleteProduct(${product.id})"  class='btn btn-danger'>Delete</a>
+               </div>
+           </td>
+       </tr>        
+       `
+
+       $("tableBody").innerHTML += tableRow
+       localStorage.removeItem("newProduct")
+    }
+
+})

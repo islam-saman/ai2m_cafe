@@ -69,6 +69,22 @@ class Database
 
     }
 
+    public function fetchLastRow(string $tableName)
+    {
+        if (!$this->connect())
+            throw new Exception;
+            
+
+        $selectQuery = "SELECT * FROM $tableName ORDER BY id DESC LIMIT 1";
+        $selectStatement = $this->dbConnection->prepare($selectQuery);
+        $selectStatement->execute();        
+
+        if($selectStatement->rowCount() != 0)
+            return $selectStatement->fetch(PDO::FETCH_ASSOC);
+        else
+            return null;
+
+    }
 
     public function insert(string $tableName, array $columns, array $columnsValue)
     {
@@ -122,10 +138,8 @@ class Database
                 $prepareSet .= ","."$columns[$index] = '$columnsValue[$index]'";   
             }
         }
-        echo $prepareSet;
 
-
-        $updateQuery = "UPDATE $tableName SET $prepareSet WHERE id=$id";
+        $updateQuery = "UPDATE $tableName SET $prepareSet WHERE id='{$id}'";
         $updateStatement = $this->dbConnection->prepare($updateQuery);
         $updateStatement->execute();
 
@@ -170,7 +184,6 @@ class Database
             return false;
         
     }
-
 
 }
 
