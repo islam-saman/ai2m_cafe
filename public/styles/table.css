@@ -1,0 +1,24 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap");
+
+body {
+  font-family: "Open Sans", sans-serif !important;
+  font-size: 2rem;
+}
+.search {
+  top: 6px !important;
+  left: 10px !important;
+}
+
+.form-control {
+  border: none !important;
+  padding-left: 32px !important;
+}
+
+.form-control:focus {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.green {
+  color: green !important;
+}
