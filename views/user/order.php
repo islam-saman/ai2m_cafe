@@ -19,7 +19,7 @@
         <div class="mb-2 d-flex justify-content-between align-items-center">
 
         </div>
-        <div class="d-flex justify-content-around mb-5">
+        <div class="d-flex justify-content-around mb-5 flex-wrap">
             <div>
                 <label for="start">Start Date:</label>
                 <input type="date" name="start" id="start" class="form-control" style="font-size: 2rem">
@@ -28,19 +28,19 @@
                 <label for="end">End Date:</label>
                 <input type="date" name="end" id="end" class="form-control" style="font-size: 2rem">
             </div>
-            <button class="btn btn-success" onclick="filterOrders()">Filter</button>
+            <button class="btn btn-success fs-2 mt-3" onclick="filterOrders()" style="height: 50px; width: 150px;">Filter</button>
         </div>
         <div class="table-responsive">
             <table class="table table-responsive table-borderless">
                 <thead>
                 <tr class="bg-light">
-                    <th scope="col" width="5%">#</th>
+                    <th scope="col" width="10%">#</th>
                     <th scope="col" width="20%">Date</th>
                     <th scope="col" width="20%">Status</th>
                     <th scope="col" width="20%">Name</th>
                     <th scope="col" width="10%">Room</th>
-                    <th scope="col" width="10%">Total Price</th>
-                    <th scope="col" class="text-end" width="10%">Ext</th>
+                    <th scope="col" width="8%">Total Price</th>
+                    <th scope="col" class="text-end" width="5%">Ext</th>
                 </tr>
                 </thead>
                 <tbody id="orderData">
@@ -64,9 +64,5 @@
 <!-- custom js file link  -->
 <script src="../../public/js/script.js"></script>
 <script src="../../public/js/user/order.js"></script>
-<script>
-    const start = document.getElementById("start").value;
-    const end = document.getElementById("end").value;
-</script>
 
 </body>

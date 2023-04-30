@@ -20,12 +20,12 @@ if(isset($_GET['id'])){
     } catch (Exception $e) {
         var_dump($e);
     }
-}elseif (isset($_GET['start'])){
+}elseif (isset($_GET['start']) && isset($_GET['end'])){
     $startDate = $_GET['start'];
     $endDate = $_GET['end'];
     try{
-        $orders = $db->join_two_tables("order", "user", "user_id", "id","`order`.* , `user`.name , `user`.profile_picture");
-        $orders_products = $db->join_three_tables("order", "product", "order_product", "id", "id", "order_id");
+        $orders = $db->join_two_tables_with_date_range("order", "user", "user_id", "id","$startDate","$endDate","`order`.* , `user`.name , `user`.profile_picture",);
+        $orders_products = $db->join_three_tables_with_date_range("order", "product", "order_product", "id", "id", "order_id","$startDate","$endDate");
         $result = ["orders"=> $orders, "orders_products" => $orders_products];
         echo json_encode($result);
     }catch (Exception $e){
@@ -33,7 +33,11 @@ if(isset($_GET['id'])){
     }
 } else { // If no order ID is provided, return all orders
     try {
+//        function filterByUser($user){
+//            if()
+//        }
         $orders = $db->join_two_tables("order", "user", "user_id", "id","`order`.* , `user`.name , `user`.profile_picture");
+//        $filtred = array($orders,);
         $orders_products = $db->join_three_tables("order", "product", "order_product", "id", "id", "order_id");
         $result = ["orders"=> $orders, "orders_products" => $orders_products];
         echo json_encode($result);

@@ -1,6 +1,7 @@
 
 const tbody = document.getElementById("orderData");
 const tableRow = document.getElementsByClassName("tableRow");
+const table = document.querySelector("table");
 const card = document.getElementsByClassName("card");
 console.log("HI")
 
@@ -12,8 +13,13 @@ function getAllOrders() {
             let orders = data['orders'];
             orders.forEach(row => {
                 tbody.innerHTML += `
-                    <tr class="tableRow" id="${row["id"]}" onclick="openOrderDetails(${row['id']})" disabled="false">
-                        <td>${row['id']}</td>
+                    <tr class="tableRow" id="${row["id"]}"  disabled="false">
+                        <td>
+                        <div class="d-flex justify-content-around">
+                             <p>${row['id']}</p>
+                             <div><i onclick="openOrderDetails(${row['id']})" class="fa fa-plus-circle" aria-hidden="true"></i></div>            
+                        </div>
+                        </td>
                         <td>${row['date']}</td>
                         <td><i class="fa fa-check-circle-o green"></i><span class="ms-1">${row['status']}</span></td>
                         <td><img src="https://i.imgur.com/VKOeFyS.png" width="25">${row['name']}</td>
@@ -65,27 +71,44 @@ function openOrderDetails(id) {
 function filterOrders() {
     const startDate = document.getElementById("start").value
     const endDate = document.getElementById("end").value
-    // console.log("start Date : " , startDate);
-    fetch(`http://localhost/ai2m_cafe/controllers/user/order.php?start=${startDate}&end=${endDate}`)
-        .then(async (res)=>{
-            let data = await res.json();
-            let orders = data['orders'];
-            console.log(orders)
-            tbody.innerHTML="";
-            orders.forEach(row => {
-                tbody.innerHTML = `
+    let errorMessage = document.getElementById("error-message");
+    if (startDate === "" || endDate === "") {
+        if (!errorMessage) {
+            errorMessage = document.createElement("p")
+            errorMessage.id = "error-message"
+            errorMessage.classList.add("alert", "alert-danger")
+            table.parentNode.insertBefore(errorMessage, table)
+        }
+        errorMessage.innerHTML = "Please select both start and end dates.";
+    } else {
+        if (errorMessage) {
+            errorMessage.remove();
+        }
+        fetch(`http://localhost/ai2m_cafe/controllers/user/order.php?start=${startDate}&end=${endDate}`)
+            .then(async (res)=>{
+                let data = await res.json();
+                let orders = data['orders'];
+                console.log(orders)
+                tbody.innerHTML="";
+                orders.forEach(row => {
+                    tbody.innerHTML += `
                     <tr class="tableRow" id="${row["id"]}" onclick="openOrderDetails(${row['id']})" disabled="false">
-                        <td>${row['id']}</td>
+                        <td>
+                            <div class="d-flex justify-content-around">
+                                <p>${row['id']}</p>
+                                 <div><i onclick="openOrderDetails(${row['id']})" class="fa fa-plus-circle" aria-hidden="true"></i></div>            
+                            </div>
+                        </td>
                         <td>${row['date']}</td>
                         <td><i class="fa fa-check-circle-o green"></i><span class="ms-1">${row['status']}</span></td>
                         <td><img src="https://i.imgur.com/VKOeFyS.png" width="25">${row['name']}</td>
                         <td>${row['room']}</td>
                         <td>${row['total']}$</td>
                         <td class="text-end"><span class="fw-bolder">${row['ext']}</span></td>
+                        <td><i class="fa-duotone fa-plus"></i></td>
                     </tr>`;
-            });
-        })
+                });
+            })
+            .catch((error) => console.log(error));
+    }
 }
-console.log(startDate.value())
-console.log(endDate.value())
-

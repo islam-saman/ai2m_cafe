@@ -5,7 +5,7 @@ const card = document.getElementsByClassName("card");
 let isCardOpen = false;
 
 function getAllOrders() {
-    fetch('http://localhost/ai2m_cafe/controllers/admin/order.php')
+    fetch('http://localhost/ai2m_cafe/controllers/admin/order.php?timestamp=' + Date.now())
         .then(async (res) => {
             let data = await res.json();
             let orders = data['orders'];
@@ -97,16 +97,17 @@ function deliverOrder(id){
                     text: 'The order has been updated successfully.',
                     timer: 2000
                 });
-                getAllOrders();
+                getAllOrders(); // call getAllOrders() to update the table
             } else {
                 Swal.fire({
                     icon: 'error',
                     title: 'Error!',
                     text: 'Failed to update order.',
-                    timer: 2000 
+                    timer: 2000
                 });
             }
         })
         .catch(error => console.log(error));
 }
+
 
