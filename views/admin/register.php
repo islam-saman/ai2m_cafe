@@ -83,9 +83,7 @@
                       </div>
                     </div>
 
-                    <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                    <p>Already have an account? </p><a href="../login.html">Sign in</a>
-                    </div>
+                    
 
                     <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                       <button type="submit" onclick="adduser()" class="btn btn-primary btn-lg">Save</button>
@@ -99,7 +97,7 @@
                 </div>
                 <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
 
-                  <img  src="../../public/uploads/r.jpg" class="img-fluid" alt="Register image">
+                  <img  src="../../public/images/r.jpg" class="img-fluid" alt="Register image">
 
                 </div>
               </div>

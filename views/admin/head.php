@@ -15,9 +15,13 @@
     <!-- custom css file link  -->
     <link rel="stylesheet" href="../../public/styles/style.css">
     <link rel="stylesheet" href="../../public/styles/bootstrap5.css">
+    <link rel="stylesheet" href="../public/styles/style.css">
+    <link rel="stylesheet" href="../public/styles/bootstrap5.css">
     <link rel="stylesheet" href="<?php echo $link ?>">
     <link rel="stylesheet" href="<?php echo $not ?>">
+    
     <title><?php echo $title; ?></title>
+
 </head>
 
 </html>

@@ -125,10 +125,8 @@ class Database
                 $prepareSet .= ","."$columns[$index] = '$columnsValue[$index]'";   
             }
         }
-        echo $prepareSet;
 
-
-        $updateQuery = "UPDATE $tableName SET $prepareSet WHERE id=$id";
+        $updateQuery = "UPDATE $tableName SET $prepareSet WHERE id ='{$id}'";
         $updateStatement = $this->dbConnection->prepare($updateQuery);
         $updateStatement->execute();
 
