@@ -227,7 +227,7 @@ section{
 
   .products-container{
     border:$border;
-    border-radius: .5rem;    
+    border-radius: .5rem;
     animation: fadeUp .4s linear;
 
     .box-container{
@@ -291,7 +291,7 @@ section{
   .cart-total{
     margin-top: 2rem;
     border:$border;
-    border-radius: .5rem;    
+    border-radius: .5rem;
     animation: fadeUp .4s linear .4s backwards;
 
     .box{
@@ -552,7 +552,7 @@ section{
         height: 15rem;
       }
     }
-    
+
     .content{
 
       h3{
@@ -572,7 +572,7 @@ section{
           color:$light-color;
         }
       }
-      
+
       .price{
         font-size: 2rem;
         color:$black;
@@ -660,7 +660,7 @@ section{
           font-size: 2.5rem;
           color:$white;
         }
-        
+
         h3{
           font-size: 3rem;
           color:$white;
@@ -846,7 +846,7 @@ section{
             &:hover{
               color:$green;
             }
-            
+
             i{
               color:$green;
               padding-right: .5rem;
@@ -882,7 +882,7 @@ section{
       color:$black;
       padding-bottom: 1rem;
     }
-    
+
     form{
       max-width:70rem;
       margin:1rem auto;
@@ -1008,7 +1008,7 @@ section{
 
 
 
-// media queries 
+// media queries
 
 @media (max-width:991px){
 

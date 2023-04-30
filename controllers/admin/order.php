@@ -8,25 +8,27 @@ $db = new Database(dbUser, dbPass, dbName);
 
 // Check if the request is for a specific order detail
 if(isset($_GET['id'])){
+
     $orderId = $_GET['id'];
     // Query the database to get the order details for the specified order ID
     try {
-        $order = $db->fetchOne("order", "id", "{$orderId}");
-        $order_products = $db->join_four_tables(
-            "order", "product", "order_product", "category",
-            "id", "id", "product_id", "id",
-            "order_product.*, product.*"
-            ,"order_id = {$orderId}");
-        $result = ["order_products" => $order_products];
-        echo json_encode($result);
+        $updated = $db->updateById("order",["status"],["out for delivery"],"$orderId");
+            echo json_encode($updated);
     } catch (Exception $e) {
         var_dump($e);
     }
 } else { // If no order ID is provided, return all orders
     try {
+        function processing_orders($var){
+            if($var['status']=='processing'){
+                return $var;
+            }
+        }
         $orders = $db->join_two_tables("order", "user", "user_id", "id","`order`.* , `user`.name , `user`.profile_picture");
         $orders_products = $db->join_three_tables("order", "product", "order_product", "id", "id", "order_id");
-        $result = ["orders"=> $orders, "orders_products" => $orders_products];
+        $filtered = array_filter($orders,"processing_orders");
+        $filteredop = array_filter($orders_products,"processing_orders");
+        $result = ["orders"=> $filtered, "orders_products" => $filteredop];
         echo json_encode($result);
     } catch (Exception $e) {
         var_dump($e);

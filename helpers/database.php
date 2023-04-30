@@ -126,7 +126,7 @@ class Database
                 $prepareSet .= ","."$columns[$index] = '$columnsValue[$index]'";   
             }
         }
-        echo $prepareSet;
+//        echo $prepareSet;
 
 
         $updateQuery = "UPDATE `$tableName` SET $prepareSet WHERE id=$id";
@@ -240,7 +240,17 @@ class Database
             return [];
     }
 
-
+    public function join_between_two_with_condition(string $table, string $start , string $end){
+        if(!$this->connect()){
+            throw new Exception();
+        }
+        $query = "SELECT * FROM `{$table}` WHERE `date` BETWEEN :start AND :end";
+        $stmt = $this->dbConnection->prepare($query);
+        $stmt->bindParam(":start", $start);
+        $stmt->bindParam(":end", $end);
+        $stmt->execute();
+        return  $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
 }
 

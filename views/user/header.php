@@ -5,10 +5,10 @@
     <nav class="navbar">
         <a href="#home">home</a>
         <a href="#about">about</a>
-        <a href="#popular">popular</a>
-        <a href="#menu">menu</a>
-        <a href="/ai2m_cafe/views/admin/manual_order.php">order</a>
-        <a href="#blogs">blogs</a>
+<!--        <a href="#popular">popular</a>-->
+<!--        <a href="#menu">menu</a>-->
+        <a href="/ai2m_cafe/views/user/order.php">My Orders</a>
+<!--        <a href="#blogs">blogs</a>-->
     </nav>
 
     <div class="icons">

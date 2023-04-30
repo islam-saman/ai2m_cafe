@@ -60,7 +60,7 @@ section {
     color: #130f40;
 }
 
-.btn {
+.custom_button {
     display: inline-block;
     margin-top: 1rem;
     padding: 1.7rem 2.8rem;
@@ -71,7 +71,7 @@ section {
     border-radius: 1rem;
 }
 
-.btn:hover {
+.custom_button:hover {
     background: linear-gradient(135deg, #6e6592, #494262);
 }
 
