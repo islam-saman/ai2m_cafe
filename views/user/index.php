@@ -19,7 +19,7 @@ echo "
                 <div class='d-flex align-items-center justify-content-between'>
                     <a aria-current='page' href='index.php'>
                         <div class='logo'>
-                            <img src='../../public/images/PHP-logo.svg.png' width='70' height='70'/>
+                            <img src='../../public/images/products/PHP-logo.svg.png' width='70' height='70'/>
                         </div>
                     </a>
                     <div>
@@ -50,7 +50,6 @@ echo "
     <title>Order</title>
 </head>
 <body>
-
     <div class="container">
         <div class="row">
             <div class="col-12 my-5">
@@ -73,16 +72,19 @@ echo "
                         <div class="box-container">
                                 
                                 <?php 
-                                    $db = new Database('127.0.0.1', '3306', 'mario', 'Mario123456789_', 'ai2m');
+                                    $db = new Database('127.0.0.1', '3306', 'root', 'Mario2022', 'aim2');
                                     if($db){
                                         $products = $db->fetchALl('product');
                                         foreach ($products as $index=>$product) {
+//                                            var_dump($product);
                                             echo "
-                                                <div class='box'>
-                                                    <input class='prdId' type='hidden' value=$product[id] />
+                                                <div class='box' onclick='addOrder($product[id])'>
+                                                    <input class='prdId' name='prdId' type='hidden' value=$product[id] />
                                                     <a class='ri-heart-line wishlist-icon'></a>
                                                     <div class='image'>
-                                                    <a style='cursor:pointer;'> <img class='w-100' style='height:150px;border-radius:10px' src='../$product[image]' alt='product'></a>
+                                                    <a style='cursor:pointer;'> 
+                                                        <img class='w-100' style='height:150px;border-radius:10px'  src='../../public/images/products/$product[image]' alt='product$index'>
+                                                    </a>
                                                     </div>
                                                     <div class='content'>
                                                         <h3 class='prdName'>$product[name]</h3>
@@ -94,7 +96,7 @@ echo "
                                                             <i class='fas fa-star-half-alt'></i>
                                                             <span> (50) </span>
                                                         </div>
-                                                        <div><span class='prdPrice'>$$product[price].00</span> </div>
+                                                        <div><span class='prdPrice'>$$product[price]</span> </div>
                                                     </div>
                                                 </div>
                                             ";
@@ -107,7 +109,6 @@ echo "
             </div>
 
             <div class="col-4 d-flex align-items-center">
-
                 <div>
                     <div class="order-checkout receipt">
                         <div class="row">
@@ -129,16 +130,14 @@ echo "
                                         <tfoot>
                                             <tr class="cart_buttons">
                                                 <td colspan="5">
-                                                    <button class="btn btn-outline-warning py-3 px-4">Update cart</button>
-                                                    <a class="btn btn-outline-danger py-3 px-4" id="cart_clear" href="#">Clear cart</a>
-                                                    
-                                                    
+                                                    <a class="btn btn-outline-warning py-3 px-4">Update cart</a>
+                                                    <a class="btn btn-outline-danger py-3 px-4" id="cart_clear" onclick="deleteAllOrders()">Clear cart</a>
                                                 </td>
                                             </tr>
 
                                             <tr class="cart_summary">
                                                 <td colspan="5">
-                                                    <p class="cart_summary__row">Total price <b class="total-price">$30.00</b></p>
+                                                    <p class="cart_summary__row" id="totalPrice">Total price <b class="total-price">$0.00</b></p>
                                                     <p class="cart_summary__instructions">
                                                         <label class="mb-2">Special instructions for seller</label>
                                                         <textarea class="form-control" name="note"></textarea>
