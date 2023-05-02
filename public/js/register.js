@@ -52,10 +52,10 @@ async function adduser()
     {
         Email.innerHTML = 'email is required';
     }
-    else if(!pattern_email.test(email))
-    {
-        Email.innerHTML = 'email must match example@example.com';
-    }
+    // else if(!pattern_email.test(email))
+    // {
+    //     Email.innerHTML = 'email must match example@example.com';
+    // }
     else
     {
         Email.innerHTML =""
@@ -140,7 +140,7 @@ async function adduser()
       formData.append("userImage", userImage);
     }
 
-    let addingResualt = await fetch("../../controllers/register.php",  {method: "POST", body: formData})
+    let addingResualt = await fetch("../../controllers/admin/addUser.php",  {method: "POST", body: formData})
 
 
     if(addingResualt.ok)

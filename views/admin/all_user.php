@@ -29,7 +29,7 @@ try{
     <div class="container">
         <div class="d-flex justify-content-between alluser my-5">
         <h1 style="font-size: 40px;">All User</h1>
-        <a href="register.php" class="btn btn-primary">Add new user </a>
+        <a href="addUser.php" class="btn btn-primary">Add new user </a>
         </div>
         <ul class="responsive-table">
           <li class="table-header">
@@ -46,7 +46,7 @@ try{
                 if($key == "ext")
                   echo "<div class='col col-2 h4' data-label='Job Id'>{$info}</div>";
                 elseif($key == "profile_picture")
-                  echo "<div class='col col-3' data-label='Job Id'><img width='100' height='100'  src='../../$info'></div>";
+                  echo "<div class='col col-3' data-label='Job Id'><img width='100' height='100'  src='../$info'></div>";
                 else
                   echo "<div class='col col-1 h4' data-label='Job Id'>{$info}</div>";
                }

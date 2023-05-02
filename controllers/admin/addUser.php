@@ -5,7 +5,7 @@ error_reporting(E_ALL);
 
 header("Access-Control-Allow-Origin: *");
 
-include '../helpers/database.php';
+include '../../helpers/database.php';
 
 
     $userInput = json_decode($_POST["user"], true);
@@ -34,7 +34,7 @@ include '../helpers/database.php';
     
     if(!isset($image) or empty($image))
     {
-        $image = "public/images/default_image.avif";
+        $image = "../public/images/default_image.avif";
     }
     elseif($_FILES["userImage"]["size"] == 0)
     {
@@ -44,7 +44,7 @@ include '../helpers/database.php';
     else
     {
         $uniqueImageName = time();
-        $image = "public/uploads/{$uniqueImageName}.{$imageExtension}";
+        $image = "../public/uploads/{$uniqueImageName}.{$imageExtension}";
     } 
 
 
@@ -134,7 +134,7 @@ if($form_errors)
                         {
                             $uploaded = move_uploaded_file($imageOldPath, "../$image");
                         }else{
-                            $image = "public/images/default_image.avif";
+                            $image = "../public/images/default_image.avif";
                         }
 
                         $columns =['name','email','password','room_no','ext','secret_key','is_admin','profile_picture'];
