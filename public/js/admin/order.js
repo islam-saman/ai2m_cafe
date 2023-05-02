@@ -87,6 +87,7 @@ getAllOrders();
 // }
 
 function deliverOrder(id){
+
     fetch(`http://localhost/ai2m_cafe/controllers/admin/order.php?id=${id}`)
         .then(res => res.json())
         .then(data => {
@@ -97,7 +98,9 @@ function deliverOrder(id){
                     text: 'The order has been updated successfully.',
                     timer: 2000
                 });
-                getAllOrders(); // call getAllOrders() to update the table
+                // getAllOrders(); // call getAllOrders() to update the table
+                // let updatedTr = document.getElementById(`${id}`);
+                // updatedTr.children[2].innerHTML ="delivered";
             } else {
                 Swal.fire({
                     icon: 'error',
