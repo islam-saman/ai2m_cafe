@@ -54,7 +54,7 @@
             </div>
             <div class="col-md-5 ps-0 d-none d-md-block">
               <div class="form-right  text-white text-center pt-5">
-                <img src="../public/images/login.jpg"
+                <img src="../public/images/login.jpg" 
                   class="img-fluid" alt="Sample image" id="image">
               </div>
             </div>
@@ -68,7 +68,7 @@
 </section>
      
         <div class="popup" id="popup">
-            <img src="../public/images/404-tick.png"><br><br>
+            <img src="../public/images/404-tick.png" ><br><br>
                     <h3>Change Password</h3>
                     <div class="input-group">
                       <input name="secretkey"  type="text" class="form-control"

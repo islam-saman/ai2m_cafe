@@ -83,7 +83,9 @@
                       </div>
                     </div>
 
-                    
+                    <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                    <p>Back to Users Page?</p><a href="all_user.php" style="color:blue;">Click Here</a>
+                    </div>
 
                     <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                       <button type="submit" onclick="adduser()" class="btn btn-primary btn-lg">Save</button>

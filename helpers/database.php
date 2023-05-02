@@ -38,13 +38,13 @@ class Database
     }
 
 
-    public function fetchALl($tableName)
+    public function fetchALl($tableName,string $select="*")
     {
         if (!$this->connect())
             throw new Exception;
         
 
-        $selectQuery = "SELECT * FROM $tableName";
+        $selectQuery = "SELECT $select FROM $tableName";
         $selectStatement = $this->dbConnection->prepare($selectQuery);
         $selectStatement->execute();        
 
@@ -53,6 +53,7 @@ class Database
         else
             return [];     
     }
+    
 
 
     // If we have time, we must let the user of the function to decide the desired fields
