@@ -13,6 +13,23 @@ function productDetilesBuilder(elem)
 }
 
 
+function imageSizeValidation(image)
+{
+    if(productImage)
+    {
+        let imageSize = productImage.size / 1000
+        
+        if(imageSize > 2000)
+            return false
+        
+        else 
+            return true
+    }
+    else
+        return "no image has been found"
+
+}
+
 async function addNewProduct()
 {
     $("adding-form").addEventListener('submit', event => {
@@ -21,25 +38,15 @@ async function addNewProduct()
     
     // prepare date to be send to the server
     var productImage = document.getElementById("productImage").files[0]
+    let validateImageSize = imageSizeValidation(productImage)
     var formData = new FormData();
     formData.append('product', JSON.stringify(productDetiles));
     
+    if(validateImageSize)    
+        formData.append("productImage", productImage);
+    else
+        vNotify.error({text: "Maxmimum size of the image is 2MB", visibleDuration: 2000, fadeInterval: 20});
     
-    if(productImage)
-    {
-        let imageSize = productImage.size / 1000
-        
-        if(imageSize > 2000)
-        {
-            vNotify.error({text: "Maxmimum size of the image is 2MB", visibleDuration: 2000, fadeInterval: 20});
-            return
-        }
-        else 
-        {
-          formData.append("productImage", productImage);
-        }
-    }
-
 
     let addingResualt = await fetch("../../controllers/product/add_product.php", { method: "POST", body: formData})
     if(addingResualt.ok)
@@ -50,7 +57,8 @@ async function addNewProduct()
             if(!formErrors)
                 formErrors = JsonResualt.errors
 
-            for (const key in formErrors) {
+            for (const key in formErrors)
+            {
                 if(formErrors[key] == JsonResualt.errors[key])
                     $(key).innerHTML = JsonResualt.errors[key]
                 else
@@ -145,6 +153,84 @@ async function deleteProduct(productId)
 
 }
 
+async function getUpdateForm()
+{
+    let getUpdateForm = await fetch("./add_product.html")
+    let updateForm = await getUpdateForm.text()
+    document.getElementById("header").innerHTML = updateForm;
+    document.getElementById("subButton").removeAttribute("onclick")
+    document.getElementById("subButton").addEventListener("click", updateProduct)
+}
+
+async function updateProduct()
+{
+
+    $("adding-form").addEventListener('submit', event => {
+        event.preventDefault();
+    });
+    
+    
+    // prepare date to be send to the server
+    var productImage = document.getElementById("productImage").files[0]
+    let validateImageSize = imageSizeValidation(productImage)
+    
+    const urlParams = new URLSearchParams(window.location.search);
+    let productId = urlParams.get('prodId')
+
+    var formData = new FormData()
+    formData.append('product', JSON.stringify(productDetiles));
+    formData.append('prodId', productId);
+    
+    if(validateImageSize)    
+        formData.append("productImage", productImage);
+    else
+        vNotify.error({text: "Maxmimum size of the image is 2MB", visibleDuration: 2000, fadeInterval: 20});
+    
+    let updateResualt = await fetch("../../controllers/product/update_product.php", { method: "POST", body: formData})
+    if(updateResualt.ok)
+    {
+        const JsonResualt = await updateResualt.json();
+        if(JsonResualt.status == 401)
+        {
+            if(!formErrors)
+                formErrors = JsonResualt.errors
+
+            for (const key in formErrors)
+            {
+                if(formErrors[key] == JsonResualt.errors[key])
+                    $(key).innerHTML = JsonResualt.errors[key]
+                else
+                    $(key).innerHTML = ""
+
+            }
+        }
+        else if(JsonResualt.status == 404)
+        {
+            vNotify.error({text: JsonResualt.error, visibleDuration: 2000, fadeInterval: 20});
+        }
+        else
+        {
+            for (const key in formErrors) {
+                $(key).innerHTML = ""
+            }
+
+            $("adding-form").reset()
+            localStorage.setItem("productNewDetiles", JSON.stringify(JsonResualt.success))
+            vNotify.success({text: JsonResualt.success, visibleDuration: 2000, fadeInterval: 20});
+
+            setTimeout(() => {
+                window.location.href = "http://localhost/ai2m_cafe/views/product/products.html";
+            }, 2000)
+        }
+    }
+    else
+    {
+        console.log("something went wrong, try again later")
+    }
+
+
+}
+
 async function isProductAvailable(productId){
 
     var formData = new FormData();
@@ -214,3 +300,5 @@ window.addEventListener("focus", () => {
     }
 
 })
+
+

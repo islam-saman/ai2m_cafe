@@ -9,7 +9,6 @@
     try
     {
         $db = new Database(dbHost, dbPort, dbUser, dbPass, dbName);
-
         $oldProductDetiles = $db->fetchOne("product", "id", "$prodId");
 
         if($oldProductDetiles)
