@@ -5,10 +5,9 @@
     include "../../../helpers/database.php";
 
     $prodId = $_POST["prodId"];
-    // $prodM = $_GET["id"];
     try
     {
-        $db = new Database(dbHost, dbPort, dbUser, dbPass, dbName);
+        $db = new Database(dbUser, dbPass, dbName);
 
         $productDetiles = $db->fetchOne("product", "id", $prodId);
 

@@ -6,7 +6,7 @@
 
     try
     {
-        $db = new Database(dbHost, dbPort, dbUser, dbPass, dbName);
+        $db = new Database(dbUser, dbPass, dbName);
         $productList = $db->fetchALl("product");
         echo json_encode($productList);
 

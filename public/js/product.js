@@ -111,12 +111,12 @@ async function displayProducts()
             <td>${product.price} EG</td>
             <td>${product.category_id}</td>
             <td>
-                <img src="../../${product.image}" style='width: 71px; border-radius: 7px;'>
+                <img src="../../../${product.image}" style='width: 71px; border-radius: 7px;'>
             </td>
             <td>
                 <div  id="btn-container"  class="btn-group" role="group">
                     <a type="button" onclick= "isProductAvailable(${product.id})"  class='btn btn-danger'>${isAvailableButton}</a>
-                    <a type="button" href='../../views/admin/product/update_product.html?prodId=${product.id}' class='btn btn-success'>Update</a>
+                    <a type="button" href='update_product.html?prodId=${product.id}' class='btn btn-success'>Update</a>
                     <a type="button" onclick= "deleteProduct(${product.id})"  class='btn btn-danger'>Delete</a>
                 </div>
             </td>
@@ -282,12 +282,12 @@ window.addEventListener("focus", () => {
            <td>${product.price} EG</td>
            <td>${product.category_id}</td>
            <td>
-               <img src="../../${product.image}" style='width: 71px; border-radius: 7px;'>
+               <img src="../../../${product.image}" style='width: 71px; border-radius: 7px;'>
            </td>
            <td>
                <div id="btn-container" class="btn-group" role="group">
                     <a type="button" onclick= "isProductAvailable(${product.id})"  class='btn btn-danger'>${isAvailableButton}</a>
-                    <a type="button" href='../../views/admin/product/update_product.html?prodId=${product.id}' class='btn btn-success'>Update</a>
+                    <a type="button" href='update_product.html?prodId=${product.id}' class='btn btn-success'>Update</a>
                     <a type="button" onclick= "deleteProduct(${product.id})"  class='btn btn-danger'>Delete</a>
                </div>
            </td>

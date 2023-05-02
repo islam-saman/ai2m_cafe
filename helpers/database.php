@@ -1,24 +1,20 @@
 <?php 
-
-
 class Database
 {
-    private string $dbHost;
-    private int $dbPort;
+    private string $dbHost = "127.0.0.1";
+    private int $dbPort = 3306;
     private string $dbUser;
     private string $dbPass;
     private string $dbName;
     private $dbConnection;
 
-    function __construct(string $dbHost, int $dbPort, string $dbUser, string $dbPass, string $dbName)
+    function __construct(string $dbUser, string $dbPass, string $dbName)
     {
-        // $this->dbHost = $dbHost;
-        // $this->dbPort = $dbPort;
         $this->dbUser = $dbUser;
         $this->dbPass = $dbPass;
         $this->dbName = $dbName;
-
         $this->connect();
+
     }
     private function connect()
     {
