@@ -1,8 +1,8 @@
 <?php 
 
     // include the env file
-    include "../../env.php";
-    include "../../helpers/database.php";
+    include "../../../env.php";
+    include "../../../helpers/database.php";
 
     $prodId = $_POST["prodId"];
 
@@ -24,7 +24,7 @@
         if($deletedProduct)
         {
             if($oldProductImage != "public/images/product_defualt_image.jpeg")
-                unlink("../../{$oldProductImage}");
+                unlink("../../../{$oldProductImage}");
 
             echo json_encode("deleted successfully");
         }

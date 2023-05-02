@@ -48,7 +48,7 @@ async function addNewProduct()
         vNotify.error({text: "Maxmimum size of the image is 2MB", visibleDuration: 2000, fadeInterval: 20});
     
 
-    let addingResualt = await fetch("../../controllers/product/add_product.php", { method: "POST", body: formData})
+    let addingResualt = await fetch("../../../controllers/admin/product/add_product.php", { method: "POST", body: formData})
     if(addingResualt.ok)
     {
         const JsonResualt = await addingResualt.json();
@@ -87,7 +87,7 @@ async function addNewProduct()
 
 async function getProductsList()
 {
-    let fetchingResualt = await fetch("../../controllers/product/list_products.php")
+    let fetchingResualt = await fetch("../../../controllers/admin/product/list_products.php")
     return fetchingResualt.json()
 }
 
@@ -116,7 +116,7 @@ async function displayProducts()
             <td>
                 <div  id="btn-container"  class="btn-group" role="group">
                     <a type="button" onclick= "isProductAvailable(${product.id})"  class='btn btn-danger'>${isAvailableButton}</a>
-                    <a type="button" href='../../views/product/update_product.html?prodId=${product.id}' class='btn btn-success'>Update</a>
+                    <a type="button" href='../../views/admin/product/update_product.html?prodId=${product.id}' class='btn btn-success'>Update</a>
                     <a type="button" onclick= "deleteProduct(${product.id})"  class='btn btn-danger'>Delete</a>
                 </div>
             </td>
@@ -134,7 +134,7 @@ async function deleteProduct(productId)
     var formData = new FormData();
     formData.append('prodId', JSON.stringify(productId));
     
-    let deleteResualt = await fetch("../../controllers/product/delete_product.php", {
+    let deleteResualt = await fetch("../../../controllers/admin/product/delete_product.php", {
         method: "POST",
         body: formData
     })
@@ -164,7 +164,6 @@ async function getUpdateForm()
 
 async function updateProduct()
 {
-
     $("adding-form").addEventListener('submit', event => {
         event.preventDefault();
     });
@@ -186,7 +185,7 @@ async function updateProduct()
     else
         vNotify.error({text: "Maxmimum size of the image is 2MB", visibleDuration: 2000, fadeInterval: 20});
     
-    let updateResualt = await fetch("../../controllers/product/update_product.php", { method: "POST", body: formData})
+    let updateResualt = await fetch("../../../controllers/admin/product/update_product.php", { method: "POST", body: formData})
     if(updateResualt.ok)
     {
         const JsonResualt = await updateResualt.json();
@@ -219,7 +218,7 @@ async function updateProduct()
             vNotify.success({text: JsonResualt.success, visibleDuration: 2000, fadeInterval: 20});
 
             setTimeout(() => {
-                window.location.href = "http://localhost/ai2m_cafe/views/product/products.html";
+                window.location.href = "http://localhost/ai2m_cafe/views/admin/product/products.html";
             }, 2000)
         }
     }
@@ -236,7 +235,7 @@ async function isProductAvailable(productId){
     var formData = new FormData();
     formData.append('prodId', JSON.stringify(productId));
     
-    let availablityResualt = await fetch("../../controllers/product/product_availability.php", {
+    let availablityResualt = await fetch("../../../controllers/admin/product/product_availability.php", {
         method: "POST",
         body: formData
     }) 
@@ -288,7 +287,7 @@ window.addEventListener("focus", () => {
            <td>
                <div id="btn-container" class="btn-group" role="group">
                     <a type="button" onclick= "isProductAvailable(${product.id})"  class='btn btn-danger'>${isAvailableButton}</a>
-                    <a type="button" href='../../views/product/update_product.html?prodId=${product.id}' class='btn btn-success'>Update</a>
+                    <a type="button" href='../../views/admin/product/update_product.html?prodId=${product.id}' class='btn btn-success'>Update</a>
                     <a type="button" onclick= "deleteProduct(${product.id})"  class='btn btn-danger'>Delete</a>
                </div>
            </td>

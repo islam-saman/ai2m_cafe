@@ -10,10 +10,10 @@ class Database
     private string $dbName;
     private $dbConnection;
 
-    function __construct(string $dbUser, string $dbPass, string $dbName,int $dbPort=3306,string $dbHost="localhost")
+    function __construct(string $dbHost, int $dbPort, string $dbUser, string $dbPass, string $dbName)
     {
-        $this->dbHost = $dbHost;
-        $this->dbPort = $dbPort;
+        // $this->dbHost = $dbHost;
+        // $this->dbPort = $dbPort;
         $this->dbUser = $dbUser;
         $this->dbPass = $dbPass;
         $this->dbName = $dbName;

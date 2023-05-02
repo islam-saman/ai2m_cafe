@@ -1,8 +1,8 @@
 <?php 
 
     // include the env file
-    include "../../env.php";
-    include "../../helpers/database.php";
+    include "../../../env.php";
+    include "../../../helpers/database.php";
 
     $prodId = $_POST["prodId"];
     // $prodM = $_GET["id"];

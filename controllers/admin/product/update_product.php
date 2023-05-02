@@ -2,9 +2,9 @@
     header("Access-Control-Allow-Origin: *");
 
     // include the env file
-    include "../../env.php";
-    include "../../helpers/database.php";
-    include "../../helpers/product_forms_validation.php";
+    include "../../../env.php";
+    include "../../../helpers/database.php";
+    include "../../../helpers/product_forms_validation.php";
     
     
     
@@ -62,9 +62,9 @@
                     {
                         try
                         {
-                            $uploaded = move_uploaded_file($imageOldPath, "../../$prodcutImage");
+                            $uploaded = move_uploaded_file($imageOldPath, "../../../$prodcutImage");
                             if($oldProductImage != "public/images/product_defualt_image.jpeg")
-                                unlink("../../{$oldProductImage}");
+                                unlink("../../../{$oldProductImage}");
                             
                             }
                             catch (Exception $movingImageError)
