@@ -97,14 +97,14 @@ class Database
                 $rowValues .= ","."'{$value}'";
         }
 
-        $insrtQuery = "INSERT INTO users ($rowColumns) values ($rowValues)";
+        $insrtQuery = "INSERT INTO `$tableName` ($rowColumns) values ($rowValues)";
         $insetStatement = $this->dbConnection->prepare($insrtQuery);
         $insetStatement->execute();
         
         if($insetStatement->rowCount())
-            return true;
+            return $this->dbConnection->lastInsertId();
         else
-            return false;
+            return 0;
     }
 
 
@@ -126,7 +126,7 @@ class Database
             }
         }
 
-        $updateQuery = "UPDATE users SET $prepareSet WHERE id=$id";
+        $updateQuery = "UPDATE `$tableName` SET $prepareSet WHERE id=$id";
         $updateStatement = $this->dbConnection->prepare($updateQuery);
         $updateStatement->execute();
 

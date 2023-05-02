@@ -203,16 +203,6 @@ section {
   animation: fadeUp 0.4s linear;
 }
 
-.search-form-container form input {
-  height: 100%;
-  width: 100%;
-  font-size: 1.7rem;
-  color: #130f40;
-  text-transform: none;
-  padding-right: 1rem;
-  background: transparent;
-}
-
 .search-form-container form label {
   font-size: 3rem;
   cursor: pointer;
@@ -1151,6 +1141,8 @@ section {
   cursor: pointer;
 }
 
+
+
 .footer .newsletter form input[type="submit"]:hover {
   background: #130f40;
 }
@@ -1167,6 +1159,10 @@ section {
   font-size: 2.2rem;
   color: #130f40;
   padding: 1rem 0;
+}
+
+.box{
+  cursor: pointer;
 }
 
 .footer .box-container .box p {
@@ -1230,6 +1226,11 @@ section {
 .footer .bottom .credit span {
   color: #52389b;
 }
+
+input{
+  width:100%;
+}
+
 
 /* footer section end */
 

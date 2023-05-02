@@ -60,7 +60,7 @@ echo "
             </div>
         </div>
         <div class="row">
-            <div class="col-8">
+            <div class="col-12 col-md-8">
                 <div class="row">
                     <section class="popular" id="popular">
 
@@ -103,17 +103,18 @@ echo "
                                         }
                                     }
                                 ?>
+
                         </div>
                     </section>
                 </div>
             </div>
 
-            <div class="col-4 d-flex align-items-center">
+            <div class="col-12 col-md-4 d-flex align-items-center">
                 <div>
                     <div class="order-checkout receipt">
                         <div class="row">
                             <div class="col-12">
-                                <form action="">
+                                <form method="POST" id="submit_order">
                                     <table class="table text-center">
                                         <thead>
                                             <tr>
@@ -130,34 +131,42 @@ echo "
                                         <tfoot>
                                             <tr class="cart_buttons">
                                                 <td colspan="5">
-                                                    <a class="btn btn-outline-warning py-3 px-4">Update cart</a>
+<!--                                                    <a class="btn btn-outline-warning py-3 px-4">Update cart</a>-->
                                                     <a class="btn btn-outline-danger py-3 px-4" id="cart_clear" onclick="deleteAllOrders()">Clear cart</a>
                                                 </td>
+                                            </tr>
+                                            <tr style="width: 100%">
+                                               <td style="width: 100%">
+                                                   <div style="width: 100%" class="d-flex align-items-center justify-content-between">
+                                                       <input class="form-control w-100" id="room_number" placeholder="Room Number"/>
+                                                       <input class="form-control w-100" id="ext" placeholder="Ext" />
+                                                   </div>
+                                               </td>
                                             </tr>
 
                                             <tr class="cart_summary">
                                                 <td colspan="5">
-                                                    <p class="cart_summary__row" id="totalPrice">Total price <b class="total-price">$0.00</b></p>
+                                                    <p class="cart_summary__row" >Total price <b id="totalPrice" class="total-price">$0.00</b></p>
                                                     <p class="cart_summary__instructions">
                                                         <label class="mb-2">Special instructions for seller</label>
-                                                        <textarea class="form-control" name="note"></textarea>
+                                                        <textarea class="form-control" id="user_comment" name="note"></textarea>
                                                     </p>
                                                     <div class="cart_summary__checkout">
-                                                        <div class="cart_summary__checkout__button_wrapper">
-                                                            <button type="submit" name="checkout" class="btn btn-primary py-3 px-4">Proceed to checkout</button>
-                                                        </div>
                                                     </div>
                                                 </td>
                                             </tr>
                                         </tfoot>
                                     </table>
+                                    <div class="cart_summary__checkout__button_wrapper">
+                                        <input type="submit" name="checkout" class="btn btn-primary py-3 px-4"
+                                                onclick="order()" value="Proceed to checkout" />
+                                    </div>
                                 </form>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 
