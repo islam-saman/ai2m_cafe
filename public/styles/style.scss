@@ -69,7 +69,7 @@ section{
   }
 }
 
-.btn{
+.custombtn{
   display: inline-block;
   margin-top: 1rem;
   padding:.7rem 1.8rem;
@@ -138,7 +138,7 @@ section{
   }
 }
 
-#menu-btn{
+#menu-custombtn{
   display: none;
 }
 
@@ -363,7 +363,7 @@ section{
       }
     }
 
-    .btn{
+    .custombtn{
       margin:1rem 0;
       width: 100%;
       text-align: center;
@@ -1028,7 +1028,7 @@ section{
 
 @media (max-width:768px){
 
-  #menu-btn{
+  #menu-custombtn{
     display: inline-block;
   }
 
@@ -1073,7 +1073,7 @@ section{
     .box{
       text-align: center;
 
-      .btn{
+      .custombtn{
         width: 100%;
       }
     }
