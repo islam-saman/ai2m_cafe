@@ -31,13 +31,13 @@ class Database
     }
 
 
-    public function fetchALl($tableName)
+    public function fetchALl($tableName,string $select="*")
     {
         if (!$this->connect())
             throw new Exception;
         
 
-        $selectQuery = "SELECT * FROM `$tableName`";
+        $selectQuery = "SELECT $select FROM $tableName";
         $selectStatement = $this->dbConnection->prepare($selectQuery);
         $selectStatement->execute();        
 
@@ -46,6 +46,7 @@ class Database
         else
             return [];     
     }
+    
 
 
     // If we have time, we must let the user of the function to decide the desired fields
@@ -106,8 +107,8 @@ class Database
                 $rowValues .= ","."'{$value}'";
         }
 
-        $insertQuery = "INSERT INTO `$tableName` ($rowColumns) values ($rowValues)";
-        $insetStatement = $this->dbConnection->prepare($insertQuery);
+        $insrtQuery = "INSERT INTO $tableName ($rowColumns) values ($rowValues)";
+        $insetStatement = $this->dbConnection->prepare($insrtQuery);
         $insetStatement->execute();
         
         if($insetStatement->rowCount())
