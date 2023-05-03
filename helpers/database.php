@@ -1,28 +1,20 @@
 <?php 
-
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-
-
 class Database
 {
-    private string $dbHost;
-    private int $dbPort;
+    private string $dbHost = "127.0.0.1";
+    private int $dbPort = 3306;
     private string $dbUser;
     private string $dbPass;
     private string $dbName;
     private $dbConnection;
 
-    function __construct(string $dbUser, string $dbPass, string $dbName,int $dbPort=3306,string $dbHost="localhost")
+    function __construct(string $dbUser, string $dbPass, string $dbName)
     {
-        $this->dbHost = $dbHost;
-        $this->dbPort = $dbPort;
         $this->dbUser = $dbUser;
         $this->dbPass = $dbPass;
         $this->dbName = $dbName;
         $this->connect();
+
     }
     private function connect()
     {
@@ -39,13 +31,13 @@ class Database
     }
 
 
-    public function fetchALl($tableName)
+    public function fetchALl($tableName,string $select="*")
     {
         if (!$this->connect())
             throw new Exception;
         
 
-        $selectQuery = "SELECT * FROM `$tableName`";
+        $selectQuery = "SELECT $select FROM $tableName";
         $selectStatement = $this->dbConnection->prepare($selectQuery);
         $selectStatement->execute();        
 
@@ -54,6 +46,7 @@ class Database
         else
             return [];     
     }
+    
 
 
     // If we have time, we must let the user of the function to decide the desired fields
@@ -73,11 +66,27 @@ class Database
 
     }
 
-
-    public function insert(string $tableName, array $columns, array $columnsValue)
+    public function fetchLastRow(string $tableName)
     {
         if (!$this->connect())
             throw new Exception;
+            
+
+        $selectQuery = "SELECT * FROM $tableName ORDER BY id DESC LIMIT 1";
+        $selectStatement = $this->dbConnection->prepare($selectQuery);
+        $selectStatement->execute();        
+
+        if($selectStatement->rowCount() != 0)
+            return $selectStatement->fetch(PDO::FETCH_ASSOC);
+        else
+            return null;
+
+    }
+
+    public function insert(string $tableName, array $columns, array $columnsValue)
+    {
+        // if (!$this->connect())
+        //     throw new Exception;
 
         $rowColumns = "";
         foreach($columns as $column)
@@ -98,8 +107,8 @@ class Database
                 $rowValues .= ","."'{$value}'";
         }
 
-        $insertQuery = "INSERT INTO `$tableName` ($rowColumns) values ($rowValues)";
-        $insetStatement = $this->dbConnection->prepare($insertQuery);
+        $insrtQuery = "INSERT INTO $tableName ($rowColumns) values ($rowValues)";
+        $insetStatement = $this->dbConnection->prepare($insrtQuery);
         $insetStatement->execute();
         
         if($insetStatement->rowCount())
