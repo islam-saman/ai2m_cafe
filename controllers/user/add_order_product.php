@@ -1,8 +1,10 @@
 <?php
 
 include ("../../helpers/database.php");
+include ("../../env.php");
 
-$db = new Database('127.0.0.1', '3306', 'root', 'Mario2022', 'aim2');
+
+$db = new Database(dbUser, dbPass, dbName);
 $order_product_data = json_decode($_POST['ordPrd'], true);
 
 if($db){

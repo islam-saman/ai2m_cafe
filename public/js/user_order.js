@@ -5,6 +5,7 @@ var orderArray = [];
 const prdId = document.getElementById("prdId");
 let prd;
 
+
 function displayOrder() {
     orderContainer = ``;
     for (const prd in orderArray){
@@ -137,7 +138,6 @@ function deleteAllOrders(){
 
 
 async function order(){
-
     document.getElementById("submit_order").addEventListener('submit', event => {
         event.preventDefault();
     });

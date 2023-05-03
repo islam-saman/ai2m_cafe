@@ -1,13 +1,14 @@
 <?php
 
 include ("../../helpers/database.php");
+include ("../../env.php");
 
-$db = new Database('127.0.0.1', '3306', 'root', 'Mario2022', 'aim2');
+$db = new Database(dbUser, dbPass, dbName);
 $order_data = json_decode($_POST['data'], true);
 
 if($db){
     if ($order_data){
-        $order = $db->insert("order",
+        $order = $db->getLastRow("order",
             ["date","room","ext","user_id","total","comment"],
             [
                 $order_data['date'],
