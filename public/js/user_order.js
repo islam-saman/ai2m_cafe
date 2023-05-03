@@ -4,22 +4,72 @@ var orderContainer = ``;
 var orderArray = [];
 const prdId = document.getElementById("prdId");
 let prd;
+let prdList;
+let users;
+let user_id;
+let userContainer = ``;
+let userArray = [];
+let user_dropdown = document.getElementById("user_dropdown");
+
+
+
+function getProducts(){
+    fetch(`http://localhost:8080/ai2m_cafe/controllers/user/get_products.php`)
+        .then(async (res)=> {
+            prdList = await res.json();
+            displayProduct();
+    });
+}getProducts();
+
+
+function displayProduct(){
+    const productCard = document.getElementById("prd-box");
+    let productContainer = ``;
+
+    for (const p of prdList) {
+        productContainer += `
+         <div class='box' onclick='addOrder(${p.id})'> 
+            <input class='prdId' name='prdId' type='hidden' value=${p.id} />
+            <a class='ri-heart-line wishlist-icon'></a>
+            <div class='image'>
+                <a style='cursor:pointer;'> 
+                    <img class='w-100' style='height:150px;border-radius:10px'  src="../../public/images/products/${p.image}" alt='${p.id}'>
+                </a>
+            </div>
+            <div class='content'>
+                <h3 class='prdName'>${p.name}</h3>
+                <div class='stars'>
+                    <i class='fas fa-star'></i>
+                    <i class='fas fa-star'></i>
+                    <i class='fas fa-star'></i>
+                    <i class='fas fa-star'></i>
+                    <i class='fas fa-star-half-alt'></i>
+                    <span> (50) </span>
+                </div>
+                <div>
+                    <span class='prdPrice'>${p.price}</span> 
+                </div>
+            </div>
+        </div>    `
+    }
+    productCard.innerHTML = productContainer;
+}
 
 
 function displayOrder() {
     orderContainer = ``;
     for (const prd in orderArray){
         orderContainer += `
-                        <tr id="${orderArray[prd].product['id']}">
-                           <td><span>${orderArray[prd].product['name']}</span></td>
-                           <td><span>${orderArray[prd].product['price']}</span></td>
+                        <tr scope="row" id="${orderArray[prd].product['id']}">
+                           <td>${orderArray[prd].product['name']}</td>
+                           <td>${orderArray[prd].product['price']}</td>
                            <td class="d-flex">
                                <a onclick="increaseOrderQuantity(${orderArray[prd].product['id']}, ${orderArray[prd].product['price']})" class="btn btn-success">+</a>
                                <input class="form-control mx-1" disabled type="number" id="ordQun${orderArray[prd].product['id']}" value="${orderArray[prd].quantity}" style="width:30px;padding:0px;text-align:center;" name="quantity"/>
                                <a onclick="decreaseOrderQuantity(${orderArray[prd].product['id']}, ${prd['price']})" class="btn btn-danger">-</a>
                            </td>
                            <td id="subTotal${orderArray[prd].product['id']}">${Number(orderArray[prd].quantity) * Number(orderArray[prd].product['price'])}</td>
-                           <td><i class="fa-solid fa-trash-can mt-1" onclick='deleteOrder(${orderArray[prd].product['id']})'></i></td>
+                           <td style="cursor: pointer"><i class="fa-solid fa-trash-can mt-1" onclick='deleteOrder(${orderArray[prd].product['id']})'></i></td>
                         </tr>  
         `
     }
@@ -132,8 +182,50 @@ function deleteOrder(orderId) {
 function deleteAllOrders(){
     orderContainer = ``;
     orderArray = [];
+
+    /*COMMENT*/
+    let comment = document.getElementById("user_comment");
+    comment.value = ``;
+
+    /*EXT*/
+    let ext = document.getElementById("ext");
+    ext.value = ``;
+
+    /*ROOM NUMBER*/
+    let roomNumber = document.getElementById("room_number");
+    roomNumber.value = ``;
+
     displayOrder();
     calcTotalPrice();
+}
+
+
+function addOrderForUser(){
+    fetch(`http://localhost:8080/ai2m_cafe/controllers/admin/add_order_for_user.php`)
+        .then(async (res)=> {
+            users = await res.json();
+            console.log(users)
+            displayUsers()
+        });
+}addOrderForUser();
+
+
+function displayUsers(){
+    userContainer = `<option selected disabled value="">Please select user</option>`
+    for (const user of users) {
+        console.log(user);
+        userContainer += `
+              <option value="${user.id}">${user.name}</option>
+        `
+        userArray.push(user);
+    }
+    user_dropdown.innerHTML = userContainer
+}
+
+
+/*Remember There is no validation on user id -----> DO NOT FORGET*/
+function getUserId(event){
+    user_id = event.target.value;
 }
 
 
@@ -158,7 +250,7 @@ async function order(){
         date:  "1997-09-12",
         room: roomNumber.value.toString(),
         ext: Number(ext.value),
-        user_id: 1,
+        user_id: user_id,
         total: Number(totalPrice.innerHTML),
         comment: comment.value
     }
@@ -170,7 +262,7 @@ async function order(){
         method:"POST",
         body: formData,
     }).then(async (res)=> {
-       orderId = await res.json();
+        orderId = await res.json();
 
         for (const selectedProduct of orderArray){
             let ordPrd = {
@@ -188,6 +280,7 @@ async function order(){
                 body: orderProduct,
             }).then(async (res)=> {
                 await res.json()
+                deleteAllOrders();
             });
         }
     });
