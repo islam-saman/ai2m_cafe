@@ -7,7 +7,7 @@
         <a href="#about">about</a>
         <a href="#popular">popular</a>
         <a href="#menu">menu</a>
-        <a href="#order">order</a>
+        <a href="/ai2m_cafe/views/admin/manual_order.php">order</a>
         <a href="#blogs">blogs</a>
     </nav>
 

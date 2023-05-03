@@ -1,27 +1,20 @@
 <?php 
-
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-
-
 class Database
 {
-    private string $dbHost;
-    private int $dbPort;
+    private string $dbHost = "127.0.0.1";
+    private int $dbPort = 3306;
     private string $dbUser;
     private string $dbPass;
     private string $dbName;
     private $dbConnection;
 
-    function __construct(string $dbHost, int $dbPort, string $dbUser, string $dbPass, string $dbName)
+    function __construct(string $dbUser, string $dbPass, string $dbName)
     {
-        $this->dbHost = $dbHost;
-        $this->dbPort = $dbPort;
         $this->dbUser = $dbUser;
         $this->dbPass = $dbPass;
         $this->dbName = $dbName;
+        $this->connect();
+
     }
     private function connect()
     {
@@ -33,18 +26,18 @@ class Database
         }
         catch(Exception $dbConError)
         {
-            echo $dbConError->getMessage();
+            return $dbConError->getMessage();
         }
     }
 
 
-    public function fetchALl($tableName)
+    public function fetchALl($tableName,string $select="*")
     {
         if (!$this->connect())
             throw new Exception;
         
 
-        $selectQuery = "SELECT * FROM $tableName";
+        $selectQuery = "SELECT $select FROM $tableName";
         $selectStatement = $this->dbConnection->prepare($selectQuery);
         $selectStatement->execute();        
 
@@ -53,6 +46,7 @@ class Database
         else
             return [];     
     }
+    
 
 
     // If we have time, we must let the user of the function to decide the desired fields
@@ -61,7 +55,7 @@ class Database
         if (!$this->connect())
             throw new Exception;
 
-        $selectQuery = "SELECT * FROM $tableName where $primaryKey = '{$value}'";
+        $selectQuery = "SELECT * FROM `$tableName` where $primaryKey = '{$value}'";
         $selectStatement = $this->dbConnection->prepare($selectQuery);
         $selectStatement->execute();        
 
@@ -108,10 +102,28 @@ class Database
 
 
 
-    public function insert(string $tableName, array $columns, array $columnsValue)
+    // public function insert(string $tableName, array $columns, array $columnsValue)
+    public function fetchLastRow(string $tableName)
     {
         if (!$this->connect())
             throw new Exception;
+            
+
+        $selectQuery = "SELECT * FROM $tableName ORDER BY id DESC LIMIT 1";
+        $selectStatement = $this->dbConnection->prepare($selectQuery);
+        $selectStatement->execute();        
+
+        if($selectStatement->rowCount() != 0)
+            return $selectStatement->fetch(PDO::FETCH_ASSOC);
+        else
+            return null;
+
+    }
+
+    public function insert(string $tableName, array $columns, array $columnsValue)
+    {
+        // if (!$this->connect())
+        //     throw new Exception;
 
         $rowColumns = "";
         foreach($columns as $column)
@@ -177,7 +189,7 @@ class Database
         if (!$this->connect())
             throw new Exception;
 
-        $deleteQuery = "DELETE FROM $tableName where $primayKey = '$value'";
+        $deleteQuery = "DELETE FROM `$tableName` where $primayKey = '$value'";
         $deleteStatement = $this->dbConnection->prepare($deleteQuery);
         $deleteStatement->execute();
 
@@ -206,6 +218,130 @@ class Database
             return false;
         
     }
+
+
+    public function join_two_tables(string $table1,
+                                    string $table2,
+                                    string $column1,
+                                    string $column2 ,
+                                    string $select,
+                                    string $condition="")
+    {
+        if (!$this->connect())
+            throw new Exception;
+        $query = "SELECT $select 
+        FROM `$table1` INNER JOIN `$table2` 
+        ON `$table1`.`$column1` = `$table2`.`$column2`
+        WHERE $condition";
+        $statement = $this->dbConnection->prepare($query);
+        $statement->execute();
+
+        if($statement->rowCount() != 0)
+            return $statement->fetchAll(PDO::FETCH_ASSOC);
+        else
+            return [];
+    }
+
+    public function join_three_tables(
+        string $table1,
+        string $table2,
+        string $table3,
+        string $column1,
+        string $column2 ,
+        string $column3,
+        string $select="*",
+        string $condition=""
+    )
+    {
+        if (!$this->connect())
+            throw new Exception;
+
+        $query = "SELECT $select FROM `$table1` 
+              INNER JOIN `$table2` ON `$table1`.`$column1` = `$table2`.`$column2`
+              INNER JOIN `$table3` ON `$table2`.`$column2` = `$table3`.`$column3`
+              WHERE $condition";
+        $statement = $this->dbConnection->prepare($query);
+        $statement->execute();
+
+        if($statement->rowCount() != 0)
+            return $statement->fetchAll(PDO::FETCH_ASSOC);
+        else
+            return [];
+    }
+    public function join_four_tables(
+        string $table1,
+        string $table2,
+        string $table3,
+        string $table4,
+        string $column1,
+        string $column2,
+        string $column3,
+        string $column4,
+        string $select = "*",
+        string $condition=""
+    ){
+        if (!$this->connect())
+            throw new Exception;
+
+        $query = "SELECT $select FROM `$table1` 
+          INNER JOIN `$table2` ON `$table1`.`$column1` = `$table2`.`$column2`
+          INNER JOIN `$table3` ON `$table2`.`$column2` = `$table3`.`$column3`
+          INNER JOIN `$table4` ON `$table3`.`$column3` = `$table4`.`$column4` WHERE $condition";
+
+        $statement = $this->dbConnection->prepare($query);
+        $statement->execute();
+
+        if($statement->rowCount() != 0)
+            return $statement->fetchAll(PDO::FETCH_ASSOC);
+        else
+            return [];
+    }
+
+    public function join_two_tables_with_date_range(
+        string $table1, string $table2, string $column1, string $column2 ,
+        string $start_date, string $end_date,string $select="*",string $condition=""
+    ) {
+        if (!$this->connect()) {
+            throw new Exception;
+        }
+
+        $query = "SELECT $select FROM `$table1` INNER JOIN `$table2` ON `$table1`.`$column1` = `$table2`.`$column2` 
+              WHERE $condition AND `$table1`.`date` BETWEEN :start_date AND :end_date";
+        $statement = $this->dbConnection->prepare($query);
+        $statement->bindValue(':start_date', $start_date);
+        $statement->bindValue(':end_date', $end_date);
+        $statement->execute();
+
+        if ($statement->rowCount() != 0) {
+            return $statement->fetchAll(PDO::FETCH_ASSOC);
+        } else {
+            return [];
+        }
+    }
+    public function join_three_tables_with_date_range(
+        string $table1, string $table2, string $table3, string $column1, string $column2, string $column3,
+        string $start_date, string $end_date,string $select="*",string $condition=""
+    ) {
+        if (!$this->connect()) {
+            throw new Exception;
+        }
+
+        $query = "SELECT $select FROM `$table1` 
+              INNER JOIN `$table2` ON `$table1`.`$column1` = `$table2`.`$column2`
+              INNER JOIN `$table3` ON `$table2`.`$column2` = `$table3`.`$column3` 
+              WHERE $condition AND `$table1`.`date` BETWEEN :start_date AND :end_date";
+        $statement = $this->dbConnection->prepare($query);
+        $statement->bindValue(':start_date', $start_date);
+        $statement->bindValue(':end_date', $end_date);
+        $statement->execute();
+
+        if ($statement->rowCount() != 0) {
+            return $statement->fetchAll(PDO::FETCH_ASSOC);
+        } else {
+            return [];
+        }
+    }
+
 
 
 }
