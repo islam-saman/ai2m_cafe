@@ -73,6 +73,41 @@ class Database
     }
 
 
+    public function getLastRow(string $tableName,array $columns, array $columnsValue){
+        if (!$this->connect())
+            throw new Exception;
+
+        $rowColumns = "";
+        foreach($columns as $column)
+        {
+            if($rowColumns == "")
+                $rowColumns .= $column;
+            else
+                $rowColumns .= ",".$column;
+        }
+
+        // we could achive this in just one for loop, but I sepreate them to be very clear for me when reading the code again
+        $rowValues = "";
+        foreach($columnsValue as $value)
+        {
+            if($rowValues == "")
+                $rowValues .= "'{$value}'";
+            else
+                $rowValues .= ","."'{$value}'";
+        }
+
+        $insrtQuery = "INSERT INTO `$tableName` ($rowColumns) values ($rowValues)";
+        $insetStatement = $this->dbConnection->prepare($insrtQuery);
+        $insetStatement->execute();
+
+        if($insetStatement->rowCount())
+            return $this->dbConnection->lastInsertId();
+        else
+            return false;
+    }
+
+
+
     public function insert(string $tableName, array $columns, array $columnsValue)
     {
         if (!$this->connect())
@@ -97,7 +132,7 @@ class Database
                 $rowValues .= ","."'{$value}'";
         }
 
-        $insrtQuery = "INSERT INTO users ($rowColumns) values ($rowValues)";
+        $insrtQuery = "INSERT INTO `$tableName` ($rowColumns) values ($rowValues)";
         $insetStatement = $this->dbConnection->prepare($insrtQuery);
         $insetStatement->execute();
         
@@ -125,10 +160,8 @@ class Database
                 $prepareSet .= ","."$columns[$index] = '$columnsValue[$index]'";   
             }
         }
-        echo $prepareSet;
 
-
-        $updateQuery = "UPDATE users SET $prepareSet WHERE id=$id";
+        $updateQuery = "UPDATE `$tableName` SET $prepareSet WHERE id=$id";
         $updateStatement = $this->dbConnection->prepare($updateQuery);
         $updateStatement->execute();
 
