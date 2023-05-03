@@ -8,26 +8,7 @@ console.log("HI")
 function getAllOrders() {
     fetch('http://localhost/ai2m_cafe/controllers/user/my_order/order.php')
         .then(async (res) => {
-            let data = await res.json();
-            console.log("orders",data['orders']);
-            let orders = data['orders'];
-            orders.forEach(row => {
-                tbody.innerHTML += `
-                    <tr class="tableRow" id="${row["id"]}"  disabled="false">
-                        <td>
-                        <div class="d-flex justify-content-around">
-                             <p>${row['id']}</p>
-                             <div><i onclick="openOrderDetails(${row['id']})" class="fa fa-plus-circle" aria-hidden="true"></i></div>            
-                        </div>
-                        </td>
-                        <td>${row['date']}</td>
-                        <td><i class="fa fa-check-circle-o green"></i><span class="ms-1">${row['status']}</span></td>
-                        <td><img src="https://i.imgur.com/VKOeFyS.png" width="25">${row['name']}</td>
-                        <td>${row['room']}</td>
-                        <td>${row['total']}$</td>
-                        <td class="text-end"><span class="fw-bolder">${row['ext']}</span></td>
-                    </tr>`;
-            });
+            drawTable(res);
         })
         .catch((error) => console.log(error))
 }
@@ -84,20 +65,27 @@ function filterOrders() {
         if (errorMessage) {
             errorMessage.remove();
         }
-        fetch(`http://localhost/ai2m_cafe/controllers/user/order.php?start=${startDate}&end=${endDate}`)
+        fetch(`http://localhost/ai2m_cafe/controllers/user/my_order/order.php?start=${startDate}&end=${endDate}`)
             .then(async (res)=>{
-                let data = await res.json();
-                let orders = data['orders'];
-                console.log(orders)
                 tbody.innerHTML="";
-                orders.forEach(row => {
-                    tbody.innerHTML += `
-                    <tr class="tableRow" id="${row["id"]}" onclick="openOrderDetails(${row['id']})" disabled="false">
+                drawTable(res);
+            })
+            .catch((error) => console.log(error));
+    }
+}
+
+async function  drawTable(res){
+    let data = await res.json();
+    if(!data["message"]){
+        let orders = data['orders'];
+        orders.forEach(row => {
+            tbody.innerHTML += `
+                    <tr class="tableRow" id="${row["id"]}"  disabled="false">
                         <td>
-                            <div class="d-flex justify-content-around">
-                                <p>${row['id']}</p>
-                                 <div><i onclick="openOrderDetails(${row['id']})" class="fa fa-plus-circle" aria-hidden="true"></i></div>            
-                            </div>
+                        <div class="d-flex justify-content-around">
+                             <p>${row['id']}</p>
+                             <div><i onclick="openOrderDetails(${row['id']})" class="fa fa-plus-circle" aria-hidden="true"></i></div>            
+                        </div>
                         </td>
                         <td>${row['date']}</td>
                         <td><i class="fa fa-check-circle-o green"></i><span class="ms-1">${row['status']}</span></td>
@@ -105,10 +93,14 @@ function filterOrders() {
                         <td>${row['room']}</td>
                         <td>${row['total']}$</td>
                         <td class="text-end"><span class="fw-bolder">${row['ext']}</span></td>
-                        <td><i class="fa-duotone fa-plus"></i></td>
                     </tr>`;
-                });
-            })
-            .catch((error) => console.log(error));
+        });
+    }else{
+        let msg = data["message"];
+        console.log(msg);
+        tbody.innerHTML = `<tr class="tableRow" id="0"  disabled="true">
+                            <td colspan="7"><p class="fs-1 fw-bold text-center alert alert-danger"> ${msg} </p></td>
+                        </tr>`;
     }
+
 }

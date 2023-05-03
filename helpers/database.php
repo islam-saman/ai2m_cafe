@@ -174,14 +174,19 @@ class Database
     }
 
 
-    public function join_two_tables(string $table1, string $table2, string $column1, string $column2 , string $select)
+    public function join_two_tables(string $table1,
+                                    string $table2,
+                                    string $column1,
+                                    string $column2 ,
+                                    string $select,
+                                    string $condition="")
     {
         if (!$this->connect())
             throw new Exception;
-//        $orders = $db->join_two_tables("order", "user", "user_id", "id");
-//        SELECT * FROM `order` INNER JOIN `user` ON `order`.`user_id` = `user`.`id`
-//        `order`.* , `user`.name , `user`.profile_picture
-        $query = "SELECT $select FROM `$table1` INNER JOIN `$table2` ON `$table1`.`$column1` = `$table2`.`$column2`";
+        $query = "SELECT $select 
+        FROM `$table1` INNER JOIN `$table2` 
+        ON `$table1`.`$column1` = `$table2`.`$column2`
+        WHERE $condition";
         $statement = $this->dbConnection->prepare($query);
         $statement->execute();
 
@@ -192,7 +197,14 @@ class Database
     }
 
     public function join_three_tables(
-        string $table1, string $table2, string $table3, string $column1, string $column2 , string $column3,string $select="*"
+        string $table1,
+        string $table2,
+        string $table3,
+        string $column1,
+        string $column2 ,
+        string $column3,
+        string $select="*",
+        string $condition=""
     )
     {
         if (!$this->connect())
@@ -200,7 +212,8 @@ class Database
 
         $query = "SELECT $select FROM `$table1` 
               INNER JOIN `$table2` ON `$table1`.`$column1` = `$table2`.`$column2`
-              INNER JOIN `$table3` ON `$table2`.`$column2` = `$table3`.`$column3`";
+              INNER JOIN `$table3` ON `$table2`.`$column2` = `$table3`.`$column3`
+              WHERE $condition";
         $statement = $this->dbConnection->prepare($query);
         $statement->execute();
 
@@ -240,14 +253,14 @@ class Database
 
     public function join_two_tables_with_date_range(
         string $table1, string $table2, string $column1, string $column2 ,
-        string $start_date, string $end_date,string $select="*"
+        string $start_date, string $end_date,string $select="*",string $condition=""
     ) {
         if (!$this->connect()) {
             throw new Exception;
         }
 
         $query = "SELECT $select FROM `$table1` INNER JOIN `$table2` ON `$table1`.`$column1` = `$table2`.`$column2` 
-              WHERE `$table1`.`date` BETWEEN :start_date AND :end_date";
+              WHERE $condition AND `$table1`.`date` BETWEEN :start_date AND :end_date";
         $statement = $this->dbConnection->prepare($query);
         $statement->bindValue(':start_date', $start_date);
         $statement->bindValue(':end_date', $end_date);
@@ -261,7 +274,7 @@ class Database
     }
     public function join_three_tables_with_date_range(
         string $table1, string $table2, string $table3, string $column1, string $column2, string $column3,
-        string $start_date, string $end_date,string $select="*"
+        string $start_date, string $end_date,string $select="*",string $condition=""
     ) {
         if (!$this->connect()) {
             throw new Exception;
@@ -270,7 +283,7 @@ class Database
         $query = "SELECT $select FROM `$table1` 
               INNER JOIN `$table2` ON `$table1`.`$column1` = `$table2`.`$column2`
               INNER JOIN `$table3` ON `$table2`.`$column2` = `$table3`.`$column3` 
-              WHERE `$table1`.`date` BETWEEN :start_date AND :end_date";
+              WHERE $condition AND `$table1`.`date` BETWEEN :start_date AND :end_date";
         $statement = $this->dbConnection->prepare($query);
         $statement->bindValue(':start_date', $start_date);
         $statement->bindValue(':end_date', $end_date);

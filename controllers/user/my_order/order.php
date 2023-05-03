@@ -1,4 +1,7 @@
 <?php
+//        a8yr USER_ID b ely mwgod f el session
+//        a8yr USER_ID b ely mwgod f el session
+//        a8yr USER_ID b ely mwgod f el session
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -15,7 +18,7 @@ if(isset($_GET['id'])){
             "order", "product", "order_product", "category",
             "id", "id", "product_id", "id",
             "order_product.*, product.*"
-            ,"order_id = {$id}");
+            ,"order_id = {$id} AND `order`.user_id = 1");
         echo json_encode($order_products);
     } catch (Exception $e) {
         var_dump($e);
@@ -24,21 +27,31 @@ if(isset($_GET['id'])){
     $startDate = $_GET['start'];
     $endDate = $_GET['end'];
     try{
-        $orders = $db->join_two_tables_with_date_range("order", "user", "user_id", "id","$startDate","$endDate","`order`.* , `user`.name , `user`.profile_picture",);
-        $orders_products = $db->join_three_tables_with_date_range("order", "product", "order_product", "id", "id", "order_id","$startDate","$endDate");
+        $orders = $db->join_two_tables_with_date_range(
+            "order", "user",
+            "user_id", "id",
+            "$startDate","$endDate","`order`.* , `user`.name , `user`.profile_picture","`order`.user_id = 1");
+        $orders_products = $db->join_three_tables_with_date_range(
+            "order", "product", "order_product",
+            "id", "id", "order_id","$startDate","$endDate","","`order`.user_id = 1");
         $result = ["orders"=> $orders, "orders_products" => $orders_products];
-        echo json_encode($result);
+        if(count($orders)> 0)
+            echo json_encode($result);
+        echo json_encode(["message"=>"no data found for this date range"]);
     }catch (Exception $e){
 
     }
 } else { // If no order ID is provided, return all orders
     try {
-//        function filterByUser($user){
-//            if()
-//        }
-        $orders = $db->join_two_tables("order", "user", "user_id", "id","`order`.* , `user`.name , `user`.profile_picture");
-//        $filtred = array($orders,);
-        $orders_products = $db->join_three_tables("order", "product", "order_product", "id", "id", "order_id");
+//        a8yr USER_ID b ely mwgod f el session
+        $orders = $db->join_two_tables(
+            "order", "user",
+            "user_id", "id",
+            "`order`.* , `user`.name , `user`.profile_picture","`order`.user_id=1"
+            );
+        $orders_products = $db->join_three_tables(
+            "order", "product", "order_product",
+            "id", "id", "order_id","*","`order`.user_id=1");
         $result = ["orders"=> $orders, "orders_products" => $orders_products];
         echo json_encode($result);
     } catch (Exception $e) {
