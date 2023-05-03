@@ -7,8 +7,6 @@
   box-sizing: border-box;
   outline: none; border:none;
   text-decoration: none;
-  text-transform: capitalize;
-  transition: .2s linear;
 }
 
 $green:#27ae60;
@@ -69,6 +67,14 @@ section{
   }
 }
 
+.unimation{
+  transition: .4s;
+}
+.unimation:hover{
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16),
+  0 3px 6px rgba(0,0,0,0.23);
+  transform: translate(0px, -15px);
+}
 .custombtn{
   display: inline-block;
   margin-top: 1rem;

@@ -9,9 +9,6 @@ include '../helpers/database.php';
 
 $userInput = json_decode($_POST["data"], true);
 
-
-    
-
 $email              = $userInput["email"];
 $password           = $userInput["password"];
 $form_errors = array();
@@ -41,12 +38,14 @@ $form_errors['Password']='error password';
     {
         try
         {
-            $db = new Database("localhost",3306,"root","1191997","ai2m"); 
+            $db = new Database("root","1191997","ai2m"); 
             if($db)
             {
+
+    
                // first check of the category is existed or not
                 $is_email_found = $db->isExisted("user", "email", $userInput["email"]);
-
+        
                 if($is_email_found)
                 {
                     $Data = $db->fetchOne("user", "email", $userInput["email"]);
@@ -73,6 +72,7 @@ $form_errors['Password']='error password';
                     echo json_encode(array("status"=> 404, "errors" => $form_errors));
                     exit;
                 }
+
             }
             
         }
