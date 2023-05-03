@@ -8,7 +8,7 @@ console.log("HI")
 function getAllOrders() {
     fetch('http://localhost/ai2m_cafe/controllers/user/my_order/order.php')
         .then(async (res) => {
-            drawTable(res);
+            await drawTable(res);
         })
         .catch((error) => console.log(error))
 }
@@ -68,7 +68,7 @@ function filterOrders() {
         fetch(`http://localhost/ai2m_cafe/controllers/user/my_order/order.php?start=${startDate}&end=${endDate}`)
             .then(async (res)=>{
                 tbody.innerHTML="";
-                drawTable(res);
+                await drawTable(res);
             })
             .catch((error) => console.log(error));
     }
@@ -76,7 +76,10 @@ function filterOrders() {
 
 async function  drawTable(res){
     let data = await res.json();
-    if(!data["message"]){
+    if(data['redirect']){
+        console.log(data['redirect'])
+        window.location.href = "http://localhost/ai2m_cafe/views/login.php";
+    } else if(!data["message"]){
         let orders = data['orders'];
         orders.forEach(row => {
             tbody.innerHTML += `
