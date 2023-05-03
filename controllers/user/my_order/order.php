@@ -2,8 +2,8 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-include "../../helpers/database.php";
-include "../../env.php";
+include "../../../helpers/database.php";
+include "../../../env.php";
 $db = new Database(dbUser, dbPass, dbName);
 
 // Check if the request is for a specific order detail

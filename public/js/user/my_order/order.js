@@ -6,7 +6,7 @@ const card = document.getElementsByClassName("card");
 console.log("HI")
 
 function getAllOrders() {
-    fetch('http://localhost/ai2m_cafe/controllers/user/order.php')
+    fetch('http://localhost/ai2m_cafe/controllers/user/my_order/order.php')
         .then(async (res) => {
             let data = await res.json();
             console.log("orders",data['orders']);
@@ -39,7 +39,7 @@ function openOrderDetails(id) {
     if(element.getAttribute("disabled") == "true"){
         return;
     }else{
-        fetch(`http://localhost/ai2m_cafe/controllers/user/order.php?id=${id}`)
+        fetch(`http://localhost/ai2m_cafe/controllers/user/my_order/order.php?id=${id}`)
             .then(async (res) => {
                 let data = await res.json();
                 let orderProducts = data;

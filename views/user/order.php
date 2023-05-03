@@ -63,6 +63,6 @@
 
 <!-- custom js file link  -->
 <script src="../../public/js/script.js"></script>
-<script src="../../public/js/user/order.js"></script>
+<script src="../../public/js/user/my_order/order.js"></script>
 
 </body>

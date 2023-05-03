@@ -5,7 +5,7 @@ const card = document.getElementsByClassName("card");
 let isCardOpen = false;
 
 function getAllOrders() {
-    fetch('http://localhost/ai2m_cafe/controllers/admin/order.php?timestamp=' + Date.now())
+    fetch('http://localhost/ai2m_cafe/controllers/admin/manual_order/order.php')
         .then(async (res) => {
             let data = await res.json();
             let orders = data['orders'];
@@ -87,8 +87,8 @@ getAllOrders();
 // }
 
 function deliverOrder(id){
-
-    fetch(`http://localhost/ai2m_cafe/controllers/admin/order.php?id=${id}`)
+    // fetch(`http://localhost/ai2m_cafe/controllers/admin/order.php/displayorder?id=${id}`)
+    fetch(`http://localhost/ai2m_cafe/controllers/admin/manual_order/order.php?id=${id}`)
         .then(res => res.json())
         .then(data => {
             if (data === true) {
