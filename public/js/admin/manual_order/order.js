@@ -8,6 +8,7 @@ function getAllOrders() {
     fetch('http://localhost/ai2m_cafe/controllers/admin/manual_order/order.php')
         .then(async (res) => {
             let data = await res.json();
+            if(data['redirect'])window.location.href = "http://localhost/ai2m_cafe/views/login.php";
             let orders = data['orders'];
             let orders_products = data["orders_products"];
             console.log(data);
@@ -33,7 +34,7 @@ function getAllOrders() {
           <tr class="tableRow" id="${row["id"]}"  disabled="false">
             <td>${row['id']}</td>
             <td>${row['date']}</td>
-            <td><i class="fa fa-check-circle-o green"></i><span class="ms-1">${row['status']}</span></td>
+            <td><i class="fa fa-check-circle-o green"></i><span class="ms-1"> ${row['status']}</span></td>
             <td><img src="https://i.imgur.com/VKOeFyS.png" width="25">${row['name']}</td>
             <td>${row['room']}</td>
             <td>${row['total']}</td>
@@ -50,46 +51,12 @@ function getAllOrders() {
 }
 getAllOrders();
 
-//
-// function openOrderDetails(id) {
-//     let element = document.getElementById(id);
-//     if(element.getAttribute("disabled") == "true"){
-//         return;
-//     }else{
-//     fetch(`http://localhost/ai2m_cafe/controllers/admin/order.php?id=${id}`)
-//         .then(async (res) => {
-//             let data = await res.json();
-//             let orderProducts = data['order_products'];
-//             console.log(data['order_products']);
-//             let newRow = document.createElement('tr')
-//             orderProducts.forEach(row => {
-//                 let newData = document.createElement('td')
-//                 newData.innerHTML = `
-//                         <div class="card" style="width: 18rem;">
-//                           <img src="${row['image']}" class="card-img-top" alt="...">
-//                           <div class="card-body">
-//                             <h2 class="card-title">Name : ${row['name']}</h2>
-//                             <p class="card-text">Price : ${row['price']}</p>
-//                             <p class="card-text">Quantity : ${row['quantity']}</p>
-//                             <p class="btn btn-primary">Sub Total : ${row['sub_total']}</p>
-//                           </div>
-//                         </div>
-//                 `;
-//                 newRow.append(newData)
-//                 // element.appendChild(newRow)
-//             })
-//             element.parentNode.insertBefore(newRow, element.nextSibling);
-//             element.setAttribute("disabled","true")
-//         })
-//         .catch((error) => console.log(error));
-//     }
-//
-// }
-
 function deliverOrder(id){
     // fetch(`http://localhost/ai2m_cafe/controllers/admin/order.php/displayorder?id=${id}`)
     fetch(`http://localhost/ai2m_cafe/controllers/admin/manual_order/order.php?id=${id}`)
-        .then(res => res.json())
+        .then(res => {res.json()
+            if(data['redirect'])window.location.href = "http://localhost/ai2m_cafe/views/login.php";
+        })
         .then(data => {
             if (data === true) {
                 Swal.fire({

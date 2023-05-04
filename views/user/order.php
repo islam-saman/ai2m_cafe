@@ -40,7 +40,8 @@
                     <th scope="col" width="20%">Name</th>
                     <th scope="col" width="10%">Room</th>
                     <th scope="col" width="8%">Total Price</th>
-                    <th scope="col" class="text-end" width="5%">Ext</th>
+                    <th scope="col" width="5%">Ext</th>
+                    <th scope="col" class="text-end">Action</th>
                 </tr>
                 </thead>
                 <tbody id="orderData">

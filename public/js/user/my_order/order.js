@@ -82,6 +82,9 @@ async function  drawTable(res){
     } else if(!data["message"]){
         let orders = data['orders'];
         orders.forEach(row => {
+            let button='';
+            if(row['status'] === "processing") button = `<a class="btn btn-danger" onclick="cancelOrder(${row['id']})">Cancel</a>`;
+
             tbody.innerHTML += `
                     <tr class="tableRow" id="${row["id"]}"  disabled="false">
                         <td>
@@ -91,11 +94,12 @@ async function  drawTable(res){
                         </div>
                         </td>
                         <td>${row['date']}</td>
-                        <td><i class="fa fa-check-circle-o green"></i><span class="ms-1">${row['status']}</span></td>
+                        <td><i class="fa fa-check-circle-o green"></i><span class="ms-1">${row['status']} </span></td>
                         <td><img src="https://i.imgur.com/VKOeFyS.png" width="25">${row['name']}</td>
                         <td>${row['room']}</td>
                         <td>${row['total']}$</td>
-                        <td class="text-end"><span class="fw-bolder">${row['ext']}</span></td>
+                        <td ><span class="fw-bolder">${row['ext']}</span></td>
+                        <td class="text-end">${button}</td>
                     </tr>`;
         });
     }else{
@@ -107,3 +111,33 @@ async function  drawTable(res){
     }
 
 }
+
+function cancelOrder(id) {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, cancel it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            fetch(`http://localhost/ai2m_cafe/controllers/user/my_order/delete_process_orders.php?id=${id}`)
+                .then(async (res) => {
+                    let data = await res.json();
+                    let message = data.message;
+                    Swal.fire({
+                        title: message,
+                        icon: 'success',
+                        timer: 2000,
+                        timerProgressBar: true,
+                    }).then(() => {
+                        window.location.href = data.redirect;
+                    })
+                })
+                .catch((error) => console.log(error));
+        }
+    })
+}
+

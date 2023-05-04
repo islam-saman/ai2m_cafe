@@ -20,11 +20,11 @@ function auth($db,string $tablename,string $key,string $value)
                 $Data = $db->fetchOne($tablename,$key,$value);
                 if($Data["is_admin"] == "0")
                 {
-                    return "is_user";
+                    echo json_encode(["is_admin"=>false]);
                 }
                 else
                 {
-                    return "is_admin";
+                    echo json_encode(["is_admin"=>true]);
                 }
             }
             else
