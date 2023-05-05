@@ -307,29 +307,29 @@ class Database
             return [];
         }
     }
-    public function join_three_tables_with_date_range(
-        string $table1, string $table2, string $table3, string $column1, string $column2, string $column3,
-        string $start_date, string $end_date,string $select="*",string $condition=""
-    ) {
-        if (!$this->connect()) {
-            throw new Exception;
-        }
-
-        $query = "SELECT $select FROM `$table1` 
-              INNER JOIN `$table2` ON `$table1`.`$column1` = `$table2`.`$column2`
-              INNER JOIN `$table3` ON `$table2`.`$column2` = `$table3`.`$column3` 
-              WHERE $condition AND `$table1`.`date` BETWEEN :start_date AND :end_date";
-        $statement = $this->dbConnection->prepare($query);
-        $statement->bindValue(':start_date', $start_date);
-        $statement->bindValue(':end_date', $end_date);
-        $statement->execute();
-
-        if ($statement->rowCount() != 0) {
-            return $statement->fetchAll(PDO::FETCH_ASSOC);
-        } else {
-            return [];
-        }
-    }
+//    public function join_three_tables_with_date_range(
+//        string $table1, string $table2, string $table3, string $column1, string $column2, string $column3,
+//        string $start_date, string $end_date,string $select="*",string $condition=""
+//    ) {
+//        if (!$this->connect()) {
+//            throw new Exception;
+//        }
+//
+//        $query = "SELECT $select FROM `$table1`
+//              INNER JOIN `$table2` ON `$table1`.`$column1` = `$table2`.`$column2`
+//              INNER JOIN `$table3` ON `$table2`.`$column2` = `$table3`.`$column3`
+//              WHERE $condition AND `$table1`.`date` BETWEEN :start_date AND :end_date";
+//        $statement = $this->dbConnection->prepare($query);
+//        $statement->bindValue(':start_date', $start_date);
+//        $statement->bindValue(':end_date', $end_date);
+//        $statement->execute();
+//
+//        if ($statement->rowCount() != 0) {
+//            return $statement->fetchAll(PDO::FETCH_ASSOC);
+//        } else {
+//            return [];
+//        }
+//    }
     public function join_three_tables(
         string $table1, string $table2, string $table3,
         string $joinCondition1, string $joinCondition2,
@@ -348,6 +348,31 @@ class Database
 
         $result = $statement->fetchAll(PDO::FETCH_ASSOC);
         return $result;
+    }
+
+    public function join_three_tables_with_date_range(
+        string $table1, string $table2, string $table3,
+        string $joinCondition1, string $joinCondition2,
+        string $start_date, string $end_date,string $select="*",string $condition=""
+    ) {
+        if (!$this->connect()) {
+            throw new Exception;
+        }
+
+        $query = "SELECT $select FROM `$table1` 
+              INNER JOIN `$table2` ON $joinCondition1
+              INNER JOIN `$table3` ON $joinCondition2
+              WHERE $condition AND `$table1`.`date` BETWEEN :start_date AND :end_date";
+        $statement = $this->dbConnection->prepare($query);
+        $statement->bindValue(':start_date', $start_date);
+        $statement->bindValue(':end_date', $end_date);
+        $statement->execute();
+
+        if ($statement->rowCount() != 0) {
+            return $statement->fetchAll(PDO::FETCH_ASSOC);
+        } else {
+            return [];
+        }
     }
 
 
