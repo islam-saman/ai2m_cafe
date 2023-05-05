@@ -2,8 +2,9 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-include "../../../helpers/database.php";
+//include "../../../helpers/database.php";
 include "../../../env.php";
+include "../../../helpers/auth.php";
 session_start();
 if(!isset($_SESSION['is_login']) || !$_SESSION['is_login']){
 
@@ -13,7 +14,13 @@ if(!isset($_SESSION['is_login']) || !$_SESSION['is_login']){
 }
 $user_id = $_SESSION['id'];
 $db = new Database(dbUser, dbPass, dbName);
+// Check if user is an admin
+$is_admin = check_admin($db, 'users', 'id', $user_id);
 
+if(!$is_admin){
+    echo json_encode(["is_admin"=>false]);
+    exit;
+}
 // Check if the request is for a specific order detail
 if(isset($_GET['id'])){
 

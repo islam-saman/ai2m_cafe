@@ -63,6 +63,7 @@
 <!-- footer section ends  -->
 
 <!-- custom js file link  -->
+<script src="https://unpkg.com/rxjs@^7/dist/bundles/rxjs.umd.min.js"></script>
 <script src="../../public/js/script.js"></script>
 <script src="../../public/js/user/my_order/order.js"></script>
 

@@ -5,9 +5,9 @@ error_reporting(E_ALL);
 include "../../../helpers/database.php";
 include "../../../env.php";
 session_start();
-if(!isset($_SESSION['is_login']) || !$_SESSION['is_login']){
+if(!isset($_SESSION['is_login'])){
 
-    echo json_encode(["redirect"=>true]);
+    echo json_encode(["is_login"=>false]);
 
     exit;
 }
