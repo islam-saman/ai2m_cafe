@@ -15,11 +15,10 @@ function getProductsForAdmin(){
     fetch(`http://localhost/ai2m_cafe/controllers/admin/home.php`)
         .then(async (res)=> {
             data = await res.json();
-            if (!data['is_admin']){
-                window.location.href = '../../views/user';
-            }
-            if (data['redirect']){
+            if (data['redirect']) {
                 window.location.href = '../../views/login.php';
+            }else if (data['is_admin']===false){
+                window.location.href = '../../views/user';
             }else{
                 prdList = data["prd"];
                 user_id=data["user_id"];

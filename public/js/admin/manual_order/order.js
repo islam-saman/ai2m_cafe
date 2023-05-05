@@ -67,6 +67,8 @@ function deliverOrder(id){
              window.location.href = "http://localhost/ai2m_cafe/views/login.php";
             }else {
                 if (data === true) {
+                    tbody.innerHTML = ``;
+                    getAllOrders();
                     Swal.fire({
                         icon: 'success',
                         title: 'Order Updated!',
@@ -74,8 +76,8 @@ function deliverOrder(id){
                         timer: 2000
                     });
                     // getAllOrders(); // call getAllOrders() to update the table
-                    // let updatedTr = document.getElementById(`${id}`);
-                    // updatedTr.children[2].innerHTML ="delivered";
+                    let updatedTr = document.getElementById(`${id}`);
+                    updatedTr.children[2].innerHTML ="delivered";
                 } else {
                     Swal.fire({
                         icon: 'error',
@@ -88,5 +90,3 @@ function deliverOrder(id){
         })
         .catch(error => console.log(error));
 }
-
-
