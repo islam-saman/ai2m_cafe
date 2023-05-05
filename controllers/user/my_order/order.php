@@ -20,11 +20,18 @@ if(isset($_GET['id'])){
     $id = $_GET['id'];
     // Query the database to get the order details for the specified order ID
     try {
-        $order_products = $db->join_four_tables(
-            "order", "product", "order_product", "category",
-            "id", "id", "product_id", "id",
-            "order_product.*, product.*"
-            ,"order_id = {$id} AND `order`.user_id = $user_id");
+//        SELECT `order_product`.*, `product`.* FROM `order`
+//              INNER JOIN `order_product` ON `order`.`id` = `order_product`.`order_id`
+//              INNER JOIN `product` ON `order_product`.`product_id` = `product`.`id`
+//              WHERE `order_product`.`order_id` = 5
+        $order_products = $db->join_three_tables(
+            "order", "order_product", "product",
+            "`order`.`id` = `order_product`.`order_id`",
+            "`order_product`.`product_id` = `product`.`id`",
+            "`order_product`.*, `product`.*",
+            "`order_product`.`order_id` = $id"
+        );
+
         echo json_encode($order_products);
     } catch (Exception $e) {
         var_dump($e);
@@ -55,10 +62,7 @@ if(isset($_GET['id'])){
             "user_id", "id",
             "`order`.* , `user`.name , `user`.profile_picture","`order`.user_id=$user_id"
             );
-        $orders_products = $db->join_three_tables(
-            "order", "product", "order_product",
-            "id", "id", "order_id","*","`order`.user_id=$user_id");
-        $result = ["orders"=> $orders, "orders_products" => $orders_products];
+        $result = ["orders"=> $orders];
         echo json_encode($result);
     } catch (Exception $e) {
         var_dump($e);
