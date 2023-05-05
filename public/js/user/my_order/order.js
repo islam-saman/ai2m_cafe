@@ -3,8 +3,6 @@ const tbody = document.getElementById("orderData");
 const tableRow = document.getElementsByClassName("tableRow");
 const table = document.querySelector("table");
 const card = document.getElementsByClassName("card");
-console.log("HI")
-
 function getAllOrders() {
     fetch('http://localhost/ai2m_cafe/controllers/user/my_order/order.php')
         .then(async (res) => {
@@ -12,7 +10,6 @@ function getAllOrders() {
         })
         .catch((error) => console.log(error))
 }
-//
 getAllOrders();
 
 function openOrderDetails(id) {
@@ -76,9 +73,8 @@ function filterOrders() {
 
 async function  drawTable(res){
     let data = await res.json();
-    if(data['redirect']){
-        console.log(data['redirect'])
-        window.location.href = "http://localhost/ai2m_cafe/views/login.php";
+    if(data['is_login']===false){
+        location.replace("http://localhost/ai2m_cafe/views/login.php");
     } else if(!data["message"]){
         let orders = data['orders'];
         orders.forEach(row => {

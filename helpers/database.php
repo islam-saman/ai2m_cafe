@@ -220,18 +220,14 @@ class Database
     }
 
 
-    public function join_two_tables(string $table1,
-                                    string $table2,
-                                    string $column1,
-                                    string $column2 ,
-                                    string $select,
-                                    string $condition="")
+    public function join_two_tables(string $table1, string $table2, string $column1, string $column2 , string $select,string $condition="")
     {
         if (!$this->connect())
             throw new Exception;
-        $query = "SELECT $select 
-        FROM `$table1` INNER JOIN `$table2` 
-        ON `$table1`.`$column1` = `$table2`.`$column2`
+//        $orders = $db->join_two_tables("order", "user", "user_id", "id");
+//        SELECT * FROM `order` INNER JOIN `user` ON `order`.`user_id` = `user`.`id`
+//        `order`.* , `user`.name , `user`.profile_picture
+        $query = "SELECT $select FROM `$table1` INNER JOIN `$table2` ON `$table1`.`$column1` = `$table2`.`$column2`
         WHERE $condition";
         $statement = $this->dbConnection->prepare($query);
         $statement->execute();
@@ -242,32 +238,25 @@ class Database
             return [];
     }
 
-    public function join_three_tables(
-        string $table1,
-        string $table2,
-        string $table3,
-        string $column1,
-        string $column2 ,
-        string $column3,
-        string $select="*",
-        string $condition=""
-    )
-    {
-        if (!$this->connect())
-            throw new Exception;
-
-        $query = "SELECT $select FROM `$table1` 
-              INNER JOIN `$table2` ON `$table1`.`$column1` = `$table2`.`$column2`
-              INNER JOIN `$table3` ON `$table2`.`$column2` = `$table3`.`$column3`
-              WHERE $condition";
-        $statement = $this->dbConnection->prepare($query);
-        $statement->execute();
-
-        if($statement->rowCount() != 0)
-            return $statement->fetchAll(PDO::FETCH_ASSOC);
-        else
-            return [];
-    }
+//    public function join_three_tables(
+//        string $table1, string $table2, string $table3, string $column1, string $column2 , string $column3,string $select="*",string $condition=""
+//    )
+//    {
+//        if (!$this->connect())
+//            throw new Exception;
+//
+//        $query = "SELECT $select FROM `$table1`
+//              INNER JOIN `$table2` ON `$table1`.`$column1` = `$table2`.`$column2`
+//              INNER JOIN `$table3` ON `$table2`.`$column2` = `$table3`.`$column3`
+//              WHERE $condition";
+//        $statement = $this->dbConnection->prepare($query);
+//        $statement->execute();
+//
+//        if($statement->rowCount() != 0)
+//            return $statement->fetchAll(PDO::FETCH_ASSOC);
+//        else
+//            return [];
+//    }
     public function join_four_tables(
         string $table1,
         string $table2,
@@ -341,6 +330,27 @@ class Database
             return [];
         }
     }
+    public function join_three_tables(
+        string $table1, string $table2, string $table3,
+        string $joinCondition1, string $joinCondition2,
+        string $select = "*", string $condition = ""
+    ) {
+        if (!$this->connect()) {
+            throw new Exception("Failed to connect to the database.");
+        }
+
+        $query = "SELECT $select FROM `$table1`
+              INNER JOIN `$table2` ON $joinCondition1
+              INNER JOIN `$table3` ON $joinCondition2
+              WHERE $condition";
+        $statement = $this->dbConnection->prepare($query);
+        $statement->execute();
+
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+
 
 
 
