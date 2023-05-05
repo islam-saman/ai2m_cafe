@@ -11,29 +11,14 @@ let userContainer = ``;
 let userArray = [];
 let user_dropdown = document.getElementById("user_dropdown");
 
-function getProductsForUser(){
-    fetch(`http://localhost/ai2m_cafe/controllers/user/get_products.php`)
-        .then(async (res)=> {
-            data = await res.json();
-            if (data['redirect']){
-                console.log("login");
-                window.location.href = '../../views/login.php';
-            }else{
-                prdList = data["prd"];
-                user_id=data["user_id"];
-
-                displayProduct();
-            }
-    });
-}getProductsForUser();
-
-
 function getProductsForAdmin(){
     fetch(`http://localhost/ai2m_cafe/controllers/admin/home.php`)
         .then(async (res)=> {
             data = await res.json();
+            if (!data['is_admin']){
+                window.location.href = '../../views/user';
+            }
             if (data['redirect']){
-                console.log("login");
                 window.location.href = '../../views/login.php';
             }else{
                 prdList = data["prd"];
@@ -55,6 +40,7 @@ function displayProduct(){
         productContainer += `
          <div class='box' onclick='addOrder(${p.id})'> 
             <input class='prdId' name='prdId' type='hidden' value=${p.id} />
+            <a class='ri-heart-line wishlist-icon'></a>
             <div class='image'>
                 <a style='cursor:pointer;'> 
                     <img class='w-100' style='height:150px;border-radius:10px'  src="../../public/images/products/${p.image}" alt='${p.id}'>

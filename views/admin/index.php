@@ -95,10 +95,6 @@
         </div>
     </div>
 </div>
-
-
-<script src="../../public/js/script.js"></script>
-<!--<script src="../../public/js/admin/add_order.js"></script>-->
-<script src="../../public/js/user_order.js"></script>
+<script src="../../public/js/admin/home.js"></script>
 
 </body>
