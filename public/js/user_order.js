@@ -4,20 +4,29 @@ var orderContainer = ``;
 var orderArray = [];
 const prdId = document.getElementById("prdId");
 let prd;
-let prdList;
+let prdList = [];
 let users;
-let user_id;
+let user_id = 0;
 let userContainer = ``;
 let userArray = [];
 let user_dropdown = document.getElementById("user_dropdown");
 
-
-
 function getProducts(){
-    fetch(`http://localhost:8080/ai2m_cafe/controllers/user/get_products.php`)
+    fetch(`http://localhost/ai2m_cafe/controllers/user/get_products.php`)
         .then(async (res)=> {
-            prdList = await res.json();
-            displayProduct();
+            data = await res.json();
+            if (data['redirect']){
+                console.log("login");
+                window.location.href = '../../views/login.php';
+            }else{
+                prdList = data["prd"];
+                user_id=data["user_id"];
+                console.log("user_id: "+ user_id);
+                if (user_id === 0){
+                    addOrderForUser();
+                }
+                displayProduct();
+            }
     });
 }getProducts();
 
@@ -78,7 +87,7 @@ function displayOrder() {
 
 
 async function addOrder(index) {
-    fetch(`http://localhost:8080/ai2m_cafe/controllers/user/user_order.php?id=${index}`)
+    fetch(`http://localhost/ai2m_cafe/controllers/user/user_order.php?id=${index}`)
         .then(async (res)=> {
             prd = await res.json();
 
@@ -201,19 +210,17 @@ function deleteAllOrders(){
 
 
 function addOrderForUser(){
-    fetch(`http://localhost:8080/ai2m_cafe/controllers/admin/add_order_for_user.php`)
+    fetch(`http://localhost/ai2m_cafe/controllers/admin/add_order_for_user.php`)
         .then(async (res)=> {
             users = await res.json();
-            console.log(users)
             displayUsers()
         });
-}addOrderForUser();
+}
 
 
 function displayUsers(){
     userContainer = `<option selected disabled value="">Please select user</option>`
     for (const user of users) {
-        console.log(user);
         userContainer += `
               <option value="${user.id}">${user.name}</option>
         `
@@ -223,7 +230,7 @@ function displayUsers(){
 }
 
 
-/*Remember There is no validation on user id -----> DO NOT FORGET*/
+/*Remember There is no validation on user id [ADMIN ONLY] -----> DO NOT FORGET*/
 function getUserId(event){
     user_id = event.target.value;
 }
@@ -233,6 +240,15 @@ async function order(){
     document.getElementById("submit_order").addEventListener('submit', event => {
         event.preventDefault();
     });
+
+    if(orderArray.length === 0){
+        let submitOrderBtn = document.getElementById("submit_order_btn");
+        submitOrderBtn.style.display = "block";
+        return;
+    }else{
+        let submitOrderBtn = document.getElementById("submit_order_btn");
+        submitOrderBtn.style.display = "none";
+    }
 
     /*COMMENT*/
     let comment = document.getElementById("user_comment");
@@ -258,7 +274,7 @@ async function order(){
     let formData = new FormData();
     formData.append("data", JSON.stringify(data));
     let orderId;
-    fetch(`http://localhost:8080/ai2m_cafe/controllers/user/add_order.php`,{
+    fetch(`http://localhost/ai2m_cafe/controllers/user/add_order.php`,{
         method:"POST",
         body: formData,
     }).then(async (res)=> {
@@ -275,7 +291,7 @@ async function order(){
             let orderProduct = new FormData();
             orderProduct.append("ordPrd", JSON.stringify(ordPrd));
 
-            fetch(`http://localhost:8080/ai2m_cafe/controllers/user/add_order_product.php`,{
+            fetch(`http://localhost/ai2m_cafe/controllers/user/add_order_product.php`,{
                 method:"POST",
                 body: orderProduct,
             }).then(async (res)=> {

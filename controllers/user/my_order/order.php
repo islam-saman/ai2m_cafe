@@ -21,10 +21,10 @@ if(isset($_GET['id'])){
     // Query the database to get the order details for the specified order ID
     try {
         $order_products = $db->join_four_tables(
-            "order", "product", "order_product", "category",
-            "id", "id", "product_id", "id",
-            "order_product.*, product.*"
-            ,"order_id = {$id} AND `order`.user_id = $user_id");
+            "order", "order_product", "product", "category",
+            "id", "order_id", "id", "id",
+            "`order_product`.*, `product`.*"
+            ,"`order_product`.`order_id` = {$id} ");
         echo json_encode($order_products);
     } catch (Exception $e) {
         var_dump($e);

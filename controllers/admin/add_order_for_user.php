@@ -3,6 +3,8 @@
 include ("../../helpers/database.php");
 include ("../../env.php");
 
+
+
 try {
     $db = new Database(dbUser, dbPass, dbName);
     if($db){
