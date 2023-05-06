@@ -53,7 +53,7 @@
 
     <!-- custom js file link  -->
     <script src="../../public/js/script.js"></script>
-    <script src="../../public/js/admin/order.js"></script>
+    <script src="../../public/js/admin/manual_order/order.js"></script>
     <script>
 
     </script>

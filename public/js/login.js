@@ -19,14 +19,9 @@ async function loginAction()
     
     var email = $("email").value;
     var Email = $("Email");
-    var pattern_email =  /^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ ;
     if(email == '')
     {
         Email.innerHTML = 'email is required';
-    }
-    else if(!pattern_email.test(email))
-    {
-        Email.innerHTML = 'email must match example@example.com';
     }
     else
     {
@@ -35,14 +30,9 @@ async function loginAction()
 
     var password = $("password").value;
     var Password = $("Password");
-    var pattern_pass =  /^[a-z _]{8}$/ ;
     if(password == '')
     {
         Password.innerHTML = 'password is required';
-    }
-    else if(!pattern_pass.test(password))
-    {
-        Password.innerHTML = 'error password';
     }
     else
     {

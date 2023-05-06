@@ -14,15 +14,15 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
 
     <!-- custom css file link  -->
-    <link rel="stylesheet" href="../../public/styles/style.css">
-    <link rel="stylesheet" href="../../public/styles/bootstrap5.css">
-    <link rel="stylesheet" href="../public/styles/style.css">
     <link rel="stylesheet" href="../public/styles/bootstrap5.css">
+    <link rel="stylesheet" href="../../public/styles/bootstrap5.css">
     <link rel="stylesheet" href="<?php echo $link ?>">
     <link rel="stylesheet" href="<?= $fontawesome; ?>">
 
     <link rel="stylesheet" href="<?php echo $not ?>">
-    
+
+    <link rel="stylesheet" href="../public/styles/style.css">
+    <link rel="stylesheet" href="../../public/styles/style.css">
     <title><?php echo $title; ?></title>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 

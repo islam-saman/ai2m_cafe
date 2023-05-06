@@ -1,4 +1,5 @@
 <?php
+
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -6,6 +7,7 @@ error_reporting(E_ALL);
 header("Access-Control-Allow-Origin: *");
 
 include '../helpers/database.php';
+include '../env.php';
 
 $userInput = json_decode($_POST["data"], true);
 
@@ -22,12 +24,8 @@ elseif(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 }
 
 // validate password
-$pattern = " /^[a-z _]{8}$/" ;
 if(empty($password) and isset($password)){
     $form_errors['Password']='password is required';
-}
-elseif(!preg_match($pattern,$password)){
-$form_errors['Password']='error password';
 }
 
     if($form_errors)
@@ -63,6 +61,7 @@ $form_errors['Password']='error password';
                         $_SESSION['is_login']=true;
                         $_SESSION['image']=$Data["profile_picture"];
                         $_SESSION['name']=$Data["name"];
+                        $_SESSION['id']=$Data["id"];
                         if($Data['is_admin'] == '0')
                         {
                             echo json_encode(array("status"=> 200, "is_admin" => false));
@@ -71,6 +70,7 @@ $form_errors['Password']='error password';
                         {
                             echo json_encode(array("status"=> 200, "is_admin" => true));
                         }
+                      
                     }
                 }
                 else
@@ -81,7 +81,6 @@ $form_errors['Password']='error password';
                 }
 
             }
-            
         }
         catch(Exception $dbConError)
         {

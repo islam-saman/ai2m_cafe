@@ -18,6 +18,7 @@
 
     <link rel="stylesheet" href="../../public/styles/style.css">
     <title><?php echo $title; ?></title>
-</head>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+=</head>
 
 </html>
