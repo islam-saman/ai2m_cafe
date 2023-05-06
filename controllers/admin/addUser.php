@@ -8,6 +8,7 @@ header("Access-Control-Allow-Origin: *");
 include '../../helpers/database.php';
 
 
+
     $userInput = json_decode($_POST["user"], true);
 
     

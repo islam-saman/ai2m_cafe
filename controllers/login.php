@@ -57,13 +57,20 @@ $form_errors['Password']='error password';
                     }
                     else
                     {
-                        echo json_encode(array("status"=> 200, "success" => "Login successfully"));
+                       
                         session_start();
                         $_SESSION['user_email']=$email;
                         $_SESSION['is_login']=true;
                         $_SESSION['image']=$Data["profile_picture"];
                         $_SESSION['name']=$Data["name"];
-                        // header("Location:../views/test.php"); 
+                        if($Data['is_admin'] == '0')
+                        {
+                            echo json_encode(array("status"=> 200, "is_admin" => false));
+                        }
+                        else
+                        {
+                            echo json_encode(array("status"=> 200, "is_admin" => true));
+                        }
                     }
                 }
                 else

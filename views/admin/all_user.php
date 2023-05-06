@@ -87,5 +87,5 @@ try{
 
 
      <script src="../../public/js/bootstrap5.js"></script> 
-     <script src="../../public/js/all_user.js"></script> 
+     <script src="../../public/js/admin/all_user.js"></script> 
      <script src="https://rawgit.com/MLaritz/Vanilla-Notify/master/dist/vanilla-notify.min.js"></script>

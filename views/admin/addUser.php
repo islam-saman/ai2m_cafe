@@ -84,7 +84,7 @@
                     </div>
 
                     <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                    <p>Back to Users Page?</p><a href="all_user.php" style="color:blue;">Click Here</a>
+                    <p>Back to Users Page?</p><a href="./all_user.php" style="color:blue;">Click Here</a>
                     </div>
 
                     <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
@@ -115,6 +115,6 @@
        
    
     <script src="../../public/js/bootstrap5.js"></script> 
-    <script src="../../public/js/register.js"></script> 
+    <script src="../../public/js/admin/addUser.js"></script> 
     <script src="https://rawgit.com/MLaritz/Vanilla-Notify/master/dist/vanilla-notify.min.js"></script>
 </body>

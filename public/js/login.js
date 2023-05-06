@@ -80,7 +80,22 @@ async function loginAction()
             }
 
             $("login_form").reset()
-            vNotify.success({text: JsonResualt.success, visibleDuration: 2000, fadeInterval: 20});
+            if(JsonResualt.is_admin)
+            {
+                vNotify.success({ text: "Admin has been logedin Successfully", visibleDuration: 2000, fadeInterval: 20 });
+                setTimeout(() => {
+                    window.location.href='http://localhost/ai2m_cafe/views/admin/index.php'
+                },1200)
+
+            }
+            else
+            {
+                vNotify.success({ text: "User has been logedin Successfully", visibleDuration: 2000, fadeInterval: 20 });
+                setTimeout(() => {
+                    window.location.href='http://localhost/ai2m_cafe/views/admin/index.php'
+                },1200)
+                 
+            }
 
         }
     }
