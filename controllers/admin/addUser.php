@@ -8,6 +8,7 @@ header("Access-Control-Allow-Origin: *");
 include '../../helpers/database.php';
 
 
+
     $userInput = json_decode($_POST["user"], true);
 
     
@@ -114,7 +115,7 @@ if($form_errors)
     {
         try
         {
-            $db = new Database("localhost",3306,"root","1191997","ai2m"); 
+            $db = new Database("root","1191997","ai2m"); 
             if($db)
             {
                // first check of the category is existed or not

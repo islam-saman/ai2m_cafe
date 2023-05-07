@@ -9,7 +9,6 @@
         $db = new Database(dbUser, dbPass, dbName);
         $productList = $db->fetchALl("product");
         echo json_encode($productList);
-
     }
     catch(Exception $dbConError)
     {

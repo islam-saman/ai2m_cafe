@@ -1,9 +1,9 @@
 <header class="header">
 
-    <a href="index.html" class="logo"> <i class="ri-store-2-line"></i> The Garden Cafe </a>
+    <a href="index.php" class="logo"> <i class="ri-store-2-line"></i> The Garden Cafe </a>
 
     <nav class="navbar">
-        <a href="#home">home</a>
+        <a href="./index.php">home</a>
         <a href="#about">about</a>
 <!--        <a href="#popular">popular</a>-->
 <!--        <a href="#menu">menu</a>-->

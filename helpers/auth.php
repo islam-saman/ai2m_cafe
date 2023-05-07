@@ -9,7 +9,7 @@ include 'database.php';
 
 
 //    send object_of_db and  $tablename and $key and $value
-function auth($db,string $tablename,string $key,string $value)
+function check_admin($db,string $tablename,string $key,string $value)
 {
     try{
         if($db)
@@ -20,16 +20,16 @@ function auth($db,string $tablename,string $key,string $value)
                 $Data = $db->fetchOne($tablename,$key,$value);
                 if($Data["is_admin"] == "0")
                 {
-                    return "is_user";
+                    return false;
                 }
                 else
                 {
-                    return "is_admin";
+                    return true;
                 }
             }
             else
             {
-               return "This Key Not Found" ;
+                return "This Key Not Found" ;
             }
         }
         else
@@ -42,9 +42,3 @@ function auth($db,string $tablename,string $key,string $value)
         $dbConError->getTrace();
     }
 }
-
-
-
-
-
-

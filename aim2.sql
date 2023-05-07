@@ -54,6 +54,8 @@ CREATE TABLE `order` (
   `room` varchar(45) COLLATE utf8_bin NOT NULL,
   `ext` int(11) NOT NULL,
   `status` enum('processing','out for delivery','done') COLLATE utf8_bin NOT NULL DEFAULT 'processing',
+  `total` int(11),
+  `quantity` int(11),
   `user_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),

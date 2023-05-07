@@ -10,7 +10,7 @@
   outline: none;
   border: none;
   text-decoration: none;
-  text-transform: capitalize;
+  /*text-transform: capitalize;*/
   -webkit-transition: 0.3s linear;
   transition: 0.3s linear;
 }
@@ -60,6 +60,14 @@ section {
   color: #130f40;
 }
 
+.unimation{
+  transition: .4s;
+}
+.unimation:hover{
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16),
+  0 3px 6px rgba(0,0,0,0.23);
+  transform: translate(0px, -15px);
+}
 .custom_button {
     display: inline-block;
     margin-top: 1rem;
