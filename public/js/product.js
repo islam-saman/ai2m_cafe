@@ -1,3 +1,5 @@
+/* Start handling add product */
+
 let formErrors;
 let productDetiles = 
 {
@@ -7,12 +9,15 @@ let productDetiles =
     isAvailable:true
 }
 
+/* General helper function */
+
+// gathering product detiles values from user inputs
 function productDetilesBuilder(elem)
 {
     productDetiles[elem.name] = elem.value
 }
 
-
+// validite image
 function imageSizeValidation(image)
 {
     if(productImage)
@@ -29,6 +34,7 @@ function imageSizeValidation(image)
         return "no image has been found"
 
 }
+
 
 async function addNewProduct()
 {
@@ -51,28 +57,32 @@ async function addNewProduct()
     let addingResualt = await fetch("../../../controllers/admin/product/add_product.php", { method: "POST", body: formData})
     if(addingResualt.ok)
     {
-        const JsonResualt = await addingResualt.json();
-        if(JsonResualt.status == 401)
+        const jsonResualt = await addingResualt.json();
+        if(jsonResualt.status == 401)
         {
+            console.log("t")
             if(!formErrors)
-                formErrors = JsonResualt.errors
+                formErrors = jsonResualt.errors
 
             for (const key in formErrors)
             {
-                if(formErrors[key] == JsonResualt.errors[key])
-                    $(key).innerHTML = JsonResualt.errors[key]
+                if(formErrors[key] == jsonResualt.errors[key])
+                    $(key).innerHTML = jsonResualt.errors[key]
                 else
                     $(key).innerHTML = ""
 
             }
         }
+        else if(jsonResualt.status == 404)
+            vNotify.success({text: jsonResualt.errors, visibleDuration: 2000, fadeInterval: 20});
+
         else
         {
             for (const key in formErrors) {
                 $(key).innerHTML = ""
             }
 
-            localStorage.setItem("newProduct", JSON.stringify(JsonResualt.success))
+            localStorage.setItem("newProduct", JSON.stringify(jsonResualt.success))
             $("adding-form").reset()
             vNotify.success({text: "product has been added succesfully", visibleDuration: 2000, fadeInterval: 20});
 
@@ -188,24 +198,24 @@ async function updateProduct()
     let updateResualt = await fetch("../../../controllers/admin/product/update_product.php", { method: "POST", body: formData})
     if(updateResualt.ok)
     {
-        const JsonResualt = await updateResualt.json();
-        if(JsonResualt.status == 401)
+        const jsonResualt = await updateResualt.json();
+        if(jsonResualt.status == 401)
         {
             if(!formErrors)
-                formErrors = JsonResualt.errors
+                formErrors = jsonResualt.errors
 
             for (const key in formErrors)
             {
-                if(formErrors[key] == JsonResualt.errors[key])
-                    $(key).innerHTML = JsonResualt.errors[key]
+                if(formErrors[key] == jsonResualt.errors[key])
+                    $(key).innerHTML = jsonResualt.errors[key]
                 else
                     $(key).innerHTML = ""
 
             }
         }
-        else if(JsonResualt.status == 404)
+        else if(jsonResualt.status == 404)
         {
-            vNotify.error({text: JsonResualt.error, visibleDuration: 2000, fadeInterval: 20});
+            vNotify.error({text: jsonResualt.error, visibleDuration: 2000, fadeInterval: 20});
         }
         else
         {
@@ -214,8 +224,8 @@ async function updateProduct()
             }
 
             $("adding-form").reset()
-            localStorage.setItem("productNewDetiles", JSON.stringify(JsonResualt.success))
-            vNotify.success({text: JsonResualt.success, visibleDuration: 2000, fadeInterval: 20});
+            localStorage.setItem("productNewDetiles", JSON.stringify(jsonResualt.success))
+            vNotify.success({text: jsonResualt.success, visibleDuration: 2000, fadeInterval: 20});
 
             setTimeout(() => {
                 window.location.href = "http://localhost/ai2m_cafe/views/admin/product/products.html";
@@ -301,3 +311,177 @@ window.addEventListener("focus", () => {
 })
 
 
+
+/* Start handling add category */
+
+let categoryName = "";
+function getCategoryValue(elem)
+{
+    categoryName = elem.value
+}
+
+
+async function getCategories()
+{
+    let fetchingResualt = await fetch("../../../controllers/admin/category/list_categories.php")
+    return fetchingResualt.json()
+}
+
+async function loadCategoriesList()
+{
+    let cateList = await getCategories()
+    cateList.forEach(cate => {
+
+        let cateOption = `<option value="${cate.id}">${cate.name}</option>`  
+        $("productCateogry").innerHTML += cateOption
+    })
+}
+
+
+async function displayCateories()
+{
+
+    let cateList = await getCategories()
+    cateList.forEach(cate => {
+
+        const tableRow = 
+        `
+        <tr id="${cate.id}">
+        <td>
+            <input disabled value="${cate.id}"  name="cateId" class="form-control text-center" >
+        </td>        
+            <td>
+                <input readonly value="${cate.name}"  name="cateName" class="form-control text-center" >
+            </td>
+            <td>
+                <div  id="btn-container"  class="btn-group" role="group">
+                    <a type="button" onclick='updateCategory(${cate.id})' class='btn btn-success'>Update</a>
+                    <a type="button" onclick= "deleteCategory(${cate.id})"  class='btn btn-danger'>Delete</a>
+                    <a type="button" onclick= "lockInput(${cate.id})"  class='btn btn-outline-dark'>
+                        <i id="open-update" class="fa-solid fa-lock"></i>
+                    </a>
+                </div>
+            </td>
+        </tr>        
+        `
+        $("tableBody").innerHTML += tableRow
+
+    });
+
+}
+
+async function addCategory()
+{
+    var formData = new FormData();
+    formData.append('cateName', categoryName);
+    
+    let availablityResualt = await fetch("../../../controllers/admin/category/add_category.php", {
+        method: "POST",
+        body: formData
+    }) 
+
+    let jsonResualt = await availablityResualt.json()
+    if(jsonResualt.status == 200)
+    {
+        $("cateError").innerHTML = ""
+        let newProductCategory = `<option value="${jsonResualt.success.id}">${jsonResualt.success.name}</option>`
+        $("productCateogry").innerHTML += newProductCategory
+        vNotify.success({text: `The category "${categoryName}" has been added`, visibleDuration: 2000, fadeInterval: 20});        
+    }
+    else
+        $("cateError").innerHTML = jsonResualt.errors.cateError
+
+}
+
+
+async function deleteCategory(cateId)
+{
+    var formData = new FormData();
+    formData.append('cateId', cateId);
+    
+    let deleteResualt = await fetch("../../../controllers/admin/category/delete_category.php", {
+        method: "POST",
+        body: formData
+    })
+
+    let jsonResualt = await deleteResualt.json()
+    if(deleteResualt.status == 200)
+    {
+        $(cateId).remove()
+        vNotify.success({text: "The category has been deleted successfully", visibleDuration: 2000, fadeInterval: 20});
+    }
+    else
+    {
+        vNotify.error({text: jsonResualt.error, visibleDuration: 2000, fadeInterval: 20});
+
+    }
+
+}
+
+let isInputUpdated = false
+let isInputLocked = true
+let inputOldValue;
+
+function lockInput(cateId)
+{
+    if(isInputLocked)
+    {
+        inputOldValue = $(cateId).children[1].firstElementChild.value
+        $(cateId).children[1].firstElementChild.removeAttribute("readonly")
+        $(cateId).children[1].firstElementChild.focus()
+        $(cateId).querySelector("#open-update").setAttribute("class","fa-solid fa-lock-open")
+        isInputLocked = false
+
+        vNotify.info({text: "Updating has been opned  <i class='fa-solid fa-lock-open'></i> ", visibleDuration: 2000, fadeInterval: 20})
+    }
+    else
+    {
+        if(!isInputUpdated)
+            $(cateId).children[1].firstElementChild.value = inputOldValue
+
+        $(cateId).children[1].firstElementChild.setAttribute("readonly", true)
+        $(cateId).querySelector("#open-update").setAttribute("class","fa-solid fa-lock")
+        isInputLocked = true
+        
+        vNotify.info({text: "Updating has been Locked  <i class='fa-solid fa-lock'></i> ", visibleDuration: 2000, fadeInterval: 20})
+    }
+
+}
+
+
+async function updateCategory(cateId)
+{
+    cateNewValue = $(cateId).children[1].firstElementChild.value
+
+    if(isInputLocked)
+    {
+        vNotify.warning({text: "Please open the <i class='fa-solid fa-lock'></i> first", visibleDuration: 2000, fadeInterval: 20});
+        return
+    }
+
+    if(cateNewValue == inputOldValue)
+    {
+        vNotify.info({text: "No change to apply", visibleDuration: 2000, fadeInterval: 20})
+        return
+    }
+
+
+    let formData = new FormData();
+    formData.append('cateId', cateId);
+    formData.append('cateName', cateNewValue);
+    
+    let deleteResualt = await fetch("../../../controllers/admin/category/update_category.php", {
+        method: "POST",
+        body: formData
+    })
+
+    let jsonResualt = await deleteResualt.json()
+    if(deleteResualt.status == 200)
+    {
+        vNotify.success({text: "The category has been updated successfully", visibleDuration: 2000, fadeInterval: 20})
+        lockInput(cateId)
+    }
+    else
+        vNotify.error({text: jsonResualt.error, visibleDuration: 2000, fadeInterval: 20});
+
+}

@@ -35,8 +35,7 @@
                 $is_category_found = $db->isExisted("category", "id", $productDetiles[4]);
                 if(!$is_category_found)
                 {
-                    $form_errors["categoryNotFound"] = "given category is not found ";
-                    echo json_encode(array("status"=> 404, "errors" => $form_errors));
+                    echo json_encode(array("status"=> 404, "errors" => "given category is not found"));
                     exit;
                 }
                 
@@ -47,7 +46,6 @@
                 
                 $added_product = $db->insert("product", $product_row_columns, $product_row_values);
                 
-
                 if($added_product)
                 {
                         try
@@ -55,12 +53,12 @@
                                 $uploaded = move_uploaded_file($imageOldPath, "../../../$prodcutImage");
                                 $newProduct = $db->fetchLastRow("product");
                                 echo json_encode(array("status"=> 200, "success" => $newProduct));
-                            }
-                            catch (Exception $movingImageError)
-                            {
-                        $movingImageError->getMessage();
-                        exit;
-                    } 
+                        }
+                        catch (Exception $movingImageError)
+                        {
+                            $movingImageError->getMessage();
+                            exit;
+                        } 
 
                 }
 

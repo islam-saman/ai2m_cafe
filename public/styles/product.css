@@ -47,4 +47,11 @@ label
     text-align: center;
 }
 
+.categoryNameInput
+{
+    border: none;
+    border: 1px solid #c1c1c191;
+    border-radius: 3px;
+    padding: 9px;
+}
 
