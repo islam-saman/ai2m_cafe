@@ -5,7 +5,7 @@
 <?php include_with_variable('head.php', array('title' => 'Add User','link'=>'../../public/styles/register.css','not'=>"https://rawgit.com/MLaritz/Vanilla-Notify/master/dist/vanilla-notify.css")); ?>
 
 <body>
-
+  <?php include 'header.php' ?>
   <section style="background-color: #eee;width: 100%;">
     <div class="container h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">

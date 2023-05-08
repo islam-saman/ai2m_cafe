@@ -31,7 +31,7 @@ async function display(){
                         firstshow +=  `<div class='col col-1 h4' data-label='Job Id'>${JsonResualt.alldata[i].name}</div>`;
                         firstshow +=  `<div class='col col-1 h4' data-label='Job Id'>${JsonResualt.alldata[i].room_no}</div>`;   
                         firstshow +=  `<div class='col col-1 h4' data-label='Job Id'>${JsonResualt.alldata[i].secret_key}</div>`;   
-                        firstshow +=  `<div class='col col-3 ' data-label='Job Id'><img width='50' height='50'  src='../${JsonResualt.alldata[i].profile_picture}'></div>`;
+                        firstshow +=  `<div class='col col-3 ms-4' data-label='Job Id'><img width='50' height='50'  src='../${JsonResualt.alldata[i].profile_picture}'></div>`;
                         firstshow +=  `<div class='col col-4' data-label='Job Id'><a class=' btn btn-warning m-2' href='editUser.php?data=${JsonResualt.alldata[i].secret_key}'  >Edit</a><a class=' btn btn-danger' href='#' onclick='deleteuser(${JsonResualt.alldata[i].secret_key})' >Delete</a></div></li>`;
                           console.log()     
                       }
@@ -79,7 +79,10 @@ async function deleteuser(secret_key)
         {
             
             vNotify.success({text: JsonResualt.success, visibleDuration: 2000, fadeInterval: 20});
-             display();
+            setTimeout(() => {
+                display();
+            },1200)
+             
         }
     }
     else

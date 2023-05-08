@@ -4,7 +4,7 @@
 
 
 <body>
-
+   <?php include 'header.php' ?>
   <section style="background-color: #eee;width: 100%;">
     <div class="container h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
