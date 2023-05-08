@@ -46,7 +46,6 @@
                   </div>
                   <span id="Password" class="text-danger"></span>
 
-
                   <div class="col-12">
                     <button type="submit" onclick="loginAction()"
                       class="btn btn-primary px-4 float-end mt-4">login</button>

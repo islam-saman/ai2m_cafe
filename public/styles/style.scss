@@ -175,7 +175,7 @@ section{
     width: 100%;
     display: flex;
     align-items: center;
-    animation: fadeUp .4s linear;
+    //animation: fadeUp .4s linear;
 
     input{
       height: 100%;
@@ -236,7 +236,7 @@ section{
   .products-container{
     border:$border;
     border-radius: .5rem;
-    animation: fadeUp .4s linear;
+    //animation: fadeUp .4s linear;
 
     .box-container{
       @include grid(30rem);
@@ -300,7 +300,7 @@ section{
     margin-top: 2rem;
     border:$border;
     border-radius: .5rem;
-    animation: fadeUp .4s linear .4s backwards;
+    //animation: fadeUp .4s linear .4s backwards;
 
     .box{
       padding:1.5rem;
@@ -338,7 +338,7 @@ section{
     border:$border;
     padding: 2rem;
     border-radius: .5rem;
-    animation: fadeUp .4s linear;
+    //animation: fadeUp .4s linear;
 
     h3{
       padding-bottom: 1rem;
