@@ -3,14 +3,17 @@ const tbody = document.getElementById("orderData");
 const tableRow = document.getElementsByClassName("tableRow");
 const table = document.querySelector("table");
 const card = document.getElementsByClassName("card");
-function getAllOrders() {
-    fetch('http://localhost/ai2m_cafe/controllers/user/my_order/order.php')
+function getAllOrders(userId) {
+
+    if(!userId)
+        userId = ""
+
+    fetch(`http://localhost/ai2m_cafe/controllers/user/my_order/order.php?userId=${userId}`)
         .then(async (res) => {
             await drawTable(res);
         })
         .catch((error) => console.log(error))
 }
-getAllOrders();
 
 function openOrderDetails(id) {
     let element = document.getElementById(id);
@@ -71,6 +74,7 @@ function filterOrders() {
 }
 
 async function  drawTable(res){
+    tbody.innerHTML = ""
     let data = await res.json();
     if(data['is_login']===false){
         location.replace("http://localhost/ai2m_cafe/views/login.php");
@@ -83,10 +87,10 @@ async function  drawTable(res){
             tbody.innerHTML += `
                     <tr class="tableRow" id="${row["id"]}"  disabled="false">
                         <td>
-                        <div class="d-flex justify-content-around">
-                             <p>${row['id']}</p>
-                             <div><i onclick="openOrderDetails(${row['id']})" class="fa fa-plus-circle" aria-hidden="true"></i></div>            
-                        </div>
+                            <div class="d-flex justify-content-around">
+                                <p>${row['id']}</p>
+                                <div><i onclick="openOrderDetails(${row['id']})" class="fa fa-plus-circle" aria-hidden="true"></i></div>            
+                            </div>
                         </td>
                         <td>${row['date']}</td>
                         <td><i class="fa fa-check-circle-o green"></i><span class="ms-1">${row['status']} </span></td>

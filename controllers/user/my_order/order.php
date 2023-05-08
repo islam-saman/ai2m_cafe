@@ -8,18 +8,14 @@ session_start();
 if(!isset($_SESSION['is_login'])){
 
     echo json_encode(["is_login"=>false]);
-
     exit;
 }
 
-if(!isset($_SESSION['id']))
-{
-    $user_id = $_GET['userId'];
-}
-else
-{
+if(empty($_GET["userId"]))
     $user_id = $_SESSION['id'];
-}
+
+else
+    $user_id = $_GET["userId"];
 
 
 //exit;

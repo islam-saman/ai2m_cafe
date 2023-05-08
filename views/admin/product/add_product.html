@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://rawgit.com/MLaritz/Vanilla-Notify/master/dist/vanilla-notify.css">
     <link rel="stylesheet" href="../../../public/styles/product.css">
 </head>
-<body>
+<body onload="loadCategoriesList()">
     <section class="container">
         <form class="add-product-form" id="adding-form" method="post" enctype="multipart/form-data">
             <div class="mb-3 row">
@@ -34,7 +34,7 @@
             <div class="mb-3 row">
                 <label for="productCateogry" class="col-4 col-form-label">Cateogry</label>
                 <div class="col-4">
-                    <select class="form-select" name="categoryId" aria-label="Default select example" id="productCateogry"  onload="loadCategoriesList()" oninput="productDetilesBuilder(this)">
+                    <select class="form-select" name="categoryId" aria-label="Default select example" id="productCateogry"  oninput="productDetilesBuilder(this)">
                         <option disabled selected>Choose a Cateogry</option>
                     </select>
                     <span id="categoryIdIsRquried" class="text-danger"></span>
@@ -70,7 +70,6 @@
                     <div class="modal-body text-center">
                         <input type="text" placeholder="Cateogry Name" name="categoryName" class="categoryNameInput" oninput="getCategoryValue(this)">
                         <span id="cateError" class="text-danger"></span>
-
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

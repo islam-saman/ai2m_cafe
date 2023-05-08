@@ -2,7 +2,7 @@
 
 <?php include_with_variable('head.php', array('title' => 'My Orders', 'link' => '../../public/styles/table.css', 'fontawesome' => 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css')); ?>
 
-<body>
+<body onload="getAllOrders()">
 
 <!-- header section starts  -->
 
@@ -11,6 +11,7 @@
 <!-- header section ends  -->
 
 <!-- main section starts -->
+
 
 <main>
     <div class="container mt-5 px-2">

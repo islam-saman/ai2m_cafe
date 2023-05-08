@@ -16,7 +16,7 @@ class Database
         $this->connect();
 
     }
-    private function connect()
+    public function connect()
     {
         try
         {
