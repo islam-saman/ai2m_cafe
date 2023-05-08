@@ -11,9 +11,6 @@ include '../env.php';
 
 $userInput = json_decode($_POST["data"], true);
 
-
-    
-
 $email              = $userInput["email"];
 $password           = $userInput["password"];
 $form_errors = array();
@@ -39,12 +36,14 @@ if(empty($password) and isset($password)){
     {
         try
         {
-            $db = new Database(dbUser,dbPass,dbName);
+            $db = new Database("root","290315","ai2m"); 
             if($db)
             {
+
+    
                // first check of the category is existed or not
                 $is_email_found = $db->isExisted("user", "email", $userInput["email"]);
-
+        
                 if($is_email_found)
                 {
                     $Data = $db->fetchOne("user", "email", $userInput["email"]);
@@ -56,14 +55,22 @@ if(empty($password) and isset($password)){
                     }
                     else
                     {
-                        echo json_encode(array("status"=> 200, "success" => "Login successfully"));
+                       
                         session_start();
                         $_SESSION['user_email']=$email;
                         $_SESSION['is_login']=true;
                         $_SESSION['image']=$Data["profile_picture"];
                         $_SESSION['name']=$Data["name"];
                         $_SESSION['id']=$Data["id"];
-                        // header("Location:../views/test.php"); 
+                        if($Data['is_admin'] == '0')
+                        {
+                            echo json_encode(array("status"=> 200, "is_admin" => false));
+                        }
+                        else
+                        {
+                            echo json_encode(array("status"=> 200, "is_admin" => true));
+                        }
+                      
                     }
                 }
                 else
@@ -72,6 +79,7 @@ if(empty($password) and isset($password)){
                     echo json_encode(array("status"=> 404, "errors" => $form_errors));
                     exit;
                 }
+
             }
         }
         catch(Exception $dbConError)

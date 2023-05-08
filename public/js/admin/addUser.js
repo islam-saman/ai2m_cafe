@@ -116,7 +116,7 @@ async function adduser()
             Ext.innerHTML =""
         }
         
-    var userImage = document.getElementById("image").files[0]
+     var userImage = document.getElementById("image").files[0]
      var formData = new FormData();
      formData.append('user', JSON.stringify(user)); 
 

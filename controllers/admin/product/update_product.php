@@ -27,7 +27,7 @@
     {
         try
         {
-            $db = new Database(dbUser,dbPass, dbName);    
+            $db = new Database(dbUser, dbPass, dbName);    
             if($db)
             {
                 $productDetiles = $formValidationResualt[1];

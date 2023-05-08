@@ -1,8 +1,7 @@
-
-
 <?php include("../../helpers/include_with_variable.php") ?>
 
-<?php include_with_variable('head.php', array('title' => 'Add User','link'=>'../../public/styles/register.css','not'=>"https://rawgit.com/MLaritz/Vanilla-Notify/master/dist/vanilla-notify.css")); ?>
+<?php include_with_variable('head.php', array('title' => 'Eidt User','link'=>'../../public/styles/register.css','not'=>"https://rawgit.com/MLaritz/Vanilla-Notify/master/dist/vanilla-notify.css")); ?>
+
 
 <body>
 
@@ -15,9 +14,9 @@
               <div class="row justify-content-center">
                 <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
 
-                  <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Add User</p>
+                  <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4" id="header"></p>
 
-                  <form class="mx-1 mx-md-4" id="add_user" method="post" enctype="multipart/form-data" >
+                  <form class="mx-1 mx-md-4" id="edit_user" method="post" enctype="multipart/form-data" >
     
 
                     <div class="d-flex flex-row align-items-center mb-4">
@@ -83,13 +82,10 @@
                       </div>
                     </div>
 
-                    <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                    <p>Back to Users Page?</p><a href="./all_user.php" style="color:blue;">Click Here</a>
-                    </div>
+                  
 
                     <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                      <button type="submit" onclick="adduser()" class="btn btn-primary btn-lg">Save</button>
-                      <button type="reset" class="btn btn-primary btn-lg ms-3">Reset</button>
+                      <button type="submit" onclick="saveNewData()" class="btn btn-primary btn-lg">Save</button>
                     </div>
 
                   </form>
@@ -115,6 +111,6 @@
        
    
     <script src="../../public/js/bootstrap5.js"></script> 
-    <script src="../../public/js/admin/addUser.js"></script> 
+    <script src="../../public/js/admin/editUser.js"></script>  
     <script src="https://rawgit.com/MLaritz/Vanilla-Notify/master/dist/vanilla-notify.min.js"></script>
 </body>

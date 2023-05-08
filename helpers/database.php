@@ -183,6 +183,34 @@ class Database
             return false;
     }
 
+    public function updateBysecretkey(string $tableName, array $columns, array $columnsValue, string $key)
+    {
+        if (!$this->connect())
+            throw new Exception;
+
+        $prepareSet = "";
+        for($index = 0; $index < count($columns); $index++)
+        {
+            if($index === 0)
+            {
+                $prepareSet .= "$columns[$index] = '$columnsValue[$index]'";
+            }
+            else
+            {
+                $prepareSet .= ","."$columns[$index] = '$columnsValue[$index]'";   
+            }
+        }
+
+        $updateQuery = "UPDATE `$tableName` SET $prepareSet WHERE secret_key=$key";
+        $updateStatement = $this->dbConnection->prepare($updateQuery);
+        $updateStatement->execute();
+
+        if($updateStatement->rowCount())
+            return true;
+        else
+            return false;
+    }
+
     // be carfull ... since the key here may not be primary then it may delete more than one recored
     public function deleteOne(string $tableName, string $primayKey, string $value)
     {
@@ -374,10 +402,6 @@ class Database
             return [];
         }
     }
-
-
-
-
 
 }
 

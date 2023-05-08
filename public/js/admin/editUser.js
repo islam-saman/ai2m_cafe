@@ -1,0 +1,215 @@
+
+var url = window.location.href
+var secret_key = url.slice(url.indexOf("=") + 1)
+let data =
+{
+    secretkey: ""
+}
+
+var oldImage;
+let formErrors;
+let user =
+{
+    Name: "",
+    email: "",
+    password: "",
+    ConfirmPassword: "",
+    Room: "",
+    Ext: "",
+    secretkey:"",
+}
+
+function userDetilesBuilder(elem) {
+    user[elem.name] = elem.value
+}
+
+
+async function getoldData() {
+    data["secretkey"] = secret_key;
+
+    var formData = new FormData();
+    formData.append('data', JSON.stringify(data));
+
+    let Resualt = await fetch("../../controllers/admin/oldUserData.php", { method: "POST", body: formData })
+
+    if (Resualt.ok) {
+        const JsonResualt = await Resualt.json();
+
+        if (JsonResualt.status == 401 || JsonResualt.status == 404) {
+            console.log("something went wrong, try again later")
+        }
+        else {
+
+            $("header").innerHTML = `Edit User ${JsonResualt.data.name}`
+            $("name").value = JsonResualt.data.name
+            $("user_email").value = JsonResualt.data.email
+            $("user_password").value = JsonResualt.data.password
+            $("cpassword").value = JsonResualt.data.password
+            $("Room_No").value = JsonResualt.data.room_no
+            $("ext").value = JsonResualt.data.ext
+            oldImage = JsonResualt.data.profile_picture
+            user =
+            {
+                Name: JsonResualt.data.name,
+                email: JsonResualt.data.email,
+                password:JsonResualt.data.password,
+                ConfirmPassword:JsonResualt.data.password,
+                Room: JsonResualt.data.room_no,
+                Ext: JsonResualt.data.ext,
+                secretkey:secret_key
+            }
+        }
+    }
+    else {
+        console.log("something went wrong, try again later")
+    }
+}
+
+getoldData()
+
+async function saveNewData() {
+    $("edit_user").addEventListener('submit', event => {
+        event.preventDefault();
+    });
+    var name = $("name").value;
+    var Name = $("Name");
+    if (name == '') {
+        Name.innerHTML = 'Name is required';
+    }
+    else if (name.length < 4) {
+        Name.innerHTML = 'Name must be at least 4 characters';
+    }
+    else if (name.length > 45) {
+        Name.innerHTML = 'Name not exceed 45 characters';
+    }
+    else {
+        Name.innerHTML = ""
+    }
+
+    var email = $("user_email").value;
+    var Email = $("email");
+    var pattern_email = /^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/;
+    if (email == '') {
+        Email.innerHTML = 'email is required';
+    }
+    else if (!pattern_email.test(email)) {
+        Email.innerHTML = 'email must match example@example.com';
+    }
+    else {
+        Email.innerHTML = ""
+    }
+
+    var password = $("user_password").value;
+    var Password = $("password");
+    var pattern_pass = /^[a-z _]{8}$/;
+    if (password == '') {
+        Password.innerHTML = 'password is required';
+    }
+    else if (!pattern_pass.test(password)) {
+        Password.innerHTML = 'error password';
+    }
+    else {
+        Password.innerHTML = ""
+    }
+
+
+    var cpassword = $("cpassword").value;
+    var ConfirmPassword = $("ConfirmPassword");
+    if (cpassword == '') {
+        ConfirmPassword.innerHTML = 'confirmPassword is required';
+    }
+    else if (cpassword != password) {
+        ConfirmPassword.innerHTML = 'Confirm_Password not matched';
+    }
+    else {
+        ConfirmPassword.innerHTML = ""
+    }
+
+
+    var Room_No = $("Room_No").value;
+    var Room = $("Room");
+    if (Room_No == '') {
+        Room.innerHTML = 'Room is required';
+    }
+    else {
+        Room.innerHTML = ""
+    }
+
+    var ext = $("ext").value;
+    var Ext = $("Ext");
+    if (ext == '') {
+        Ext.innerHTML = 'Ext is required';
+    }
+    else {
+        Ext.innerHTML = ""
+    }
+
+
+    var userImage = document.getElementById("image").files[0]
+    var formData = new FormData();
+    formData.append("user", JSON.stringify(user));
+
+    if (userImage) {
+
+        let imageSize = userImage.size / 1000
+
+        if (imageSize > 2000) {
+            vNotify.error({ text: "Maxmimum size of the image is 2MB", visibleDuration: 2000, fadeInterval: 20 });
+            return
+        }
+        else {
+            formData.append("userImage", userImage);
+        }
+    }
+    // else {
+    //     // console.log(userImage)*****************************************************************************
+        
+    //     formData.append("userImage", oldImage);
+    // }
+
+    let editResualt = await fetch("../../controllers/admin/editUser.php", { method: "POST", body: formData })
+
+
+    if (editResualt.ok) {
+
+        const JsonResualt = await editResualt.json();
+
+        if (JsonResualt.status == 401 || JsonResualt.status == 404) {
+            console.log(JsonResualt.errors);
+            formErrors = JsonResualt.errors
+            console.log(formErrors);
+
+            for (const key in formErrors) {
+                if (formErrors[key] == JsonResualt.errors[key])
+                    $(key).innerHTML = JsonResualt.errors[key]
+                else
+                    $(key).innerHTML = ""
+
+            }
+        }
+        else {
+            for (const key in formErrors) {
+                $(key).innerHTML = ""
+            }
+
+            $("edit_user").reset()
+            vNotify.success({ text: JsonResualt.success, visibleDuration: 2000, fadeInterval: 20 });
+            setTimeout(() => {
+                window.location.href='http://localhost/ai2m_cafe/views/admin/all_user.php'
+            },1200)
+             
+        }
+    }
+    else {
+        console.log("something went wrong, try again later")
+    }
+
+
+
+}
+
+
+
+function $(identifer) {
+    return document.getElementById(identifer)
+}
