@@ -75,12 +75,12 @@
          <h1>Login Here</h1>
   <form id="login_form" method="post">
     <div style="margin-bottom: 10px;">
-      <p>User name</p>
+<!--      <p>User name</p>-->
       <input type="text" name="email" id="email"  placeholder="Enter Username" oninput="userDetilesBuilder(this)">
       <span id="Email"  style="color: rgb(187, 44, 44);"></span>
     </div>
     <div style="margin-bottom: 10px;">
-      <p>Password</p>
+<!--      <p>Password</p>-->
       <input name="password"  type="password" 
       placeholder="Enter Password" id="password" oninput="userDetilesBuilder(this)">
       <span id="Password" style="color: rgb(187, 44, 44);"></span>
@@ -88,7 +88,7 @@
     <div>
       <input type="submit" name="" onclick="loginAction()" value="Login">
     </div>
-        <a href="#" onclick="openpopup()">lost your Password?</a><br>
+        <a class="lost-pass" href="#" onclick="openpopup()">Lost your Password?</a><br>
   </form>
     </div>
 </div>

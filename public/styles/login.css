@@ -52,6 +52,8 @@ h1{
     height: 40px;
     color: #fff;
     font-size: 16px;
+    padding:15px;
+    margin-top: 5px;
 } 
 .loginbox input[type="submit"]
 {
@@ -62,6 +64,8 @@ h1{
     color: #fff;
     font-size: 18px;
     border-radius: 20px;
+    margin-top: 10px;
+
 }
 .loginbox input[type="submit"]:hover
 {
@@ -158,3 +162,12 @@ a {
     justify-content:space-between !important ;
     margin-top: 30px;
 }
+.username{
+    margin-bottom: 5px;
+}
+
+.lost-pass:hover{
+    color: #fa3b3b;
+}
+
+

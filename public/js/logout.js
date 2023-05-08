@@ -4,7 +4,9 @@ let username = document.getElementById("username");
 
 
 function logout(){
-    fetch("http://localhost/ai2m_cafe/helpers/logout.php")
+    fetch("http://localhost/ai2m_cafe/helpers/logout.php");
+    window.location.href='http://localhost/ai2m_cafe/views/login.php';
+
 }
 
 function getUserData(){
