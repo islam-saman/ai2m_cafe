@@ -403,10 +403,6 @@ class Database
         }
     }
 
-
-
-
-
 }
 
 ?>

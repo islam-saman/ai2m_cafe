@@ -43,7 +43,6 @@ function openOrderDetails(id) {
             })
             .catch((error) => console.log(error));
     }
-
 }
 
 function filterOrders() {

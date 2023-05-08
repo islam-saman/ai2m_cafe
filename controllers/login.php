@@ -36,7 +36,7 @@ if(empty($password) and isset($password)){
     {
         try
         {
-            $db = new Database("root","1191997","ai2m"); 
+            $db = new Database("root","290315","ai2m"); 
             if($db)
             {
 
