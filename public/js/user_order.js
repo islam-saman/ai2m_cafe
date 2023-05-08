@@ -11,6 +11,9 @@ let userContainer = ``;
 let userArray = [];
 let user_dropdown = document.getElementById("user_dropdown");
 
+
+
+
 function getProductsForUser(){
     fetch(`http://localhost/ai2m_cafe/controllers/user/get_products.php`)
         .then(async (res)=> {
@@ -53,7 +56,7 @@ function displayProduct(){
 
     for (const p of prdList) {
         productContainer += `
-         <div class='box' onclick='addOrder(${p.id})'> 
+         <div class='box col-3 mx-2' style="margin: 10px;background: #bababa;" onclick='addOrder(${p.id})'> 
             <input class='prdId' name='prdId' type='hidden' value=${p.id} />
             <div class='image'>
                 <a style='cursor:pointer;'> 
@@ -62,14 +65,6 @@ function displayProduct(){
             </div>
             <div class='content'>
                 <h3 class='prdName'>${p.name}</h3>
-                <div class='stars'>
-                    <i class='fas fa-star'></i>
-                    <i class='fas fa-star'></i>
-                    <i class='fas fa-star'></i>
-                    <i class='fas fa-star'></i>
-                    <i class='fas fa-star-half-alt'></i>
-                    <span> (50) </span>
-                </div>
                 <div>
                     <span class='prdPrice'>${p.price}</span> 
                 </div>

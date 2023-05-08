@@ -25,10 +25,10 @@ function openOrderDetails(id) {
                 orderProducts.forEach(row => {
                     let newData = document.createElement('td')
                     newData.innerHTML = `
-                        <div class="card" style="width: 18rem;">
-                          <img src="${row['image']}" class="card-img-top" alt="...">
+                        <div class="card" style="width: 18rem;height: 30rem">
+                          <img src="http://localhost/ai2m_cafe/public/images/products/${row['image']}" height="230" class="card-img-top" alt="...">
                           <div class="card-body">
-                            <h2 class="card-title">Name : ${row['name']}</h2>
+                            <h2 class="card-title" style="font-size: 1.5em">Name : ${row['name']}</h2>
                             <p class="card-text">Price : ${row['price']}</p>
                             <p class="card-text">Quantity : ${row['quantity']}</p>
                             <p class="btn btn-primary">Sub Total : ${row['sub_total']}</p>
@@ -86,11 +86,11 @@ async function  drawTable(res){
                         <td>
                         <div class="d-flex justify-content-around">
                              <p>${row['id']}</p>
-                             <div><i onclick="openOrderDetails(${row['id']})" class="fa fa-plus-circle" aria-hidden="true"></i></div>            
+                             <div ><i style="cursor: pointer" onclick="openOrderDetails(${row['id']})" class="fa fa-plus-circle" aria-hidden="true"></i></div>            
                         </div>
                         </td>
                         <td>${row['date']}</td>
-                        <td><i class="fa fa-check-circle-o green"></i><span class="ms-1">${row['status']} </span></td>
+                        <td><i class="fa fa-check-circle-o green" ></i><span class="ms-1">${row['status']} </span></td>
                         <td><img src="https://i.imgur.com/VKOeFyS.png" width="25">${row['name']}</td>
                         <td>${row['room']}</td>
                         <td>${row['total']}$</td>

@@ -23,14 +23,14 @@
                 <table class="table table-responsive table-borderless">
                     <thead>
                         <tr class="bg-light">
-                            <th scope="col" width="5%">#</th>
-                            <th scope="col" width="20%">Date</th>
-                            <th scope="col" width="20%">Status</th>
-                            <th scope="col" width="20%">Name</th>
-                            <th scope="col" width="10%">Room</th>
-                            <th scope="col" width="10%">Total Price</th>
-                            <th scope="col" width="5%">Ext</th>
-                            <th scope="col" class="text-end" width="10%">Action</th>
+                            <th scope="col">#</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Room</th>
+                            <th scope="col">Total Price</th>
+                            <th scope="col">Ext</th>
+                            <th scope="col" class="text-end">Action</th>
                         </tr>
                     </thead>
                     <tbody id="orderData">
