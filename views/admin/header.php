@@ -8,7 +8,7 @@
         <a href="#popular">popular</a>
         <a href="#menu">menu</a>
         <a href="/ai2m_cafe/views/admin/manual_order.php">order</a>
-        <a href="#blogs">blogs</a>
+        <a href="./all_user.php">All User</a>
     </nav>
 
     <div class="icons">

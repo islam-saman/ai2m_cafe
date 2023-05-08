@@ -17,15 +17,15 @@ $form_errors = array();
 
 // validate email
 if(empty($email) and isset($email)){
-    $form_errors['Email']='email is required';
+    $form_errors['Email']='Email is required';
 }
 elseif(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    $form_errors['Email']='email must match example@example.com';
+    $form_errors['Email']='Email must match example@example.com';
 }
 
 // validate password
 if(empty($password) and isset($password)){
-    $form_errors['Password']='password is required';
+    $form_errors['Password']='Password is required';
 }
 
     if($form_errors)
@@ -36,7 +36,7 @@ if(empty($password) and isset($password)){
     {
         try
         {
-            $db = new Database("root","1191997","ai2m"); 
+            $db = new Database(dbUser,dbPass,dbName); 
             if($db)
             {
 

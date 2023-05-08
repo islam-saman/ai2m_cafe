@@ -6,6 +6,7 @@ error_reporting(E_ALL);
 header("Access-Control-Allow-Origin: *");
 
 include '../../helpers/database.php';
+include '../../env.php';
 
 
   $userInput = json_decode($_POST["user"], true);
@@ -108,7 +109,7 @@ include '../../helpers/database.php';
     {
         try
         {
-            $db = new Database("root","1191997","ai2m"); 
+            $db = new Database(dbUser,dbPass,dbName); 
             if($db)
             {
                 

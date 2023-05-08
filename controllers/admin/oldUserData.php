@@ -6,7 +6,7 @@ error_reporting(E_ALL);
 header("Access-Control-Allow-Origin: *");
 
  include '../../helpers/database.php';
-
+  include '../../env.php';
  
 $Data = json_decode($_POST["data"], true);
 
@@ -14,7 +14,7 @@ $secretkey               = $Data["secretkey"];
 
 try
 {
-    $db = new Database("root","1191997","ai2m"); 
+    $db = new Database(dbUser,dbPass,dbName); 
     if($db)
     {
 
