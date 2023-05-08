@@ -11,7 +11,17 @@ if(!isset($_SESSION['is_login'])){
 
     exit;
 }
-$user_id = $_SESSION['id'];
+
+if(!isset($_SESSION['id']))
+{
+    $user_id = $_GET['userId'];
+}
+else
+{
+    $user_id = $_SESSION['id'];
+}
+
+
 //exit;
 $db = new Database(dbUser, dbPass, dbName);
 
@@ -20,10 +30,7 @@ if(isset($_GET['id'])){
     $id = $_GET['id'];
     // Query the database to get the order details for the specified order ID
     try {
-//        SELECT `order_product`.*, `product`.* FROM `order`
-//              INNER JOIN `order_product` ON `order`.`id` = `order_product`.`order_id`
-//              INNER JOIN `product` ON `order_product`.`product_id` = `product`.`id`
-//              WHERE `order_product`.`order_id` = 5
+
         $order_products = $db->join_three_tables(
             "order", "order_product", "product",
             "`order`.`id` = `order_product`.`order_id`",

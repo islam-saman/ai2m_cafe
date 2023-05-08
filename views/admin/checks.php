@@ -1,6 +1,6 @@
 <?php include("../../helpers/include_with_variable.php") ?>
 
-<?php include_with_variable('head.php', array('title' => 'My Orders', 'link' => '../../public/styles/table.css', 'fontawesome' => 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css')); ?>
+<?php include_with_variable('head.php', array('title' => 'Checks', 'link' => '../../public/styles/table.css', 'fontawesome' => 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css')); ?>
 
 <body>
 
@@ -15,7 +15,7 @@
 <main>
     <div class="container mt-5 px-2">
 
-        <h1 class="text-center mb-5" style="font-size: 3.7rem;">Orders</h1>
+        <h1 class="text-center mb-5" style="font-size: 3.7rem;">Checks</h1>
         <div class="mb-2 d-flex justify-content-between align-items-center">
 
         </div>
@@ -34,14 +34,14 @@
             <table class="table table-responsive table-borderless">
                 <thead>
                 <tr class="bg-light">
-                    <th scope="col">#</th>
-                    <th scope="col">Date</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Room</th>
-                    <th scope="col">Total Price</th>
-                    <th scope="col">Ext</th>
-                    <th scope="col">Action</th>
+                    <th scope="col" width="10%">#</th>
+                    <th scope="col" width="20%">Date</th>
+                    <th scope="col" width="20%">Status</th>
+                    <th scope="col" width="20%">Name</th>
+                    <th scope="col" width="10%">Room</th>
+                    <th scope="col" width="8%">Total Price</th>
+                    <th scope="col" width="5%">Ext</th>
+                    <th scope="col" class="text-end">Action</th>
                 </tr>
                 </thead>
                 <tbody id="orderData">

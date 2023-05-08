@@ -23,7 +23,6 @@ function validateProductForm($productInput)
     elseif(!preg_match($name_pattern, $name) )
         $form_errors["invaildName"] = "alphabetic character and numbers only";
     
-
     if(!isset($price) or empty($price) )
         $form_errors["priceIsRquried"] = "Price is rquired ";
     
