@@ -9,6 +9,13 @@ include '../../helpers/database.php';
 include '../../env.php';
 
 
+session_start();
+if(!isset($_SESSION['is_login']) || !$_SESSION['is_login']){
+    echo json_encode(["redirect"=>true]);
+    exit;
+}
+
+
   $userInput = json_decode($_POST["user"], true);
 
     

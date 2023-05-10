@@ -8,6 +8,13 @@ header("Access-Control-Allow-Origin: *");
  include '../../helpers/database.php';
  include '../../env.php';
 
+session_start();
+if(!isset($_SESSION['is_login']) || !$_SESSION['is_login']){
+    echo json_encode(["redirect"=>true]);
+    exit;
+}
+
+
  
 $Data = json_decode($_POST["data"], true);
 

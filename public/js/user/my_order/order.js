@@ -9,8 +9,7 @@ function getAllOrders() {
             await drawTable(res);
         })
         .catch((error) => console.log(error))
-}
-getAllOrders();
+}getAllOrders();
 
 function openOrderDetails(id) {
     let element = document.getElementById(id);
