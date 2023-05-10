@@ -85,6 +85,41 @@ function displayOrder() {
     tbodyTable.innerHTML = orderContainer;
 }
 
+function filterProducts(event) {
+    const searchValue = document.getElementById("searchInput").value.toLowerCase();
+    event.preventDefault();
+    fetch(`http://localhost/ai2m_cafe/controllers/user/get_products.php`)
+        .then(async (res)=> {
+            data = await res.json();
+            if (data['redirect']){
+                console.log("login");
+                window.location.href = '../../views/login.php';
+            } else {
+                prdList = data["prd"];
+                user_id = data["user_id"];
+
+                // Filter prdList based on the search input value
+                const filteredList = prdList.filter(prd => {
+                    const name = prd.name.toLowerCase();
+                    return name.indexOf(searchValue) !== -1;
+                });
+                if (filteredList.length===0){
+                    document.getElementById("prd-box").innerHTML = `
+                         <h2 class="text-center fw-bold fst-italic">No Products Found</h2>
+                    `;
+                }else{
+                    // Display the filtered list of products
+                    prdList = filteredList;
+                    displayProduct();
+                }
+            }
+        });
+}
+
+// Add an event listener for input changes to enable autocomplete
+document.getElementById("searchInput").addEventListener("input", filterProducts);
+
+
 
 async function addOrder(index) {
     fetch(`http://localhost/ai2m_cafe/controllers/user/user_order.php?id=${index}`)
