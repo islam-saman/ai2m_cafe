@@ -9,9 +9,9 @@
 <div class="container">
     <div class="row">
         <div class="col-12 my-5">
-            <form class="d-flex " role="search">
-                <input class="form-control px-3 py-4 me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success px-5" type="submit">Search</button>
+            <form class="d-flex" role="search">
+                <input class="form-control px-3 py-4 me-2" type="search" id="searchInput" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success px-5" onclick="filterProducts(event)" type="submit">Search</button>
             </form>
         </div>
     </div>
