@@ -5,7 +5,7 @@ var orderArray = [];
 const prdId = document.getElementById("prdId");
 let prd;
 let prdList = [];
-let users;
+let  s;
 let user_id = 0;
 let userContainer = ``;
 let userArray = [];
