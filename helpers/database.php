@@ -109,7 +109,7 @@ class Database
             throw new Exception;
             
 
-        $selectQuery = "SELECT * FROM $tableName ORDER BY id DESC LIMIT 1";
+        $selectQuery = "SELECT * FROM `$tableName` ORDER BY id DESC LIMIT 1";
         $selectStatement = $this->dbConnection->prepare($selectQuery);
         $selectStatement->execute();        
 
@@ -227,8 +227,6 @@ class Database
             return false;   
 
     }
-
-
 
     public function isExisted(string $tableName, string $primaryKey, string $value)
     {

@@ -3,6 +3,7 @@ const tbody = document.getElementById("orderData");
 const tableRow = document.getElementsByClassName("tableRow");
 const table = document.querySelector("table");
 const card = document.getElementsByClassName("card");
+
 function getAllOrders() {
     fetch('http://localhost/ai2m_cafe/controllers/user/my_order/order.php')
         .then(async (res) => {
@@ -134,4 +135,3 @@ function cancelOrder(id) {
         }
     })
 }
-

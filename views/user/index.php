@@ -1,11 +1,15 @@
 <?php include("../../helpers/include_with_variable.php") ?>
 
+
 <?php include_with_variable('head.php', array('title' => 'Home' , 'link'=>'../../public/styles/table.css')); ?>
 
 
 <body>
 <?php include ("./header.php") ?>
+
     <div class="container">
+
+
         <div class="row">
             <div class="col-12 my-5">
                 <form class="d-flex" role="search">
@@ -14,6 +18,8 @@
                 </form>
             </div>
         </div>
+
+
         <div class="row">
             <div class="col-12">
                     <section class="popular" id="popular">
@@ -23,7 +29,19 @@
                     </section>
                 </div>
         </div>
-            <div class="row  align-items-baseline">
+
+
+        <div class="row  align-items-baseline my-5">
+            <div class="col-12 col-md-8">
+                <section class="bg-light rounded-4" id="popular">
+                    <div class="box-container row d-flex justify-content-center" id="last-product">
+                    </div>
+                </section>
+            </div>
+        </div>
+
+
+        <div class="row  align-items-baseline">
                 <div class="col-12 col-md-8">
                     <section class="bg-light rounded-4" id="popular">
                         <div class="box-container row d-flex justify-content-center" id="prd-box">
@@ -89,6 +107,7 @@
 
             </div>
             </div>
+
 
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.min.js" integrity="sha512-0w8aS6z7q3t3AL/kpUEZPJ9XZTrbYugbnRATcmmV7yE8IMIB2fZlIEMl+6thHJx8d0arI3PqU+3/06SMv6ohcA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

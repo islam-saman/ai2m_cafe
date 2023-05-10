@@ -10,6 +10,43 @@ let user_id = 0;
 let userContainer = ``;
 let userArray = [];
 let user_dropdown = document.getElementById("user_dropdown");
+let last_product=document.getElementById("last-product");
+let lastestProducts = [];
+let lastestProductsContainer = ``;
+
+function getLastProducts(){
+    lastestProductsContainer = ``;
+    lastestProducts = [];
+
+    fetch(`http://localhost/ai2m_cafe/controllers/last_order.php`)
+        .then(async (res)=>{
+            data = await res.json();
+            if (data['redirect']){
+                window.location.href = '../../views/login.php';
+            }else{
+                lastestProducts = data['last_products'];
+                lastestProducts.forEach((p)=>{
+                    lastestProductsContainer += `
+                     <div class='box col-3 mx-2' style="margin: 10px;background: #bababa;" onclick='addOrder(${p.id})'> 
+                        <input class='prdId' name='prdId' type='hidden' value=${p.id} />
+                        <div class='image'>
+                            <a style='cursor:pointer;'> 
+                                <img class='w-100' style='height:150px;border-radius:10px'  src="../../public/images/products/${p.image}" alt='${p.id}'>
+                            </a>
+                        </div>
+                        <div class='content'>
+                            <h3 class='prdName'>${p.name}</h3>
+                            <div>
+                                <span class='prdPrice'>${p.price}</span> 
+                            </div>
+                        </div>
+                    </div>    `
+                })
+                last_product.innerHTML = lastestProductsContainer;
+            }
+        })
+}getLastProducts();
+
 
 function getProductsForAdmin(){
     fetch(`http://localhost/ai2m_cafe/controllers/admin/home.php`)
@@ -47,14 +84,6 @@ function displayProduct(){
             </div>
             <div class='content'>
                 <h3 class='prdName'>${p.name}</h3>
-                <div class='stars'>
-                    <i class='fas fa-star'></i>
-                    <i class='fas fa-star'></i>
-                    <i class='fas fa-star'></i>
-                    <i class='fas fa-star'></i>
-                    <i class='fas fa-star-half-alt'></i>
-                    <span> (50) </span>
-                </div>
                 <div>
                     <span class='prdPrice'>${p.price}</span> 
                 </div>

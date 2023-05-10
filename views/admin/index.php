@@ -19,12 +19,25 @@
         <div class="col-12 col-md-8">
             <div class="row">
                 <section class="popular" id="popular">
-
                     <div class="heading">
                         <span>popular food</span>
                         <h3>our special dishes</h3>
                     </div>
+                </section>
+            </div>
 
+
+            <div class="row  align-items-baseline my-5">
+                <div class="col-12 col-md-8">
+                    <section class="bg-light rounded-4" id="popular">
+                        <div class="box-container row d-flex justify-content-center" id="last-product">
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <div class="row align-items-baseline my-5">
+                <section>
                     <div class="box-container" id="prd-box">
                     </div>
                 </section>
