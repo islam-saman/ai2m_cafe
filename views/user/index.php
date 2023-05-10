@@ -8,9 +8,9 @@
     <div class="container">
         <div class="row">
             <div class="col-12 my-5">
-                <form class="d-flex " role="search">
-                    <input class="form-control px-3 py-4 me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success px-5" type="submit">Search</button>
+                <form class="d-flex" role="search">
+                    <input class="form-control px-3 py-4 me-2" type="search" id="searchInput" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success px-5" onclick="filterProducts(event)" type="submit">Search</button>
                 </form>
             </div>
         </div>
@@ -91,5 +91,6 @@
             </div>
 
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.min.js" integrity="sha512-0w8aS6z7q3t3AL/kpUEZPJ9XZTrbYugbnRATcmmV7yE8IMIB2fZlIEMl+6thHJx8d0arI3PqU+3/06SMv6ohcA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="../../public/js/user_order.js"></script>
 </body>

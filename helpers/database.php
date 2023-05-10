@@ -402,6 +402,21 @@ class Database
             return [];
         }
     }
+    public function search($table,$keyword,$value){
+        if (!$this->connect()) {
+            throw new Exception;
+        }
+
+        $query = "select * from $table where $keyword like '%$value%'";
+        $statement = $this->dbConnection->prepare($query);
+        $statement->execute();
+
+        if ($statement->rowCount()!= 0) {
+            return $statement->fetchAll(PDO::FETCH_ASSOC);
+        } else {
+            return [];
+        }
+    }
 
 }
 
