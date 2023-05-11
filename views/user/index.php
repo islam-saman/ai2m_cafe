@@ -1,55 +1,58 @@
-<?php 
+<?php include("../../helpers/include_with_variable.php") ?>
 
 
-//echo '<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">';
-//echo '<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>';
+<?php include_with_variable('head.php', array('title' => 'Home' , 'link'=>'../../public/styles/table.css')); ?>
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-
-include("../../helpers/include_with_variable.php");
-include ("./head.php");
-include('../../helpers/database.php');
-include ('../../env.php');
-//?>
-
-<?php include_with_variable('head.php', array('title' => 'Home', 'link' => '../../public/styles/user_order.css', 'fontawesome' => 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css')); ?>
 
 <body>
 <?php include ("./header.php") ?>
+
     <div class="container">
+
+
         <div class="row">
             <div class="col-12 my-5">
-                <form class="d-flex " role="search">
-                    <input class="form-control px-3 py-4 me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success px-5" type="submit">Search</button>
+                <form class="d-flex" role="search">
+                    <input class="form-control px-3 py-4 me-2" type="search" id="searchInput" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success px-5" onclick="filterProducts(event)" type="submit">Search</button>
                 </form>
             </div>
         </div>
-        <div class="row">
-            <div class="col-12 col-md-8">
-                <div class="row">
-                    <section class="popular" id="popular">
 
+
+        <div class="row">
+            <div class="col-12">
+                    <section class="popular" id="popular">
                         <div class="heading">
                             <span>popular food</span>
                             <h3>our special dishes</h3>
-                        </div>
+                    </section>
+                </div>
+        </div>
 
-                        <div class="box-container" id="prd-box">
+
+        <div class="row  align-items-baseline my-5">
+            <div class="col-12 col-md-8">
+                <section class="bg-light rounded-4" id="popular">
+                    <div class="box-container row d-flex justify-content-center" id="last-product">
+                    </div>
+                </section>
+            </div>
+        </div>
+
+
+        <div class="row  align-items-baseline">
+                <div class="col-12 col-md-8">
+                    <section class="bg-light rounded-4" id="popular">
+                        <div class="box-container row d-flex justify-content-center" id="prd-box">
                         </div>
                     </section>
                 </div>
-            </div>
-
-            <div class="col-12 col-md-4 d-flex align-items-center">
-                <div>
-                    <div class="order-checkout receipt">
-                        <div class="row">
-                            <div class="col-12">
-                                <form method="POST" id="submit_order">
+                <div class="col-12 col-md-4 d-flex align-items-center">
+                <div class="order-checkout receipt">
+                    <div class="row">
+                        <div class="col-12" >
+                            <form method="POST" id="submit_order">
                                     <table class="table table-responsive">
                                         <thead>
                                             <tr>
@@ -98,12 +101,15 @@ include ('../../env.php');
                                         </div>
                                     </div>
                                 </form>
-                            </div>
                         </div>
                     </div>
                 </div>
+
             </div>
-        </div>
+            </div>
+
+
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.min.js" integrity="sha512-0w8aS6z7q3t3AL/kpUEZPJ9XZTrbYugbnRATcmmV7yE8IMIB2fZlIEMl+6thHJx8d0arI3PqU+3/06SMv6ohcA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="../../public/js/user_order.js"></script>
 </body>

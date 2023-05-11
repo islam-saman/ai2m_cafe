@@ -22,10 +22,10 @@ function getAllOrders() {
                     orderProducts.forEach(op => {
                         productCards += `
                 <td>
-                  <div class="card" style="width: 18rem;">
-                    <img src="${op.image}" class="card-img-top" alt="...">
+                  <div class="card" style="width: 18rem; height: 30rem">
+                    <img src="http://localhost/ai2m_cafe/public/images/products/${op.image}" height="230" class="card-img-top" alt="...">
                     <div class="card-body">
-                      <h2 class="card-title">Name : ${op.name}</h2>
+                      <h5 class="card-title">Name : ${op.name}</h5>
                       <p class="card-text">Price : ${op.price}</p>
                       <p class="card-text">Quantity : ${op.quantity}</p>
                       <p class="btn btn-primary">Sub Total : ${op.sub_total}</p>

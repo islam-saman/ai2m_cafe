@@ -4,6 +4,7 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 include "../../../helpers/database.php";
 include "../../../env.php";
+
 session_start();
 if(!isset($_SESSION['is_login'])){
 

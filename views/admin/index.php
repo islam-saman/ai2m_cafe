@@ -7,29 +7,22 @@
 <?php include ("./header.php") ?>
 
 <div class="container">
-    <div class="row">
-        <div class="col-12 my-5">
-            <form class="d-flex " role="search">
-                <input class="form-control px-3 py-4 me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success px-5" type="submit">Search</button>
-            </form>
-        </div>
+    <div class="row search-bar mt-5 mb-5">
+        <form class="d-flex " role="search">
+            <input class="form-control px-3 py-4 me-2" type="search" id="searchInput" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success px-5" onclick="filterProducts(event)" type="submit">Search</button>
+        </form>
     </div>
+
+    <div class="row  mb-5">
+        <section class="col-12 rounded-4" id="popular">
+            <div class="box-container row d-flex justify-content-around" id="last-product"> </div>
+        </section>
+    </div>
+            
     <div class="row">
-        <div class="col-12 col-md-8">
-            <div class="row">
-                <section class="popular" id="popular">
+    <div class="box-container row" id="prd-box"></div>
 
-                    <div class="heading">
-                        <span>popular food</span>
-                        <h3>our special dishes</h3>
-                    </div>
-
-                    <div class="box-container" id="prd-box">
-                    </div>
-                </section>
-            </div>
-        </div>
 
         <div class="col-12 col-md-4 d-flex align-items-center">
             <div>

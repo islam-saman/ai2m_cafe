@@ -6,6 +6,13 @@ error_reporting(E_ALL);
 header("Access-Control-Allow-Origin: *");
 
 include '../../helpers/database.php';
+include '../../env.php';
+
+session_start();
+if(!isset($_SESSION['is_login']) || !$_SESSION['is_login']){
+    echo json_encode(["redirect"=>true]);
+    exit;
+}
 
 
 
@@ -115,7 +122,7 @@ if($form_errors)
     {
         try
         {
-            $db = new Database("root","1191997","ai2m"); 
+            $db = new Database(dbUser,dbPass,dbName); 
             if($db)
             {
                // first check of the category is existed or not

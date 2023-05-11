@@ -5,13 +5,13 @@ error_reporting(E_ALL);
 //include "../../../helpers/database.php";
 include "../../../env.php";
 include "../../../helpers/auth.php";
+
 session_start();
 if(!isset($_SESSION['is_login']) || !$_SESSION['is_login']){
-
     echo json_encode(["redirect"=>true]);
-
     exit;
 }
+
 $user_id = $_SESSION['id'];
 $db = new Database(dbUser, dbPass, dbName);
 //// Check if user is an admin

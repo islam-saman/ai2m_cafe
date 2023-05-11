@@ -3,17 +3,27 @@ const tbody = document.getElementById("orderData");
 const tableRow = document.getElementsByClassName("tableRow");
 const table = document.querySelector("table");
 const card = document.getElementsByClassName("card");
+<<<<<<< HEAD
 function getAllOrders(userId) {
 
     if(!userId)
         userId = ""
 
     fetch(`http://localhost/ai2m_cafe/controllers/user/my_order/order.php?userId=${userId}`)
+=======
+
+function getAllOrders() {
+    fetch('http://localhost/ai2m_cafe/controllers/user/my_order/order.php')
+>>>>>>> 263fddecd22bc1644e1a7fe7dd06a60115dde145
         .then(async (res) => {
             await drawTable(res);
         })
         .catch((error) => console.log(error))
+<<<<<<< HEAD
 }
+=======
+}getAllOrders();
+>>>>>>> 263fddecd22bc1644e1a7fe7dd06a60115dde145
 
 function openOrderDetails(id) {
     let element = document.getElementById(id);
@@ -28,10 +38,10 @@ function openOrderDetails(id) {
                 orderProducts.forEach(row => {
                     let newData = document.createElement('td')
                     newData.innerHTML = `
-                        <div class="card" style="width: 18rem;">
-                          <img src="${row['image']}" class="card-img-top" alt="...">
+                        <div class="card" style="width: 18rem;height: 30rem">
+                          <img src="http://localhost/ai2m_cafe/public/images/products/${row['image']}" height="230" class="card-img-top" alt="...">
                           <div class="card-body">
-                            <h2 class="card-title">Name : ${row['name']}</h2>
+                            <h2 class="card-title" style="font-size: 1.5em">Name : ${row['name']}</h2>
                             <p class="card-text">Price : ${row['price']}</p>
                             <p class="card-text">Quantity : ${row['quantity']}</p>
                             <p class="btn btn-primary">Sub Total : ${row['sub_total']}</p>
@@ -87,13 +97,20 @@ async function  drawTable(res){
             tbody.innerHTML += `
                     <tr class="tableRow" id="${row["id"]}"  disabled="false">
                         <td>
+<<<<<<< HEAD
                             <div class="d-flex justify-content-around">
                                 <p>${row['id']}</p>
                                 <div><i onclick="openOrderDetails(${row['id']})" class="fa fa-plus-circle" aria-hidden="true"></i></div>            
                             </div>
+=======
+                        <div class="d-flex justify-content-around">
+                             <p>${row['id']}</p>
+                             <div ><i style="cursor: pointer" onclick="openOrderDetails(${row['id']})" class="fa fa-plus-circle" aria-hidden="true"></i></div>            
+                        </div>
+>>>>>>> 263fddecd22bc1644e1a7fe7dd06a60115dde145
                         </td>
                         <td>${row['date']}</td>
-                        <td><i class="fa fa-check-circle-o green"></i><span class="ms-1">${row['status']} </span></td>
+                        <td><i class="fa fa-check-circle-o green" ></i><span class="ms-1">${row['status']} </span></td>
                         <td><img src="https://i.imgur.com/VKOeFyS.png" width="25">${row['name']}</td>
                         <td>${row['room']}</td>
                         <td>${row['total']}$</td>
@@ -139,4 +156,3 @@ function cancelOrder(id) {
         }
     })
 }
-

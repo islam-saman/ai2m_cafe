@@ -2,11 +2,16 @@
 
 
 
-<?php include("../helpers/include_with_variable.php") ?>
-<?php include_with_variable('./admin/head.php', array('title' => 'login','link'=>'../public/styles/login.css','not'=>"https://rawgit.com/MLaritz/Vanilla-Notify/master/dist/vanilla-notify.css")); ?>
 
+
+<html>
+<head>
+    <title>login</title>
+    <link rel="stylesheet" type="text/css" href="../public/styles/login.css">
+    <link rel="stylesheet" href="https://rawgit.com/MLaritz/Vanilla-Notify/master/dist/vanilla-notify.css">
+</head>
 <body>
-<div class="login-page mt-5">
+<!-- <div class="login-page mt-5">
   <div class="container">
     <div class="row">
       <div class="col-lg-10 offset-lg-1">
@@ -41,7 +46,6 @@
                   </div>
                   <span id="Password" class="text-danger"></span>
 
-
                   <div class="col-12">
                     <button type="submit" onclick="loginAction()"
                       class="btn btn-primary px-4 float-end mt-4">login</button>
@@ -65,7 +69,29 @@
     </div>
   </div>
 </div>
-</section>
+</section> -->
+<div class="loginbox">
+  <img src="../public/images/a.png"  class="avatar">
+         <h1>Login Here</h1>
+  <form id="login_form" method="post">
+    <div style="margin-bottom: 10px;">
+<!--      <p>User name</p>-->
+      <input type="text" name="email" id="email"  placeholder="Enter Username" oninput="userDetilesBuilder(this)">
+      <span id="Email"  style="color: rgb(187, 44, 44);"></span>
+    </div>
+    <div style="margin-bottom: 10px;">
+<!--      <p>Password</p>-->
+      <input name="password"  type="password" 
+      placeholder="Enter Password" id="password" oninput="userDetilesBuilder(this)">
+      <span id="Password" style="color: rgb(187, 44, 44);"></span>
+    </div>
+    <div>
+      <input type="submit" name="" onclick="loginAction()" value="Login">
+    </div>
+        <a class="lost-pass" href="#" onclick="openpopup()">Lost your Password?</a><br>
+  </form>
+    </div>
+</div>
      
         <div class="popup" id="popup">
             <img src="../public/images/404-tick.png" ><br><br>
@@ -84,7 +110,10 @@
                         placeholder="Enter New Password" id="newpassword" oninput="newpassDetilesBuilder(this)">
                     </div>
                     <span id="Newpassword" class="text-danger"></span>
-            <button type="button" onclick="closepopup()" >ok</button>
+                    <div  class=" div_action ">
+                    <button type="button" class="ms-2" onclick="closepopup()" ><b>Save</b></button>
+                    <button type="button" class="ms-2" onclick="closepopupImmediately()"><b>Close</b></button>
+                   </div>
         </div>
 
 
@@ -93,4 +122,4 @@
     <script src="../public/js/login.js"></script> 
     <script src="https://rawgit.com/MLaritz/Vanilla-Notify/master/dist/vanilla-notify.min.js"></script>
 </body>
-
+<html>

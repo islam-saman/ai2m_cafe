@@ -109,7 +109,7 @@ class Database
             throw new Exception;
             
 
-        $selectQuery = "SELECT * FROM $tableName ORDER BY id DESC LIMIT 1";
+        $selectQuery = "SELECT * FROM `$tableName` ORDER BY id DESC LIMIT 1";
         $selectStatement = $this->dbConnection->prepare($selectQuery);
         $selectStatement->execute();        
 
@@ -227,8 +227,6 @@ class Database
             return false;   
 
     }
-
-
 
     public function isExisted(string $tableName, string $primaryKey, string $value)
     {
@@ -397,6 +395,21 @@ class Database
         $statement->execute();
 
         if ($statement->rowCount() != 0) {
+            return $statement->fetchAll(PDO::FETCH_ASSOC);
+        } else {
+            return [];
+        }
+    }
+    public function search($table,$keyword,$value){
+        if (!$this->connect()) {
+            throw new Exception;
+        }
+
+        $query = "select * from $table where $keyword like '%$value%'";
+        $statement = $this->dbConnection->prepare($query);
+        $statement->execute();
+
+        if ($statement->rowCount()!= 0) {
             return $statement->fetchAll(PDO::FETCH_ASSOC);
         } else {
             return [];

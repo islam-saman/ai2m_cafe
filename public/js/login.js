@@ -72,7 +72,7 @@ async function loginAction()
             $("login_form").reset()
             if(JsonResualt.is_admin)
             {
-                vNotify.success({ text: "Admin has been logedin Successfully", visibleDuration: 2000, fadeInterval: 20 });
+                vNotify.success({ text: "Admin has been logged in Successfully", visibleDuration: 2000, fadeInterval: 20 });
                 setTimeout(() => {
                     window.location.href='http://localhost/ai2m_cafe/views/admin/index.php'
                 },1200)
@@ -80,9 +80,9 @@ async function loginAction()
             }
             else
             {
-                vNotify.success({ text: "User has been logedin Successfully", visibleDuration: 2000, fadeInterval: 20 });
+                vNotify.success({ text: "User has been logged in Successfully", visibleDuration: 2000, fadeInterval: 20 });
                 setTimeout(() => {
-                    window.location.href='http://localhost/ai2m_cafe/views/admin/index.php'
+                    window.location.href='http://localhost/ai2m_cafe/views/user/index.php'
                 },1200)
                  
             }
@@ -133,6 +133,10 @@ function newpassDetilesBuilder(elem)
     newpass[elem.name] = elem.value
 }
 
+function closepopupImmediately()
+{
+     popup.classList.remove("open-popup");
+}
 
 async function closepopup()
 {
@@ -144,12 +148,12 @@ async function closepopup()
     var pattern_pass =  /^[a-z _]{8}$/ ;
     if(newpassword == '')
     {
-        NewPassword.innerHTML = 'password is required';
+        NewPassword.innerHTML = 'Password is required';
     }
-    else if(!pattern_pass.test(newpassword))
-    {
-        NewPassword.innerHTML = 'error password';
-    }
+    // else if(!pattern_pass.test(newpassword))
+    // {
+    //     NewPassword.innerHTML = 'Error Password';
+    // }
     else
     {
         NewPassword.innerHTML =""
@@ -159,7 +163,7 @@ async function closepopup()
     var Secretkey = $("Secretkey");
     if(secretkey == '')
     {
-        Secretkey.innerHTML = 'Secretkey is required';
+        Secretkey.innerHTML = 'Secret key is required';
     }
     else
     {
