@@ -374,7 +374,7 @@ async function addCategory()
 {
     var formData = new FormData();
     formData.append('cateName', categoryName);
-    
+    console.log("hi")
     let availablityResualt = await fetch("../../../controllers/admin/category/add_category.php", {
         method: "POST",
         body: formData

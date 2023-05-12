@@ -1,5 +1,5 @@
 
-<?php include ("./head.php")?>
+<?php include ("head.php")?>
 
 <header class="header">
 
