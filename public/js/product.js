@@ -126,7 +126,7 @@ async function displayProducts()
             <td>
                 <div  id="btn-container"  class="btn-group" role="group">
                     <a type="button" onclick= "isProductAvailable(${product.id})"  class='btn btn-danger'>${isAvailableButton}</a>
-                    <a type="button" href='update_product.html?prodId=${product.id}' class='btn btn-success'>Update</a>
+                    <a type="button" href='update_product.php?prodId=${product.id}' class='btn btn-success'>Update</a>
                     <a type="button" onclick= "deleteProduct(${product.id})"  class='btn btn-danger'>Delete</a>
                 </div>
             </td>
@@ -165,7 +165,7 @@ async function deleteProduct(productId)
 
 async function getUpdateForm()
 {
-    let getUpdateForm = await fetch("./add_product.html")
+    let getUpdateForm = await fetch("./add_product.php")
     let updateForm = await getUpdateForm.text()
     document.getElementById("header").innerHTML = updateForm;
     document.getElementById("subButton").removeAttribute("onclick")
@@ -297,7 +297,7 @@ window.addEventListener("focus", () => {
            <td>
                <div id="btn-container" class="btn-group" role="group">
                     <a type="button" onclick= "isProductAvailable(${product.id})"  class='btn btn-danger'>${isAvailableButton}</a>
-                    <a type="button" href='update_product.html?prodId=${product.id}' class='btn btn-success'>Update</a>
+                    <a type="button" href='update_product.php?prodId=${product.id}' class='btn btn-success'>Update</a>
                     <a type="button" onclick= "deleteProduct(${product.id})"  class='btn btn-danger'>Delete</a>
                </div>
            </td>
@@ -432,7 +432,8 @@ function lockInput(cateId)
         $(cateId).querySelector("#open-update").setAttribute("class","fa-solid fa-lock-open")
         isInputLocked = false
 
-        vNotify.info({text: "Updating has been opned  <i class='fa-solid fa-lock-open'></i> ", visibleDuration: 2000, fadeInterval: 20})
+        vNotify.info({text: "Updating has been opned  <i class='fa-solid fa-lock-open'></i> ",
+          visibleDuration: 2000, fadeInterval: 20})
     }
     else
     {
@@ -443,7 +444,7 @@ function lockInput(cateId)
         $(cateId).querySelector("#open-update").setAttribute("class","fa-solid fa-lock")
         isInputLocked = true
         
-        vNotify.info({text: "Updating has been Locked  <i class='fa-solid fa-lock'></i> ", visibleDuration: 2000, fadeInterval: 20})
+        vNotify.info({text: "Updating has been Locked  <i class='fa-solid fa-lock'></i> ",  visibleDuration: 2000, fadeInterval: 20})
     }
 
 }

@@ -23,11 +23,15 @@ function getLastProducts(){
             data = await res.json();
             if (data['redirect']){
                 window.location.href = '../../views/login.php';
-            }else{
+            }else
+            {
                 lastestProducts = data['last_products'];
-                lastestProducts.forEach((p)=>{
+                lastestProducts.forEach((p, index)=>{
+                    index++
+
+
                     lastestProductsContainer += `
-                     <div class='box col-3 mx-2' style="margin: 10px;" onclick='addOrder(${p.id})'> 
+                     <div class='box  col-3 mx-2' style="margin: 10px;" onclick='addOrder(${p.id})'> 
                         <input class='prdId' name='prdId' type='hidden' value=${p.id} />
                         <div class='image'>
                             <a style='cursor:pointer;'> 
@@ -40,9 +44,22 @@ function getLastProducts(){
                                 <span class='prdPrice'>${p.price}</span> 
                             </div>
                         </div>
-                    </div>    `
+                    </div> `
+
+                    if(index % 3 == 0)
+                    {
+                        if(index == 3)
+                        {
+                            last_product.innerHTML += `<div class="carousel-item justify-content-center d-flex active">${lastestProductsContainer}</div>`;
+                            lastestProductsContainer = ""
+                        }
+                        else
+                        {
+                            last_product.innerHTML += `<div class="carousel-item d-flex justify-content-center;slide-${index / 3}">${lastestProductsContainer}</div>`;
+                            lastestProductsContainer = ""
+                        }
+                    }
                 })
-                last_product.innerHTML = lastestProductsContainer;
             }
         })
 }getLastProducts();
@@ -78,7 +95,7 @@ function displayProduct(){
             <input class='prdId' name='prdId' type='hidden' value=${p.id} />
             <div class='image'>
                 <a style='cursor:pointer;'> 
-                    <img class='w-100' style='height:150px;border-radius:10px'  src="../../public/images/products/${p.image}" alt='${p.id}'>
+                    <img class='w-100' style='height:150px;'  src="../../public/images/products/${p.image}" alt='${p.id}'>
                 </a>
             </div>
             <div class='content'>
@@ -101,9 +118,9 @@ function displayOrder() {
                            <td>${orderArray[prd].product['name']}</td>
                            <td>${orderArray[prd].product['price']}</td>
                            <td class="d-flex">
-                               <a onclick="increaseOrderQuantity(${orderArray[prd].product['id']}, ${orderArray[prd].product['price']})" class="btn btn-success">+</a>
-                               <input class="form-control mx-1" disabled type="number" id="ordQun${orderArray[prd].product['id']}" value="${orderArray[prd].quantity}" style="width:30px;padding:0px;text-align:center;" name="quantity"/>
-                               <a onclick="decreaseOrderQuantity(${orderArray[prd].product['id']}, ${prd['price']})" class="btn btn-danger">-</a>
+                               <a onclick="increaseOrderQuantity(${orderArray[prd].product['id']}, ${orderArray[prd].product['price']})" class="btn increase-button btn-success">+</a>
+                               <input class=""  type="number" id="ordQun${orderArray[prd].product['id']}" value="${orderArray[prd].quantity}" style="width:30px;padding:0px;text-align:center;" name="quantity"/>
+                               <a onclick="decreaseOrderQuantity(${orderArray[prd].product['id']}, ${prd['price']})" class="btn decrease-button btn-danger">-</a>
                            </td>
                            <td id="subTotal${orderArray[prd].product['id']}">${Number(orderArray[prd].quantity) * Number(orderArray[prd].product['price'])}</td>
                            <td style="cursor: pointer"><i class="fa-solid fa-trash-can mt-1" onclick='deleteOrder(${orderArray[prd].product['id']})'></i></td>
@@ -158,9 +175,6 @@ async function addOrder(index) {
             for (const prdEl of orderArray) {
                 if(prdEl.product.id == prd['id']){
                     foundOrder = true;
-                    // let orderQuantity = document.getElementById(`ordQun${prd['id']}`);
-                    // let increasePrdValue  = Number(orderQuantity.value) + 1;
-                    // orderQuantity.value = increasePrdValue;
                     increaseOrderQuantity(`${prd.id}`,`${prd.price}`)
                     break;
                 }
@@ -172,7 +186,7 @@ async function addOrder(index) {
                            <td><span>${prd['price']}</span></td>
                            <td class="d-flex">
                                <a onclick="increaseOrderQuantity(${prd['id']}, ${prd['price']})" class="btn btn-success">+</a>
-                               <input disabled class="form-control mx-1" type="number" id="ordQun${prd['id']}" value="1" style="width:30px;padding:0px;text-align:center;" name="quantity"/>
+                               <input  class="" type="number" id="ordQun${prd['id']}" value="1" style="width:30px;padding:0px;text-align:center;" name="quantity"/>
                                <a onclick="decreaseOrderQuantity(${prd['id']}, ${prd['price']})" class="btn btn-danger">-</a>
                            </td>
                            <td id="subTotal${prd['id']}">${Number(prd['price'])}</td>
@@ -184,7 +198,6 @@ async function addOrder(index) {
                 displayOrder();
                 calcTotalPrice();
             }
-            // console.log(orderArray)
         })
 }
 
