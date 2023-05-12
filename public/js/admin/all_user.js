@@ -15,7 +15,14 @@ async function display(){
     if(alldata.ok)
     {
         const JsonResualt = await alldata.json();
-        console.log(JsonResualt)
+           
+        // if(JsonResualt['redirect']){
+        //     window.location.href = "http://localhost/ai2m_cafe/views/login.php"
+        // }else if (JsonResualt['is_admin']===false){
+        //     window.location.href = "http://localhost/ai2m_cafe/views/login.php";
+        // }
+
+
         if(JsonResualt.status == 401 || JsonResualt.status == 404)
         {
             console.log("something went wrong, try again later")
@@ -69,6 +76,15 @@ async function deleteuser(secret_key)
     if(deleteResualt.ok)
     {
         const JsonResualt = await deleteResualt.json();
+        if(JsonResualt['redirect']){
+            window.location.href = "http://localhost/ai2m_cafe/views/login.php"
+        }else if (JsonResualt['is_admin']===false){
+            window.location.href = "http://localhost/ai2m_cafe/views/login.php";
+        }
+
+
+
+
         if(JsonResualt.status == 401 || JsonResualt.status == 404)
         {
             console.log("something went wrong, try again later")

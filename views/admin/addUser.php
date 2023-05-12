@@ -4,7 +4,7 @@
 
 <?php include_with_variable('head.php', array('title' => 'Add User','link'=>'../../public/styles/register.css','not'=>"https://rawgit.com/MLaritz/Vanilla-Notify/master/dist/vanilla-notify.css")); ?>
 
-<body>
+<body onload="checkuser()">
   <?php include 'header.php' ?>
   <section style="background-color: #eee;width: 100%;">
     <div class="container h-100">
@@ -113,7 +113,23 @@
   
         
        
-   
+   <script>
+    async function checkuser(){
+
+     let addingResualt = await fetch("../../controllers/admin/addUser.php")
+      if(addingResualt.ok)
+      {
+          const JsonResualt = await addingResualt.json();
+          if(JsonResualt['redirect'] == true){
+              window.location.href = "http://localhost/ai2m_cafe/views/login.php"
+          }
+          else if (JsonResualt['is_admin']===false){
+                window.location.href = "http://localhost/ai2m_cafe/views/login.php";
+          }
+      }
+    }
+
+</script>
     <script src="../../public/js/bootstrap5.js"></script> 
     <script src="../../public/js/admin/addUser.js"></script> 
     <script src="https://rawgit.com/MLaritz/Vanilla-Notify/master/dist/vanilla-notify.min.js"></script>

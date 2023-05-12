@@ -147,6 +147,12 @@ async function adduser()
     {
         
          const JsonResualt = await addingResualt.json();
+         if(JsonResualt['redirect'] == true){
+            window.location.href = "http://localhost/ai2m_cafe/views/login.php"
+        }
+        else if (JsonResualt['is_admin']===false){
+            window.location.href = "http://localhost/ai2m_cafe/views/login.php";
+        }
          
         if(JsonResualt.status == 401 || JsonResualt.status == 404)
         {

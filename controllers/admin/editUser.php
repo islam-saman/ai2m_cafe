@@ -5,13 +5,23 @@ error_reporting(E_ALL);
 
 header("Access-Control-Allow-Origin: *");
 
-include '../../helpers/database.php';
+include '../../helpers/auth.php';
 include '../../env.php';
 
 
 session_start();
 if(!isset($_SESSION['is_login']) || !$_SESSION['is_login']){
     echo json_encode(["redirect"=>true]);
+    exit;
+}
+
+$user_id = $_SESSION['id'];
+$db = new Database(dbUser, dbPass, dbName);
+//// Check if user is an admin
+$is_admin = check_admin($db, 'user', 'id', $user_id);
+
+if(!$is_admin){
+    echo json_encode(["is_admin"=>false]);
     exit;
 }
 
