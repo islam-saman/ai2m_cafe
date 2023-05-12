@@ -1,3 +1,6 @@
+<?php include("../../../helpers/include_with_variable.php") ?>
+<?php include_with_variable('head.php', array('title' => 'Home')); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,8 +10,12 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link rel="stylesheet" href="https://rawgit.com/MLaritz/Vanilla-Notify/master/dist/vanilla-notify.css">
     <link rel="stylesheet" href="../../../public/styles/product.css">
+    <link rel="stylesheet" href="../../../public/styles/style.css">
+
 </head>
 <body onload="loadCategoriesList()">
+    <?php include ("../header.php") ?>
+
     <section class="container">
         <form class="add-product-form" id="adding-form" method="post" enctype="multipart/form-data">
             <div class="mb-3 row">

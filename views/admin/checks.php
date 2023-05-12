@@ -1,3 +1,8 @@
+<?php include("../../helpers/include_with_variable.php") ?>
+<?php include_with_variable('head.php', array('title' => 'Home')); ?>
+<?php include ("./header.php") ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

@@ -7,24 +7,47 @@
 <?php include ("./header.php") ?>
 
 <div class="container">
-    <div class="row search-bar mt-5 mb-5">
+    <div class="row search-bar rounded-4 mt-5 mb-5">
         <form class="d-flex " role="search">
             <input class="form-control px-3 py-4 me-2" type="search" id="searchInput" placeholder="Search" aria-label="Search">
+
             <button class="btn btn-outline-success px-5" onclick="filterProducts(event)" type="submit">Search</button>
         </form>
     </div>
 
     <div class="row  mb-5">
-        <section class="col-12 rounded-4" id="popular">
-            <div class="box-container row d-flex justify-content-around" id="last-product"> </div>
+        <section class="col-12 rounded-4 " id="popular">
+            <div id="carouselExampleIndicators" class="carousel slide row" data-bs-ride="true">
+                <button class="carousel-control-prev col-1" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                    <img src="../../public//images//arrow-left-solid.svg" width="20">
+
+                    <span class="visually-hidden">Previous</span>
+                </button>
+
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                </div>
+                <div class="carousel-inner col-8">
+                    
+                    <div class=" box-container" id="last-product"></div>
+                </div>
+
+                <button class="carousel-control-next col-1" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                    <img src="../../public//images//arrow-right-solid.svg" width="20">
+
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
         </section>
     </div>
-            
-    <div class="row">
-    <div class="box-container row" id="prd-box"></div>
+</div>
 
-
-        <div class="col-12 col-md-4 d-flex align-items-center">
+<div class="row">
+        <div class=" col-md-2"></div>
+        <div class="box-container col-md-8 row" id="prd-box"></div>
+        <div class="col-12 col-md-2 d-flex mx-2 align-items-center">
             <div>
                 <div class="order-checkout receipt">
                     <div class="row">
@@ -74,20 +97,24 @@
                                     </div>
                                     <div>
                                         <div>
-                                            <input type="submit" name="checkout" class="btn btn-primary py-3 px-4"
-                                                   onclick="order()" value="Proceed to checkout"  />
+                                            <input type="submit" name="checkout" class="btn  btn-outline-primary btn-procced py-3 px-4"
+                                                   onclick="order()" value="Proceed"  />
                                         </div>
-                                        <p style="display: none" id="submit_order_btn" class="text-danger">No products chosen</p>
                                     </div>
+
                                 </div>
+                                <p style="display: none" id="submit_order_btn" class="text-danger">No products chosen</p>
+
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+
 </div>
+
+
 <script src="../../public/js/admin/home.js"></script>
 
 </body>
