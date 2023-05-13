@@ -359,7 +359,7 @@ async function order(){
     let roomNumber = document.getElementById("room_number");
 
     let data = {
-        date:  "1997-09-12",
+        date: new Date().toISOString().slice(0, 19).replace('T', ' '),
         room: roomNumber.value.toString(),
         ext: Number(ext.value),
         user_id: user_id,

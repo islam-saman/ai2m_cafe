@@ -7,7 +7,7 @@
 
 <nav class="navbar navbar-expand-lg">
   <div class="container-fluid">
-        <a class="navbar-brand" href="../../views/admin/index.php" >
+        <a class="navbar-brand" href="/ai2m_cafe/views/admin/index.php" >
             <!-- <i class="ri-store-2-line"></i>  -->
             Casablanca Cafe
         </a>
@@ -36,7 +36,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="./all_user.php">All User</a>
+                    <a class="nav-link" href="/ai2m_cafe/views/admin/all_user.php">All User</a>
                 </li>
 
                 <li class="nav-item">
