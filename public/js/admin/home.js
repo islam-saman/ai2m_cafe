@@ -5,36 +5,33 @@ var orderArray = [];
 const prdId = document.getElementById("prdId");
 let prd;
 let prdList = [];
-let  s;
+let s;
 let user_id = 0;
 let userContainer = ``;
 let userArray = [];
 let user_dropdown = document.getElementById("user_dropdown");
-let last_product=document.getElementById("last-product");
+let last_product = document.getElementById("last-product");
 let lastestProducts = [];
 let lastestProductsContainer = ``;
 
-function getLastProducts(){
+function getLastProducts() {
     lastestProductsContainer = ``;
     lastestProducts = [];
 
     fetch(`http://localhost/ai2m_cafe/controllers/last_order.php`)
-        .then(async (res)=>{
+        .then(async (res) => {
             data = await res.json();
-            if (data['redirect']){
+            if (data['redirect']) {
                 window.location.href = '../../views/login.php';
-            }else
-            {
+            } else {
                 lastestProducts = data['last_products'];
-                lastestProducts.forEach((p, index)=>{
-                    index++
-
+                lastestProducts.forEach((p, index) => {
                     lastestProductsContainer += `
                      <div class='box  col-12 mx-2' style="margin: 10px;" onclick='addOrder(${p.id})'> 
                         <input class='prdId' name='prdId' type='hidden' value=${p.id} />
                         <div class='image'>
                             <a style='cursor:pointer;'> 
-                                <img class='w-100' style='height:150px'  src="../../${p.image}" alt='${p.id}'>
+                                <img class='w-100' style='height:150px'  src="http://localhost/ai2m_cafe/${p.image}" alt='${p.id}'>
                             </a>
                         </div>
                         <div class='content'>
@@ -50,29 +47,29 @@ function getLastProducts(){
                 last_product.innerHTML = lastestProductsContainer
             }
         })
-}getLastProducts();
+} getLastProducts();
 
 
-function getProductsForAdmin(){
+function getProductsForAdmin() {
     fetch(`http://localhost/ai2m_cafe/controllers/admin/home.php`)
-        .then(async (res)=> {
+        .then(async (res) => {
             data = await res.json();
             if (data['redirect']) {
                 window.location.href = '../../views/login.php';
-            }else if (data['is_admin']===false){
+            } else if (data['is_admin'] === false) {
                 window.location.href = '../../views/user';
-            }else{
+            } else {
                 prdList = data["prd"];
-                user_id=data["user_id"];
+                user_id = data["user_id"];
                 displayProduct();
             }
         });
-}getProductsForAdmin();
+} getProductsForAdmin();
 
 
 
 
-function displayProduct(){
+function displayProduct() {
     const productCard = document.getElementById("prd-box");
     let productContainer = ``;
 
@@ -82,7 +79,7 @@ function displayProduct(){
             <input class='prdId' name='prdId' type='hidden' value=${p.id} />
             <div class='image'>
                 <a style='cursor:pointer;'> 
-                    <img class='w-100' style='height:150px;'  src="../../${p.image}" alt='${p.id}'>
+                    <img class='w-100' style='height:150px;'  src="http://localhost/ai2m_cafe/${p.image}" alt='${p.id}'>
                 </a>
             </div>
             <div class='content'>
@@ -99,7 +96,7 @@ function displayProduct(){
 
 function displayOrder() {
     orderContainer = ``;
-    for (const prd in orderArray){
+    for (const prd in orderArray) {
         orderContainer += `
                         <tr scope="row" id="${orderArray[prd].product['id']}">
                            <td>${orderArray[prd].product['name']}</td>
@@ -121,9 +118,9 @@ function filterProducts(event) {
     const searchValue = document.getElementById("searchInput").value.toLowerCase();
     event.preventDefault();
     fetch(`http://localhost/ai2m_cafe/controllers/user/get_products.php`)
-        .then(async (res)=> {
+        .then(async (res) => {
             data = await res.json();
-            if (data['redirect']){
+            if (data['redirect']) {
                 console.log("login");
                 window.location.href = '../../views/login.php';
             } else {
@@ -135,11 +132,11 @@ function filterProducts(event) {
                     const name = prd.name.toLowerCase();
                     return name.indexOf(searchValue) !== -1;
                 });
-                if (filteredList.length===0){
+                if (filteredList.length === 0) {
                     document.getElementById("prd-box").innerHTML = `
                          <h2 class="text-center fw-bold fst-italic">No Products Found</h2>
                     `;
-                }else{
+                } else {
                     // Display the filtered list of products
                     prdList = filteredList;
                     displayProduct();
@@ -155,18 +152,18 @@ document.getElementById("searchInput").addEventListener("input", filterProducts)
 
 async function addOrder(index) {
     fetch(`http://localhost/ai2m_cafe/controllers/user/user_order.php?id=${index}`)
-        .then(async (res)=> {
+        .then(async (res) => {
             prd = await res.json();
 
             let foundOrder = false;
             for (const prdEl of orderArray) {
-                if(prdEl.product.id == prd['id']){
+                if (prdEl.product.id == prd['id']) {
                     foundOrder = true;
-                    increaseOrderQuantity(`${prd.id}`,`${prd.price}`)
+                    increaseOrderQuantity(`${prd.id}`, `${prd.price}`)
                     break;
                 }
             }
-            if(!foundOrder){
+            if (!foundOrder) {
                 let newOrder = `
                        <tr id="${prd['id']}">
                            <td><span>${prd['name']}</span></td>
@@ -181,7 +178,7 @@ async function addOrder(index) {
                        </tr>               
                     `;
                 orderContainer += newOrder;
-                orderArray.push({product: prd, quantity: 1, subTotal: Number(prd['price'])});
+                orderArray.push({ product: prd, quantity: 1, subTotal: Number(prd['price']) });
                 displayOrder();
                 calcTotalPrice();
             }
@@ -191,7 +188,7 @@ async function addOrder(index) {
 
 function increaseOrderQuantity(orderId, orderPrice) {
     for (const prdEl of orderArray) {
-        if(prdEl.product.id == orderId){
+        if (prdEl.product.id == orderId) {
             let orderQuantity = document.getElementById(`ordQun${orderId}`);
             prdEl.quantity++;
             orderQuantity.value = (prdEl.quantity).toString();
@@ -205,13 +202,13 @@ function increaseOrderQuantity(orderId, orderPrice) {
 }
 
 
-function decreaseOrderQuantity(orderId, orderPrice){
+function decreaseOrderQuantity(orderId, orderPrice) {
     for (const prdEl of orderArray) {
-        if(prdEl.product.id == orderId){
+        if (prdEl.product.id == orderId) {
             let orderQuantity = document.getElementById(`ordQun${orderId}`);
             prdEl.quantity--;
 
-            if(prdEl.quantity === 0){
+            if (prdEl.quantity === 0) {
                 deleteOrder(prdEl.product.id);
                 orderQuantity.value = prdEl.quantity;
                 prdEl.subTotal = 0;
@@ -230,28 +227,28 @@ function decreaseOrderQuantity(orderId, orderPrice){
 }
 
 
-function calcTotalPrice(){
+function calcTotalPrice() {
     let total = 0;
     let totalPrice = document.getElementById("totalPrice");
 
-    for (const el of orderArray){
+    for (const el of orderArray) {
         let ordQun = document.getElementById(`ordQun${el.product.id}`);
 
-        total += ( Number(ordQun.value) * Number(el.product.price));
+        total += (Number(ordQun.value) * Number(el.product.price));
     }
-    totalPrice.innerHTML  = total.toString();
+    totalPrice.innerHTML = total.toString();
 }
 
 
 function deleteOrder(orderId) {
-    orderArray2 = orderArray.splice(orderArray.findIndex( item => item.product.id  === orderId),1);
+    orderArray2 = orderArray.splice(orderArray.findIndex(item => item.product.id === orderId), 1);
     orderContainer = ``;
     displayOrder();
     calcTotalPrice();
 }
 
 
-function deleteAllOrders(){
+function deleteAllOrders() {
     orderContainer = ``;
     orderArray = [];
 
@@ -272,16 +269,16 @@ function deleteAllOrders(){
 }
 
 
-function addOrderForUser(){
+function addOrderForUser() {
     fetch(`http://localhost/ai2m_cafe/controllers/admin/add_order_for_user.php`)
-        .then(async (res)=> {
+        .then(async (res) => {
             users = await res.json();
             displayUsers()
         });
 }
 addOrderForUser();
 
-function displayUsers(){
+function displayUsers() {
     userContainer = `<option selected disabled value="">Please select user</option>`
     for (const user of users) {
         userContainer += `
@@ -294,21 +291,21 @@ function displayUsers(){
 
 
 /*Remember There is no validation on user id [ADMIN ONLY] -----> DO NOT FORGET*/
-function getUserId(event){
+function getUserId(event) {
     user_id = event.target.value;
 }
 
 
-async function order(){
+async function order() {
     document.getElementById("submit_order").addEventListener('submit', event => {
         event.preventDefault();
     });
 
-    if(orderArray.length === 0){
+    if (orderArray.length === 0) {
         let submitOrderBtn = document.getElementById("submit_order_btn");
         submitOrderBtn.style.display = "block";
         return;
-    }else{
+    } else {
         let submitOrderBtn = document.getElementById("submit_order_btn");
         submitOrderBtn.style.display = "none";
     }
@@ -326,7 +323,7 @@ async function order(){
     let roomNumber = document.getElementById("room_number");
 
     let data = {
-        date:  "1997-09-12",
+        date: new Date().toISOString().slice(0, 19).replace('T', ' '),
         room: roomNumber.value.toString(),
         ext: Number(ext.value),
         user_id: user_id,
@@ -337,27 +334,27 @@ async function order(){
     let formData = new FormData();
     formData.append("data", JSON.stringify(data));
     let orderId;
-    fetch(`http://localhost/ai2m_cafe/controllers/user/add_order.php`,{
-        method:"POST",
+    fetch(`http://localhost/ai2m_cafe/controllers/user/add_order.php`, {
+        method: "POST",
         body: formData,
-    }).then(async (res)=> {
+    }).then(async (res) => {
         orderId = await res.json();
 
-        for (const selectedProduct of orderArray){
+        for (const selectedProduct of orderArray) {
             let ordPrd = {
                 order_id: orderId,
                 product_id: selectedProduct.product.id,
                 quantity: selectedProduct.quantity,
-                sub_total:selectedProduct.subTotal
+                sub_total: selectedProduct.subTotal
             }
 
             let orderProduct = new FormData();
             orderProduct.append("ordPrd", JSON.stringify(ordPrd));
 
-            fetch(`http://localhost/ai2m_cafe/controllers/user/add_order_product.php`,{
-                method:"POST",
+            fetch(`http://localhost/ai2m_cafe/controllers/user/add_order_product.php`, {
+                method: "POST",
                 body: orderProduct,
-            }).then(async (res)=> {
+            }).then(async (res) => {
                 await res.json()
                 deleteAllOrders();
             });

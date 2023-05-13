@@ -25,11 +25,12 @@ function openOrderDetails(id) {
                 let data = await res.json();
                 let orderProducts = data;
                 let newRow = document.createElement('tr')
-                orderProducts.forEach(row => {
-                    let newData = document.createElement('td')
-                    newData.innerHTML = `
+
+                    orderProducts.forEach(row => {
+                        let newData = document.createElement('td')
+                        newData.innerHTML = `
                         <div class="card" style="width: 18rem;height: 30rem">
-                          <img src="http://localhost/ai2m_cafe/public/images/products/${row['image']}" height="230" class="card-img-top" alt="...">
+                          <img src="http://localhost/ai2m_cafe/${row['image']}" height="230" class="card-img-top" alt="...">
                           <div class="card-body">
                             <h2 class="card-title" style="font-size: 1.5em">Name : ${row['name']}</h2>
                             <p class="card-text">Price : ${row['price']}</p>
@@ -38,11 +39,11 @@ function openOrderDetails(id) {
                           </div>
                         </div>
                 `;
-                    newRow.append(newData)
-                    // element.appendChild(newRow)
-                })
-                element.parentNode.insertBefore(newRow, element.nextSibling);
-                element.setAttribute("disabled", "true")
+                        newRow.append(newData)
+                        // element.appendChild(newRow)
+                    })
+                    element.parentNode.insertBefore(newRow, element.nextSibling);
+                    element.setAttribute("disabled", "true")
             })
             .catch((error) => console.log(error));
     }

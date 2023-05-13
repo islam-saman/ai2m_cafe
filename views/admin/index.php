@@ -36,7 +36,7 @@
                                             <th scope="col">Name</th>
                                             <th scope="col">Price</th>
                                             <th scope="col">Quantity</th>
-                                            <th scope="col">Sub Total</th>
+                                            <th scope="col">Total</th>
                                             <th scope="col"></th>
                                         </tr>
                                         </thead>

@@ -36,7 +36,13 @@
                 // first check of the product is exist or not
                 $oldProductDetiles = $db->fetchOne("product", "id", $prodId);
                 if($oldProductDetiles)
-                    $oldProductImage = $oldProductDetiles["image"];
+                {
+                    if(!isset($image) || empty($image))
+                    {
+                        $oldProductImage = $oldProductDetiles["image"];
+                        $productDetiles[2] = $oldProductImage;
+                    }
+                }
                 else
                 {
                     echo json_encode(array("status"=> 404, "error" => "given product is not found "));
@@ -58,13 +64,12 @@
                 
                 if($update_product)
                 {
-                    if($prodcutImage != "public/images/product_defualt_image.jpeg")
+                    if($prodcutImage && $prodcutImage != "public/images/product_defualt_image.jpeg")
                     {
                         try
                         {
                             $uploaded = move_uploaded_file($imageOldPath, "../../../$prodcutImage");
-                            if($oldProductImage != "public/images/product_defualt_image.jpeg")
-                                unlink("../../../{$oldProductImage}");
+                            unlink("../../../{$oldProductImage}");
                             
                             }
                             catch (Exception $movingImageError)
@@ -72,7 +77,8 @@
                                 $movingImageError->getMessage();
                                 exit;
                             } 
-                        }
+ 
+                    }
                     echo json_encode(array("status"=> 200, "success" => "Product has been updated successfully"));
 
                 }
