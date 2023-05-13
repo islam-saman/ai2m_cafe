@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../../public/styles/product.css">
     <link rel="stylesheet" href="https://rawgit.com/MLaritz/Vanilla-Notify/master/dist/vanilla-notify.css"> -->
     <link rel="stylesheet" href="../../../public/styles/style.css">
+    <link rel="stylesheet" href="../../../public/styles/vanilla-notify.css">
 
 </head>
 <body onload="getUpdateForm()" id="header">
