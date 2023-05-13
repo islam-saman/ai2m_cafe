@@ -8,7 +8,7 @@
 <head>
     <title>login</title>
     <link rel="stylesheet" type="text/css" href="../public/styles/login.css">
-    <link rel="stylesheet" href="https://rawgit.com/MLaritz/Vanilla-Notify/master/dist/vanilla-notify.css">
+    <link rel="stylesheet" href="../public/styles/vanilla-notify.css">
 </head>
 <body>
 <!-- <div class="login-page mt-5">
