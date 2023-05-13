@@ -1,5 +1,6 @@
 <?php include("../../../helpers/include_with_variable.php") ?>
-<?php include_with_variable('head.php', array('title' => 'Home')); ?>
+<?php include_with_variable('../head.php', array('title' => 'add product')); ?>
+<?php include ("../header.php") ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,7 +15,6 @@
 
 </head>
 <body onload="loadCategoriesList()">
-    <?php include ("../header.php") ?>
 
     <section class="container">
         <form class="add-product-form" id="adding-form" method="post" enctype="multipart/form-data">
@@ -30,7 +30,7 @@
             <div class="mb-3 row">
                 <label for="productPrice" class="col-4 col-form-label">Price</label>
                 <div class="col-6">
-                    <input  type="number" min="1" name="productPrice" class="form-control" id="productName"  oninput="productDetilesBuilder(this)">
+                    <input  type="number" min="1" name="productPrice" class="form-control" id="productPrice"  oninput="productDetilesBuilder(this)">
                     <span id="priceIsRquried" class="text-danger"></span>
                     <span id="invalidPrice" class="text-danger"></span>
                 </div>
@@ -87,8 +87,8 @@
         </div>        
     </section>
     <script src="https://unpkg.com/rxjs@^7/dist/bundles/rxjs.umd.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
     <script src="https://rawgit.com/MLaritz/Vanilla-Notify/master/dist/vanilla-notify.min.js"></script>
     <script src="../../../public/js/product.js"></script>
+
 </body>
 </html>

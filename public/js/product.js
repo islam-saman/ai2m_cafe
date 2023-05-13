@@ -110,6 +110,7 @@ async function displayProducts()
     let productList = await getProductsList()
     productList.forEach(product => {
 
+        let prodDetiles = JSON.stringify(product);
 
         let isAvailableButton;
         if(product.is_available)
@@ -129,7 +130,7 @@ async function displayProducts()
             <td>
                 <div  id="btn-container"  class="btn-group" role="group">
                     <a type="button" onclick= "isProductAvailable(${product.id})"  class='btn btn-danger'>${isAvailableButton}</a>
-                    <a type="button" href='update_product.php?prodId=${product.id}' class='btn btn-success'>Update</a>
+                    <a type="button"  href='update_product.php?prodId=${product.id}'  onclick="getProductData(${product.id})" class='btn btn-success'>Update</a>
                     <a type="button" onclick= "deleteProduct(${product.id})"  class='btn btn-danger'>Delete</a>
                 </div>
             </td>
@@ -168,12 +169,51 @@ async function deleteProduct(productId)
 
 async function getUpdateForm()
 {
+    loadCategoriesList()
     let getUpdateForm = await fetch("./add_product.php")
     let updateForm = await getUpdateForm.text()
     document.getElementById("header").innerHTML = updateForm;
     document.getElementById("subButton").removeAttribute("onclick")
     document.getElementById("subButton").addEventListener("click", updateProduct)
-    loadCategoriesList()
+    document.title = "update product"
+    
+    setTimeout(()=> {
+        setProductData()
+    }, 100)
+}
+
+function getProductData(prodId)
+{
+    let productDetiles = {};   
+    productDetiles.name = $(prodId).children[0].innerHTML
+    productDetiles.price = $(prodId).children[1].innerHTML
+    productDetiles.categoryId = $(prodId).children[2].innerHTML
+    localStorage.setItem("productData", JSON.stringify(productDetiles))
+}
+
+function setProductData()
+{
+    let prdocutInfo = localStorage.getItem("productData")
+    if(prdocutInfo)
+    {
+        let product = JSON.parse(prdocutInfo)
+
+        $("productName").value = product.name
+        $("productPrice").value = product.price.replace(' EG','')
+        
+        productDetiles.productName = product.name
+        productDetiles.productPrice = product.price.replace(' EG','')
+        productDetiles.categoryId = product.categoryId
+
+        Array.from($("productCateogry").children).forEach(elm => {
+
+            if(elm.value == product.categoryId)
+            {
+                elm.setAttribute("selected", "true")
+            }
+        })
+
+    }
 }
 
 async function updateProduct()
@@ -189,6 +229,7 @@ async function updateProduct()
     
     const urlParams = new URLSearchParams(window.location.search);
     let productId = urlParams.get('prodId')
+
 
     var formData = new FormData()
     formData.append('product', JSON.stringify(productDetiles));

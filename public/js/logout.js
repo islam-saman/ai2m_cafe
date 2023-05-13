@@ -12,7 +12,7 @@ function getUserData(){
     fetch("http://localhost/ai2m_cafe/controllers/getUserDataFromSession.php")
         .then(async (res)=>{
             let userData = await res.json();
-            image_user.setAttribute("src","../"+userData["image"]);
+            image_user.setAttribute("src","/ai2m_cafe/public/uploads/"+userData["image"]);
             username.innerHTML = userData["name"];
         })
 }

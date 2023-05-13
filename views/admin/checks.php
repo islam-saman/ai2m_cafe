@@ -50,11 +50,9 @@
             </tbody>
         </table>
     </section>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+
     <script src="https://rawgit.com/MLaritz/Vanilla-Notify/master/dist/vanilla-notify.min.js"></script>
     <script src="../../public/js/user/my_order/order.js"></script>
     <script src="../../public/js/admin/checks.js"></script>
-
-
 </body>
 </html>
