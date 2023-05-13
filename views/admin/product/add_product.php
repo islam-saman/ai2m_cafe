@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="../../../public/styles/vanilla-notify.css">
     <link rel="stylesheet" href="../../../public/styles/product.css">
     <link rel="stylesheet" href="../../../public/styles/style.css">
+    <link rel="stylesheet" href="../../../public/styles/vanilla-notify.css">
 </head>
 <body onload="loadCategoriesList()">
     <?php include ("../header.php") ?>

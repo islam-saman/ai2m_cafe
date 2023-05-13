@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="../../../public/styles/style.css">
     <link rel="stylesheet" href="../../../public/styles/vanilla-notify.css">
 
-
 </head>
 <body onload="getUpdateForm()" id="header">
 <?php include ("../header.php") ?>
