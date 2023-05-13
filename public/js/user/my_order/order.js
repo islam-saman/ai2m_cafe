@@ -3,27 +3,17 @@ const tbody = document.getElementById("orderData");
 const tableRow = document.getElementsByClassName("tableRow");
 const table = document.querySelector("table");
 const card = document.getElementsByClassName("card");
-<<<<<<< HEAD
 function getAllOrders(userId) {
 
     if(!userId)
         userId = ""
 
     fetch(`http://localhost/ai2m_cafe/controllers/user/my_order/order.php?userId=${userId}`)
-=======
-
-function getAllOrders() {
-    fetch('http://localhost/ai2m_cafe/controllers/user/my_order/order.php')
->>>>>>> 263fddecd22bc1644e1a7fe7dd06a60115dde145
         .then(async (res) => {
             await drawTable(res);
         })
         .catch((error) => console.log(error))
-<<<<<<< HEAD
 }
-=======
-}getAllOrders();
->>>>>>> 263fddecd22bc1644e1a7fe7dd06a60115dde145
 
 function openOrderDetails(id) {
     let element = document.getElementById(id);
