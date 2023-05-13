@@ -38,7 +38,7 @@
                 </div>
 
                 <button class="carousel-control-next col-1" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                    <img src="../../public//images//arrow-right-solid.svg" width="20">
+                    <img src="../../public/images/arrow-right-solid.svg" width="20">
 
                     <span class="visually-hidden">Next</span>
                 </button>

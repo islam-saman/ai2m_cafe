@@ -35,7 +35,7 @@ function getLastProducts(){
                         <input class='prdId' name='prdId' type='hidden' value=${p.id} />
                         <div class='image'>
                             <a style='cursor:pointer;'> 
-                                <img class='w-100' style='height:150px'  src="../../public/images/products/${p.image}" alt='${p.id}'>
+                                <img class='w-100' style='height:150px'  src="../../${p.image}" alt='${p.id}'>
                             </a>
                         </div>
                         <div class='content'>
@@ -95,7 +95,7 @@ function displayProduct(){
             <input class='prdId' name='prdId' type='hidden' value=${p.id} />
             <div class='image'>
                 <a style='cursor:pointer;'> 
-                    <img class='w-100' style='height:150px;'  src="../../public/images/products/${p.image}" alt='${p.id}'>
+                    <img class='w-100' style='height:150px;'  src="../../${p.image}" alt='${p.id}'>
                 </a>
             </div>
             <div class='content'>
