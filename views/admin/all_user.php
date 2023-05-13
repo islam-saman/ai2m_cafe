@@ -1,7 +1,7 @@
 
 <?php include("../../helpers/include_with_variable.php") ?>
 
- <?php include_with_variable('head.php', array('title' => 'All user','link'=>'../../public/styles/all_user.css','not'=>"https://rawgit.com/MLaritz/Vanilla-Notify/master/dist/vanilla-notify.css")); ?>
+ <?php include_with_variable('head.php', array('title' => 'All user','link'=>'../../public/styles/all_user.css','not'=>"../../public/styles/vanilla-notify.css")); ?>
 
 
   <body onload="checkuser()">
