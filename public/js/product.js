@@ -86,6 +86,9 @@ async function addNewProduct()
             $("adding-form").reset()
             vNotify.success({text: "product has been added succesfully", visibleDuration: 2000, fadeInterval: 20});
 
+            setTimeout(() => {
+                window.location.href = "http://localhost/ai2m_cafe/views/admin/product/products.php";
+            }, 2000)            
         }
     }
     else
@@ -170,6 +173,7 @@ async function getUpdateForm()
     document.getElementById("header").innerHTML = updateForm;
     document.getElementById("subButton").removeAttribute("onclick")
     document.getElementById("subButton").addEventListener("click", updateProduct)
+    loadCategoriesList()
 }
 
 async function updateProduct()
@@ -228,7 +232,7 @@ async function updateProduct()
             vNotify.success({text: jsonResualt.success, visibleDuration: 2000, fadeInterval: 20});
 
             setTimeout(() => {
-                window.location.href = "http://localhost/ai2m_cafe/views/admin/product/products.html";
+                window.location.href = "http://localhost/ai2m_cafe/views/admin/product/products.php";
             }, 2000)
         }
     }

@@ -29,9 +29,8 @@ function getLastProducts(){
                 lastestProducts.forEach((p, index)=>{
                     index++
 
-
                     lastestProductsContainer += `
-                     <div class='box  col-3 mx-2' style="margin: 10px;" onclick='addOrder(${p.id})'> 
+                     <div class='box  col-12 mx-2' style="margin: 10px;" onclick='addOrder(${p.id})'> 
                         <input class='prdId' name='prdId' type='hidden' value=${p.id} />
                         <div class='image'>
                             <a style='cursor:pointer;'> 
@@ -41,25 +40,14 @@ function getLastProducts(){
                         <div class='content'>
                             <h3 class='prdName'>${p.name}</h3>
                             <div>
-                                <span class='prdPrice'>${p.price}</span> 
+                                <span class='prdPrice'>$${p.price} <i class="fa-solid fa-cart-shopping"></i></span> 
                             </div>
                         </div>
                     </div> `
 
-                    if(index % 3 == 0)
-                    {
-                        if(index == 3)
-                        {
-                            last_product.innerHTML += `<div class="carousel-item justify-content-center d-flex active">${lastestProductsContainer}</div>`;
-                            lastestProductsContainer = ""
-                        }
-                        else
-                        {
-                            last_product.innerHTML += `<div class="carousel-item d-flex justify-content-center;slide-${index / 3}">${lastestProductsContainer}</div>`;
-                            lastestProductsContainer = ""
-                        }
-                    }
                 })
+
+                last_product.innerHTML = lastestProductsContainer
             }
         })
 }getLastProducts();
@@ -84,7 +72,6 @@ function getProductsForAdmin(){
 
 
 
-
 function displayProduct(){
     const productCard = document.getElementById("prd-box");
     let productContainer = ``;
@@ -101,10 +88,10 @@ function displayProduct(){
             <div class='content'>
                 <h3 class='prdName'>${p.name}</h3>
                 <div>
-                    <span class='prdPrice'>${p.price}</span> 
+                    <span class='prdPrice'>$${p.price} <i class="fa-solid fa-cart-shopping"></i> </span> 
                 </div>
             </div>
-        </div>    `
+        </div>`
     }
     productCard.innerHTML = productContainer;
 }
