@@ -3,20 +3,23 @@ const tbody = document.getElementById("orderData");
 const tableRow = document.getElementsByClassName("tableRow");
 const table = document.querySelector("table");
 const card = document.getElementsByClassName("card");
+function getAllOrders(userId) {
 
-function getAllOrders() {
-    fetch('http://localhost/ai2m_cafe/controllers/user/my_order/order.php')
+    if (!userId)
+        userId = ""
+
+    fetch(`http://localhost/ai2m_cafe/controllers/user/my_order/order.php?userId=${userId}`)
         .then(async (res) => {
             await drawTable(res);
         })
         .catch((error) => console.log(error))
-}getAllOrders();
+}
 
 function openOrderDetails(id) {
     let element = document.getElementById(id);
-    if(element.getAttribute("disabled") == "true"){
+    if (element.getAttribute("disabled") == "true") {
         return;
-    }else{
+    } else {
         fetch(`http://localhost/ai2m_cafe/controllers/user/my_order/order.php?id=${id}`)
             .then(async (res) => {
                 let data = await res.json();
@@ -39,7 +42,7 @@ function openOrderDetails(id) {
                     // element.appendChild(newRow)
                 })
                 element.parentNode.insertBefore(newRow, element.nextSibling);
-                element.setAttribute("disabled","true")
+                element.setAttribute("disabled", "true")
             })
             .catch((error) => console.log(error));
     }
@@ -62,24 +65,24 @@ function filterOrders() {
             errorMessage.remove();
         }
         fetch(`http://localhost/ai2m_cafe/controllers/user/my_order/order.php?start=${startDate}&end=${endDate}`)
-            .then(async (res)=>{
-                tbody.innerHTML="";
+            .then(async (res) => {
+                tbody.innerHTML = "";
                 await drawTable(res);
             })
             .catch((error) => console.log(error));
     }
 }
 
-async function  drawTable(res){
+async function drawTable(res) {
     tbody.innerHTML = ""
     let data = await res.json();
-    if(data['is_login']===false){
+    if (data['is_login'] === false) {
         location.replace("http://localhost/ai2m_cafe/views/login.php");
-    } else if(!data["message"]){
+    } else if (!data["message"]) {
         let orders = data['orders'];
         orders.forEach(row => {
-            let button='';
-            if(row['status'] === "processing") button = `<a class="btn btn-danger" onclick="cancelOrder(${row['id']})">Cancel</a>`;
+            let button = '';
+            if (row['status'] === "processing") button = `<a class="btn btn-danger" onclick="cancelOrder(${row['id']})">Cancel</a>`;
 
             tbody.innerHTML += `
                     <tr class="tableRow" id="${row["id"]}"  disabled="false">
@@ -98,7 +101,7 @@ async function  drawTable(res){
                         <td class="text-end">${button}</td>
                     </tr>`;
         });
-    }else{
+    } else {
         let msg = data["message"];
         console.log(msg);
         tbody.innerHTML = `<tr class="tableRow" id="0"  disabled="true">
