@@ -45,7 +45,7 @@
                                 <span id="username"></span>
                             </button>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item btn btn-ligh" href="" onclick="logout()"> Logout</a></li>
+                                <li><a class="dropdown-item btn btn-light" href="" onclick="logout()"> Logout</a></li>
                             </ul>
                         </div>
                     </div>
