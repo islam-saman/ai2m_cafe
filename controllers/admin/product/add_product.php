@@ -25,7 +25,7 @@
         
         try
         {
-            $db = new Database("root", "290315", "ai2m");    
+            $db = new Database(dbUser,dbPass,dbName);    
             if($db)
             {
                 $productDetiles = $formValidationResualt[1];

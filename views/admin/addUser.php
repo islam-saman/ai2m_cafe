@@ -2,7 +2,7 @@
 
 <?php include("../../helpers/include_with_variable.php") ?>
 
-<?php include_with_variable('head.php', array('title' => 'Add User','link'=>'../../public/styles/register.css','not'=>"https://rawgit.com/MLaritz/Vanilla-Notify/master/dist/vanilla-notify.css")); ?>
+<?php include_with_variable('head.php', array('title' => 'Add User','link'=>'../../public/styles/register.css','not'=>"../../public/styles/vanilla-notify.css")); ?>
 
 <body onload="checkuser()">
   <?php include 'header.php' ?>
