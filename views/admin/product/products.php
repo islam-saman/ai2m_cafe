@@ -1,5 +1,30 @@
-<?php include("../../../helpers/include_with_variable.php") ?>
-<?php include_with_variable('../head.php', array('title' => 'Products')); ?>
+<?php
+    include "../../../env.php";
+    include "../../../helpers/database.php";
+    include "../../../helpers/product_forms_validation.php";
+    include "../../../helpers/include_with_variable.php";
+    
+    session_start();
+    $user_id = $_SESSION['id'];
+    $db = new Database(dbUser, dbPass, dbName);
+    
+    if(!isset($_SESSION['is_login']) || !$_SESSION['is_login']){
+        header("location:http://localhost/ai2m_cafe/views/login.php");
+        exit;
+    }
+    else
+    {
+        $userData = $db->fetchOne('user', 'id', $user_id);
+        if(!$userData["is_admin"])
+        {
+            header("location:http://localhost/ai2m_cafe/views/login.php");
+            exit;
+        }
+        
+    }
+    
+    include_with_variable('../head.php', array('title' => 'Add Product'));
+?>
 
 <!DOCTYPE html>
 <html lang="en">

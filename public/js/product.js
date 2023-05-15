@@ -58,9 +58,22 @@ async function addNewProduct()
     if(addingResualt.ok)
     {
         const jsonResualt = await addingResualt.json();
-        if(jsonResualt.status == 401)
+        if(jsonResualt.status == 200)
         {
-            console.log("t")
+            for (const key in formErrors) {
+                $(key).innerHTML = ""
+            }
+
+            localStorage.setItem("newProduct", JSON.stringify(jsonResualt.success))
+            $("adding-form").reset()
+            vNotify.success({text: "Product has been added successfully", visibleDuration: 2000, fadeInterval: 20});
+
+            setTimeout(() => {
+                window.location.href = "http://localhost/ai2m_cafe/views/admin/product/products.php";
+            }, 2000)            
+        }
+        else if(jsonResualt.status == 400)
+        {
             if(!formErrors)
                 formErrors = jsonResualt.errors
 
@@ -74,22 +87,15 @@ async function addNewProduct()
             }
         }
         else if(jsonResualt.status == 404)
-            vNotify.success({text: jsonResualt.errors, visibleDuration: 2000, fadeInterval: 20});
-
+            vNotify.error({text: jsonResualt.error, visibleDuration: 2000, fadeInterval: 20});
         else
         {
-            for (const key in formErrors) {
-                $(key).innerHTML = ""
-            }
-
-            localStorage.setItem("newProduct", JSON.stringify(jsonResualt.success))
-            $("adding-form").reset()
-            vNotify.success({text: "product has been added succesfully", visibleDuration: 2000, fadeInterval: 20});
-
+            vNotify.error({text: jsonResualt.error, visibleDuration: 2000, fadeInterval: 20});
             setTimeout(() => {
-                window.location.href = "http://localhost/ai2m_cafe/views/admin/product/products.php";
-            }, 2000)            
+                window.location.href = "http://localhost/ai2m_cafe/views/login.php";
+            }, 2500)  
         }
+
     }
     else
     {
@@ -98,48 +104,56 @@ async function addNewProduct()
 
 }
 
-async function getProductsList()
-{
-    let fetchingResualt = await fetch("../../../controllers/admin/product/list_products.php")
-    return fetchingResualt.json()
-}
-
 
 async function displayProducts()
 {
-    let productList = await getProductsList()
-    productList.forEach(product => {
+    let fetchingResualt = await fetch("../../../controllers/admin/product/list_products.php")
+    const jsonResualt = await fetchingResualt.json();
+    
+    if(jsonResualt.status != 200)
+    {
+        vNotify.error({text: jsonResualt.error, visibleDuration: 2000, fadeInterval: 20});
+        setTimeout(() => {
+            window.location.href = "http://localhost/ai2m_cafe/views/login.php";
+        }, 2500)  
+    }
+    else
+    {
 
-        let prodDetiles = JSON.stringify(product);
+        let productList = jsonResualt.productList
+        productList.forEach(product => {
 
-        let isAvailableButton;
-        if(product.is_available)
-            isAvailableButton = "Available"
-        else
-            isAvailableButton = "Unavailable"
+            let prodDetiles = JSON.stringify(product);
 
-        const tableRow = 
-        `
-        <tr id="${product.id}">
-            <td>${product.name}</td>
-            <td>${product.price} EG</td>
-            <td>${product.category_id}</td>
-            <td>
-                <img src="../../../${product.image}" style='width: 71px; border-radius: 7px;'>
-            </td>
-            <td>
-                <div  id="btn-container"  class="btn-group" role="group">
-                    <a type="button" onclick= "isProductAvailable(${product.id})"  class='btn btn-danger'>${isAvailableButton}</a>
-                    <a type="button"  href='update_product.php?prodId=${product.id}'  onclick="getProductData(${product.id})" class='btn btn-success'>Update</a>
-                    <a type="button" onclick= "deleteProduct(${product.id})"  class='btn btn-danger'>Delete</a>
-                </div>
-            </td>
-        </tr>        
-        `
+            let isAvailableButton;
+            if(product.is_available)
+                isAvailableButton = "Available"
+            else
+                isAvailableButton = "Unavailable"
 
-        $("tableBody").innerHTML += tableRow
+            const tableRow = 
+            `
+            <tr id="${product.id}">
+                <td>${product.name}</td>
+                <td>${product.price} EG</td>
+                <td>${product.category_id}</td>
+                <td>
+                    <img src="../../../${product.image}" style='width: 71px; border-radius: 7px;'>
+                </td>
+                <td>
+                    <div  id="btn-container"  class="btn-group" role="group">
+                        <a type="button" onclick= "isProductAvailable(${product.id})"  class='btn btn-danger'>${isAvailableButton}</a>
+                        <a type="button"  href='update_product.php?prodId=${product.id}'  onclick="getProductData(${product.id})" class='btn btn-success'>Update</a>
+                        <a type="button" onclick= "deleteProduct(${product.id})"  class='btn btn-danger'>Delete</a>
+                    </div>
+                </td>
+            </tr>        
+            `
 
-    });
+            $("tableBody").innerHTML += tableRow
+
+        });
+    }
 
 }
 
@@ -154,15 +168,21 @@ async function deleteProduct(productId)
     })
 
     let jsonResualt = await deleteResualt.json()
-    if(deleteResualt.status == 200)
+    if(jsonResualt.status == 200)
     {
         $(productId).remove()
         vNotify.success({text: "The product has been deleted successfully", visibleDuration: 2000, fadeInterval: 20});
     }
+    else if(jsonResualt.status == 404)
+    {
+        vNotify.error({text: jsonResualt.error, visibleDuration: 2000, fadeInterval: 20});
+    }
     else
     {
         vNotify.error({text: jsonResualt.error, visibleDuration: 2000, fadeInterval: 20});
-
+        setTimeout(() => {
+            window.location.href = "http://localhost/ai2m_cafe/views/login.php";
+        }, 2500)          
     }
 
 }
@@ -244,7 +264,21 @@ async function updateProduct()
     if(updateResualt.ok)
     {
         const jsonResualt = await updateResualt.json();
-        if(jsonResualt.status == 401)
+        if(jsonResualt.status == 200)
+        {
+            for (const key in formErrors) {
+                $(key).innerHTML = ""
+            }
+
+            localStorage.setItem("productNewDetiles", JSON.stringify(jsonResualt.success))
+            $("adding-form").reset()
+            vNotify.success({text: "Product has been updated successfully", visibleDuration: 2000, fadeInterval: 20});
+
+            setTimeout(() => {
+                window.location.href = "http://localhost/ai2m_cafe/views/admin/product/products.php";
+            }, 2000)            
+        }
+        else if(jsonResualt.status == 400)
         {
             if(!formErrors)
                 formErrors = jsonResualt.errors
@@ -259,22 +293,13 @@ async function updateProduct()
             }
         }
         else if(jsonResualt.status == 404)
-        {
             vNotify.error({text: jsonResualt.error, visibleDuration: 2000, fadeInterval: 20});
-        }
         else
         {
-            for (const key in formErrors) {
-                $(key).innerHTML = ""
-            }
-
-            $("adding-form").reset()
-            localStorage.setItem("productNewDetiles", JSON.stringify(jsonResualt.success))
-            vNotify.success({text: jsonResualt.success, visibleDuration: 2000, fadeInterval: 20});
-
+            vNotify.error({text: jsonResualt.error, visibleDuration: 2000, fadeInterval: 20});
             setTimeout(() => {
-                window.location.href = "http://localhost/ai2m_cafe/views/admin/product/products.php";
-            }, 2000)
+                window.location.href = "http://localhost/ai2m_cafe/views/login.php";
+            }, 2500)  
         }
     }
     else
@@ -296,16 +321,22 @@ async function isProductAvailable(productId){
     }) 
 
     let jsonResualt = await availablityResualt.json()
-    if(availablityResualt.status == 200)
+    if(jsonResualt.status == 200)
     {
         availableButtonText = jsonResualt.success ? "Available" : "Unavailable"
         $(productId).querySelector("#btn-container").firstElementChild.innerText = availableButtonText
         vNotify.success({text: `The product now is ${availableButtonText}`, visibleDuration: 2000, fadeInterval: 20});
     }
+    else if(jsonResualt.status == 404)
+    {
+        vNotify.error({text: jsonResualt.error, visibleDuration: 2000, fadeInterval: 20});
+    }
     else
     {
         vNotify.error({text: jsonResualt.error, visibleDuration: 2000, fadeInterval: 20});
-
+        setTimeout(() => {
+            window.location.href = "http://localhost/ai2m_cafe/views/login.php";
+        }, 2500)          
     }
 }
 
@@ -433,9 +464,19 @@ async function addCategory()
         $("productCateogry").innerHTML += newProductCategory
         vNotify.success({text: `The category "${categoryName}" has been added`, visibleDuration: 2000, fadeInterval: 20});        
     }
-    else
+    else if(jsonResualt.status == 400)
         $("cateError").innerHTML = jsonResualt.errors.cateError
 
+    else if(jsonResualt.status == 404 || jsonResualt.status == 409)
+        vNotify.error({text: jsonResualt.error, visibleDuration: 2000, fadeInterval: 20});
+    
+    else
+    {
+        vNotify.error({text: jsonResualt.error, visibleDuration: 2000, fadeInterval: 20});
+        setTimeout(() => {
+            window.location.href = "http://localhost/ai2m_cafe/views/login.php";
+        }, 2500)          
+    }
 }
 
 
@@ -450,15 +491,21 @@ async function deleteCategory(cateId)
     })
 
     let jsonResualt = await deleteResualt.json()
-    if(deleteResualt.status == 200)
+    if(jsonResualt.status == 200)
     {
         $(cateId).remove()
         vNotify.success({text: "The category has been deleted successfully", visibleDuration: 2000, fadeInterval: 20});
     }
+    else if(jsonResualt.status == 404)
+    {
+        vNotify.error({text: jsonResualt.error, visibleDuration: 2000, fadeInterval: 20});
+    }
     else
     {
         vNotify.error({text: jsonResualt.error, visibleDuration: 2000, fadeInterval: 20});
-
+        setTimeout(() => {
+            window.location.href = "http://localhost/ai2m_cafe/views/login.php";
+        }, 2500)          
     }
 
 }
@@ -522,13 +569,21 @@ async function updateCategory(cateId)
     })
 
     let jsonResualt = await deleteResualt.json()
-    if(deleteResualt.status == 200)
+    if(jsonResualt.status == 200)
     {
         vNotify.success({text: "The category has been updated successfully", visibleDuration: 2000, fadeInterval: 20})
         isInputUpdated = true
         lockInput(cateId)
     }
-    else
+    else if(jsonResualt.status == 404)
+    {
         vNotify.error({text: jsonResualt.error, visibleDuration: 2000, fadeInterval: 20});
-
+    }
+    else
+    {
+        vNotify.error({text: jsonResualt.error, visibleDuration: 2000, fadeInterval: 20});
+        setTimeout(() => {
+            window.location.href = "http://localhost/ai2m_cafe/views/login.php";
+        }, 2500)          
+    }
 }
