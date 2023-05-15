@@ -1,6 +1,5 @@
 <?php include("../../../helpers/include_with_variable.php") ?>
-<?php include_with_variable('../head.php', array('title' => 'add product')); ?>
-<?php include ("../header.php") ?>
+<?php include_with_variable('../head.php', array('title' => 'Products')); ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -15,6 +14,7 @@
 
 </head>
 <body onload="displayProducts()">
+<?php include ("../header.php") ?>
     <div class="container mt-5">
         <h1>Product List 
             <a type="button" href='../product/add_product.php' class='btn btn-primary'>Add New</a>
@@ -34,5 +34,6 @@
     </div>
     <script src="https://rawgit.com/MLaritz/Vanilla-Notify/master/dist/vanilla-notify.min.js"></script>
     <script src="../../../public/js/product.js"></script>
+
 </body>
 </html>

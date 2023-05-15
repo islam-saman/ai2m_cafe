@@ -17,8 +17,6 @@ async function loadUsersList()
     })
 }
 
-
-
 async function displayUsers(elem)
 {
 
@@ -50,7 +48,6 @@ async function displayUsers(elem)
 
 }
 
-
 async function displayUserOrder(userId) {
 
     let fetchingResualt = await fetch(`../../controllers/admin/checks/user_orders_checks.php?userId=${userId}`)
@@ -70,7 +67,6 @@ async function displayUserOrder(userId) {
     });    
 }
 
-
 function $(identifer)
 {
     return document.getElementById(identifer)
@@ -80,4 +76,29 @@ function fnLoader()
 {
     loadUsersList()
     displayUsers()    
+}
+
+function filterOrders() {
+    const startDate = document.getElementById("start").value
+    const endDate = document.getElementById("end").value
+    let errorMessage = document.getElementById("error-message");
+    if (startDate === "" || endDate === "") {
+        if (!errorMessage) {
+            errorMessage = document.createElement("p")
+            errorMessage.id = "error-message"
+            errorMessage.classList.add("alert", "alert-danger")
+            table.parentNode.insertBefore(errorMessage, table)
+        }
+        errorMessage.innerHTML = "Please select both start and end dates.";
+    } else {
+        if (errorMessage) {
+            errorMessage.remove();
+        }
+        fetch(`http://localhost/ai2m_cafe/controllers/user/my_order/order.php?start=${startDate}&end=${endDate}`)
+            .then(async (res)=>{
+                tbody.innerHTML="";
+                await drawTable(res);
+            })
+            .catch((error) => console.log(error));
+    }
 }

@@ -5,7 +5,7 @@ const table = document.querySelector("table");
 const card = document.getElementsByClassName("card");
 function getAllOrders(userId) {
 
-    if(!userId)
+    if (!userId)
         userId = ""
 
     fetch(`http://localhost/ai2m_cafe/controllers/user/my_order/order.php?userId=${userId}`)
@@ -17,19 +17,20 @@ function getAllOrders(userId) {
 
 function openOrderDetails(id) {
     let element = document.getElementById(id);
-    if(element.getAttribute("disabled") == "true"){
+    if (element.getAttribute("disabled") == "true") {
         return;
-    }else{
+    } else {
         fetch(`http://localhost/ai2m_cafe/controllers/user/my_order/order.php?id=${id}`)
             .then(async (res) => {
                 let data = await res.json();
                 let orderProducts = data;
                 let newRow = document.createElement('tr')
-                orderProducts.forEach(row => {
-                    let newData = document.createElement('td')
-                    newData.innerHTML = `
+
+                    orderProducts.forEach(row => {
+                        let newData = document.createElement('td')
+                        newData.innerHTML = `
                         <div class="card" style="width: 18rem;height: 30rem">
-                          <img src="http://localhost/ai2m_cafe/public/images/products/${row['image']}" height="230" class="card-img-top" alt="...">
+                          <img src="http://localhost/ai2m_cafe/${row['image']}" height="230" class="card-img-top" alt="...">
                           <div class="card-body">
                             <h2 class="card-title" style="font-size: 1.5em">Name : ${row['name']}</h2>
                             <p class="card-text">Price : ${row['price']}</p>
@@ -38,11 +39,11 @@ function openOrderDetails(id) {
                           </div>
                         </div>
                 `;
-                    newRow.append(newData)
-                    // element.appendChild(newRow)
-                })
-                element.parentNode.insertBefore(newRow, element.nextSibling);
-                element.setAttribute("disabled","true")
+                        newRow.append(newData)
+                        // element.appendChild(newRow)
+                    })
+                    element.parentNode.insertBefore(newRow, element.nextSibling);
+                    element.setAttribute("disabled", "true")
             })
             .catch((error) => console.log(error));
     }
@@ -65,39 +66,32 @@ function filterOrders() {
             errorMessage.remove();
         }
         fetch(`http://localhost/ai2m_cafe/controllers/user/my_order/order.php?start=${startDate}&end=${endDate}`)
-            .then(async (res)=>{
-                tbody.innerHTML="";
+            .then(async (res) => {
+                tbody.innerHTML = "";
                 await drawTable(res);
             })
             .catch((error) => console.log(error));
     }
 }
 
-async function  drawTable(res){
+async function drawTable(res) {
     tbody.innerHTML = ""
     let data = await res.json();
-    if(data['is_login']===false){
+    if (data['is_login'] === false) {
         location.replace("http://localhost/ai2m_cafe/views/login.php");
-    } else if(!data["message"]){
+    } else if (!data["message"]) {
         let orders = data['orders'];
         orders.forEach(row => {
-            let button='';
-            if(row['status'] === "processing") button = `<a class="btn btn-danger" onclick="cancelOrder(${row['id']})">Cancel</a>`;
+            let button = '';
+            if (row['status'] === "processing") button = `<a class="btn btn-danger" onclick="cancelOrder(${row['id']})">Cancel</a>`;
 
             tbody.innerHTML += `
                     <tr class="tableRow" id="${row["id"]}"  disabled="false">
                         <td>
-<<<<<<< HEAD
-                            <div class="d-flex justify-content-around">
-                                <p>${row['id']}</p>
-                                <div><i onclick="openOrderDetails(${row['id']})" class="fa fa-plus-circle" aria-hidden="true"></i></div>            
-                            </div>
-=======
                         <div class="d-flex justify-content-around">
                              <p>${row['id']}</p>
                              <div ><i style="cursor: pointer" onclick="openOrderDetails(${row['id']})" class="fa fa-plus-circle" aria-hidden="true"></i></div>            
                         </div>
->>>>>>> 263fddecd22bc1644e1a7fe7dd06a60115dde145
                         </td>
                         <td>${row['date']}</td>
                         <td><i class="fa fa-check-circle-o green" ></i><span class="ms-1">${row['status']} </span></td>
@@ -108,7 +102,7 @@ async function  drawTable(res){
                         <td class="text-end">${button}</td>
                     </tr>`;
         });
-    }else{
+    } else {
         let msg = data["message"];
         console.log(msg);
         tbody.innerHTML = `<tr class="tableRow" id="0"  disabled="true">

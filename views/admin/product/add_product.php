@@ -1,6 +1,5 @@
 <?php include("../../../helpers/include_with_variable.php") ?>
-<?php include_with_variable('../head.php', array('title' => 'add product')); ?>
-<?php include ("../header.php") ?>
+<?php include_with_variable('../head.php', array('title' => 'Add Product')); ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -15,6 +14,7 @@
     <link rel="stylesheet" href="../../../public/styles/vanilla-notify.css">
 </head>
 <body onload="loadCategoriesList()">
+<?php include ("../header.php") ?>
 
     <section class="container">
         <form class="add-product-form" id="adding-form" method="post" enctype="multipart/form-data">

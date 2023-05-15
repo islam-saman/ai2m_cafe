@@ -1,10 +1,9 @@
 <?php include("../../../helpers/include_with_variable.php") ?>
-<?php include_with_variable('../head.php', array('title' => 'add product')); ?>
-<?php include ("../header.php") ?>
+<?php include_with_variable('../head.php', array('title' => 'Category')); ?>
+
 
 
 <!DOCTYPE html>
-<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -18,6 +17,8 @@
 
 </head>
 <body onload="displayCateories()">
+<?php include("../header.php") ?>
+
     <section class="container">
         <table  class='table text-center'  style='vertical-align: middle;'>
             <thead>
@@ -32,5 +33,6 @@
     </section>
     <script src="https://rawgit.com/MLaritz/Vanilla-Notify/master/dist/vanilla-notify.min.js"></script>
     <script src="../../../public/js/product.js"></script>
+
 </body>
 </html>

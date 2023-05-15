@@ -17,25 +17,21 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="../../views/admin/index.php">Home</a>
+                    <a class="nav-link active" aria-current="page" href="../../views/user/index.php">Home</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">about</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">popular</a>
-                </li>
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="#">about</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="#">popular</a>-->
+<!--                </li>-->
+<!---->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="#">menu</a>-->
+<!--                </li>-->
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#">menu</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="/ai2m_cafe/views/admin/manual_order.php>">order</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="./all_user.php">All User</a>
+                    <a class="nav-link" href="/ai2m_cafe/views/user/order.php">order</a>
                 </li>
 
                 <li class="nav-item">
@@ -49,7 +45,7 @@
                                 <span id="username"></span>
                             </button>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item btn btn-ligh" href="" onclick="logout()"> Logout</a></li>
+                                <li><a class="dropdown-item btn btn-light" href="" onclick="logout()"> Logout</a></li>
                             </ul>
                         </div>
                     </div>

@@ -38,7 +38,7 @@ function getLastProducts(){
                         <input class='prdId' name='prdId' type='hidden' value=${p.id} />
                         <div class='image'>
                             <a style='cursor:pointer;'> 
-                                <img class='w-100' style='height:150px'  src="../../public/images/products/${p.image}" alt='${p.id}'>
+                                <img class='w-100' style='height:150px'  src="http://localhost/ai2m_cafe/${p.image}" alt='${p.id}'>
                             </a>
                         </div>
                         <div class='content'>
@@ -112,7 +112,7 @@ function displayProduct(){
             <input class='prdId' name='prdId' type='hidden' value=${p.id} />
             <div class='image'>
                 <a style='cursor:pointer;'> 
-                    <img class='w-100' style='height:150px'  src="../../public/images/products/${p.image}" alt='${p.id}'>
+                    <img class='w-100' style='height:150px' src="http://localhost/ai2m_cafe/${p.image}" alt='${p.id}'>
                 </a>
             </div>
             <div class='content'>
@@ -359,7 +359,7 @@ async function order(){
     let roomNumber = document.getElementById("room_number");
 
     let data = {
-        date:  "1997-09-12",
+        date: new Date().toISOString().slice(0, 19).replace('T', ' '),
         room: roomNumber.value.toString(),
         ext: Number(ext.value),
         user_id: user_id,

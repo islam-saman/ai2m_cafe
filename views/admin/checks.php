@@ -18,15 +18,29 @@
     <section class="container">
         <div class="mb-3 row">
             <label for="usersList" class="col-4 col-form-label">Users</label>
-            <div class="col-4">
-                <select class="form-select" name="categoryId" aria-label="Default select example" id="usersList"  oninput="displayUsers(this)">
+            <div class="col-4  justify-content-center align-items-center">
+                    <div class="d-flex justify-content-center mb-5">
+                        <div class="mx-3">
+                            <label for="start">Start Date:</label>
+                            <input type="date" name="start" id="start" class="form-control" style="font-size: 2rem">
+                        </div>
+                        <div class="mx-3">
+                            <label for="end">End Date:</label>
+                            <input type="date" name="end" id="end" class="form-control" style="font-size: 2rem">
+                        </div>
+                    </div>
+
+                <div class="d-flex justify-content-center align-items-baseline">
+                    <button class="btn btn-success fs-4 mt-4 mx-4" onclick="filterOrders()" style="height: 50px; width: 150px;">Filter</button>
+                    <select class="form-select" name="categoryId" aria-label="Default select example" id="usersList"  oninput="displayUsers(this)" style="width: 300px">
                     <option disabled selected>Choose User</option>
                     <option value="">All user</option>
-
                 </select>
                 <span id="userIdIsRquried" class="text-danger"></span>
                 <span class="text-danger"></span>
+                </div>
             </div>
+
         </div>
 
         <table  class='table text-center'  style='vertical-align: middle;'>

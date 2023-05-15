@@ -23,7 +23,7 @@ function getAllOrders() {
                         productCards += `
                 <td>
                   <div class="card" style="width: 18rem; height: 30rem">
-                    <img src="http://localhost/ai2m_cafe/public/images/products/${op.image}" height="230" class="card-img-top" alt="...">
+                    <img src="http://localhost/ai2m_cafe/${op.image}" height="230" class="card-img-top" alt="...">
                     <div class="card-body">
                       <h5 class="card-title">Name : ${op.name}</h5>
                       <p class="card-text">Price : ${op.price}</p>
