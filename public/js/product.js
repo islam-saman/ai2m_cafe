@@ -525,6 +525,7 @@ async function updateCategory(cateId)
     if(deleteResualt.status == 200)
     {
         vNotify.success({text: "The category has been updated successfully", visibleDuration: 2000, fadeInterval: 20})
+        isInputUpdated = true
         lockInput(cateId)
     }
     else
